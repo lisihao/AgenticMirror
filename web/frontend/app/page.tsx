@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SketchFace from '@/components/workflow/SketchFace';
 
 const features = [
     {
@@ -174,95 +175,57 @@ export default function LandingPage() {
                             </div>
                         </motion.div>
 
-                        {/* Right - Mirror visualization */}
+                        {/* Right - Mirror with SketchFace */}
                         <motion.div
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.6, delay: 0.2 }}
                             className="relative"
                         >
-                            <div className="relative w-full aspect-square max-w-lg mx-auto">
+                            <div className="relative w-full max-w-lg mx-auto">
                                 {/* Glow effect */}
                                 <div className="absolute inset-0 bg-gradient-mirror rounded-full blur-3xl opacity-20 animate-pulse-slow" />
 
-                                {/* Mirror frame */}
-                                <div className="relative w-full h-full rounded-3xl bg-gradient-to-br from-gray-800 to-gray-900 p-2 shadow-2xl">
-                                    <div className="w-full h-full rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center overflow-hidden">
-                                        {/* Mirror surface */}
-                                        <div className="relative w-full h-full bg-gradient-to-br from-white via-gray-50 to-gray-100">
-                                            {/* Face mesh visualization */}
-                                            <svg className="absolute inset-0 w-full h-full" viewBox="0 0 400 400">
-                                                <defs>
-                                                    <linearGradient id="meshGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                                        <stop offset="0%" stopColor="#E91E63" stopOpacity="0.3" />
-                                                        <stop offset="100%" stopColor="#9C27B0" stopOpacity="0.3" />
-                                                    </linearGradient>
-                                                </defs>
-                                                {/* Simplified face mesh dots */}
-                                                <g fill="url(#meshGradient)">
-                                                    {Array.from({ length: 50 }).map((_, i) => (
-                                                        <circle
-                                                            key={i}
-                                                            cx={150 + Math.cos(i * 0.5) * (50 + i * 1.5)}
-                                                            cy={150 + Math.sin(i * 0.3) * (40 + i * 1.2)}
-                                                            r={2}
-                                                            className="animate-pulse"
-                                                            style={{ animationDelay: `${i * 50}ms` }}
-                                                        />
-                                                    ))}
-                                                </g>
-                                                {/* Face outline */}
-                                                <ellipse
-                                                    cx="200"
-                                                    cy="200"
-                                                    rx="80"
-                                                    ry="100"
-                                                    fill="none"
-                                                    stroke="url(#meshGradient)"
-                                                    strokeWidth="2"
-                                                    strokeDasharray="5,5"
-                                                    className="animate-spin-slow"
-                                                    style={{ transformOrigin: 'center' }}
-                                                />
-                                            </svg>
-
-                                            {/* Analysis indicators */}
-                                            <div className="absolute top-8 left-8 glass rounded-lg px-3 py-2 text-xs font-medium text-mirror-600">
-                                                <div className="flex items-center gap-2">
-                                                    <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                                                    实时追踪中
-                                                </div>
-                                            </div>
-
-                                            <div className="absolute bottom-8 right-8 glass rounded-lg px-3 py-2">
-                                                <div className="text-xs text-gray-500">皮肤评分</div>
-                                                <div className="text-2xl font-bold text-gradient">78</div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                {/* SketchFace Mirror */}
+                                <div className="relative">
+                                    <SketchFace
+                                        showScanLine={true}
+                                        showMetrics={true}
+                                        showEarringRecommend={true}
+                                        beautyScore={78}
+                                    />
                                 </div>
 
                                 {/* Floating badges */}
                                 <motion.div
                                     animate={{ y: [0, -10, 0] }}
                                     transition={{ duration: 3, repeat: Infinity }}
-                                    className="absolute -top-4 -right-4 bg-white rounded-xl shadow-lg px-4 py-2"
+                                    className="absolute -top-2 -right-2 bg-white rounded-xl shadow-lg px-4 py-2 z-10"
                                 >
                                     <div className="flex items-center gap-2">
                                         <Sparkles className="w-5 h-5 text-gold-500" />
-                                        <span className="font-medium">AI 分析</span>
+                                        <span className="font-medium text-sm">AI 智能分析</span>
                                     </div>
                                 </motion.div>
 
                                 <motion.div
                                     animate={{ y: [0, 10, 0] }}
                                     transition={{ duration: 4, repeat: Infinity }}
-                                    className="absolute -bottom-4 -left-4 bg-white rounded-xl shadow-lg px-4 py-2"
+                                    className="absolute -bottom-2 -left-2 bg-white rounded-xl shadow-lg px-4 py-2 z-10"
                                 >
                                     <div className="flex items-center gap-2">
                                         <Camera className="w-5 h-5 text-mirror-500" />
-                                        <span className="font-medium">4K 超清</span>
+                                        <span className="font-medium text-sm">实时追踪</span>
                                     </div>
+                                </motion.div>
+
+                                <motion.div
+                                    animate={{ x: [0, 5, 0] }}
+                                    transition={{ duration: 3.5, repeat: Infinity }}
+                                    className="absolute top-1/2 -right-4 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-xl shadow-lg px-3 py-2 z-10"
+                                >
+                                    <div className="text-xs font-bold">+40分</div>
+                                    <div className="text-[10px] opacity-80">变美指数</div>
                                 </motion.div>
                             </div>
                         </motion.div>
