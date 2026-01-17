@@ -20,31 +20,47 @@ import Footer from '@/components/layout/Footer';
 const features = [
     {
         icon: Camera,
-        title: '智能感知',
-        titleEn: 'Smart Perception',
-        description: '2轴云台追踪，4K+红外双摄，实时捕捉面部468个特征点',
+        title: '一键诊断',
+        subtitle: '告别盲目护肤',
+        before: '每天照镜子不知道自己啥肤质',
+        after: '3秒精准定位问题，对症下药',
+        boost: '+35',
+        boostLabel: '护肤效率',
         gradient: 'from-blue-500 to-cyan-500',
+        emoji: '🔍',
     },
     {
         icon: Sparkles,
-        title: 'AI 皮肤分析',
-        titleEn: 'AI Skin Analysis',
-        description: '深度分析肤质、水油、毛孔、色斑等8项核心指标',
+        title: '手残党救星',
+        subtitle: 'AI手把手教学',
+        before: '看了100个教程还是画不好',
+        after: '跟着指引画，新手也能出门见人',
+        boost: '+40',
+        boostLabel: '妆容完成度',
         gradient: 'from-mirror-500 to-pink-500',
+        emoji: '✨',
     },
     {
         icon: Palette,
-        title: '个性化推荐',
-        titleEn: 'Personalized Recommendations',
-        description: '基于肤质、场合、趋势的智能妆容和产品推荐',
+        title: '专属变美方案',
+        subtitle: '千人千面定制',
+        before: '跟风买了一堆不适合自己的',
+        after: '每款推荐都是为你量身定制',
+        boost: '+30',
+        boostLabel: '产品匹配度',
         gradient: 'from-accent-500 to-purple-500',
+        emoji: '💄',
     },
     {
         icon: ShoppingBag,
-        title: 'Agentic Commerce',
-        titleEn: 'Smart Shopping',
-        description: '主动感知需求、追踪价格、智能补货的购物代理',
+        title: '省钱小助手',
+        subtitle: '智能比价补货',
+        before: '口红用完才发现忘了买',
+        after: '自动提醒+全网比价，省心省钱',
+        boost: '-30%',
+        boostLabel: '美妆开支',
         gradient: 'from-gold-500 to-orange-500',
+        emoji: '💰',
     },
 ];
 
@@ -66,22 +82,28 @@ const specs = [
 
 const testimonials = [
     {
-        name: '小美',
-        role: '时尚博主',
-        content: '终于有一款真正懂我的美妆助手了！每天的妆容推荐都很贴合我的风格和日程。',
+        name: '糖糖',
+        role: '化妆小白 → 现在被夸',
+        avatar: '🙋‍♀️',
+        content: '之前画眼线像毛毛虫，用了AI指导一周后，闺蜜问我是不是报班学化妆了哈哈哈！',
         rating: 5,
+        tag: '新手逆袭',
     },
     {
-        name: 'Lisa',
-        role: '职场白领',
-        content: '皮肤分析太准了，用了一个月推荐的护肤方案，肤质明显改善。',
+        name: 'Coco',
+        role: '敏感肌 · 终于找到适合的',
+        avatar: '👩',
+        content: '以前买护肤品全靠博主推荐，踩了无数坑。现在AI根据我的肤质推荐，皮肤真的稳定多了！',
         rating: 5,
+        tag: '敏感肌友好',
     },
     {
-        name: '阿雅',
-        role: '美妆爱好者',
-        content: '智能补货提醒太贴心了，再也不用担心口红用完才发现忘记买。',
+        name: '奶茶',
+        role: '省钱达人',
+        avatar: '💁‍♀️',
+        content: '它会帮我比价！同款口红便宜了60块！每个月能省下好几百，够我喝奶茶了~',
         rating: 5,
+        tag: '省钱秘籍',
     },
 ];
 
@@ -104,19 +126,25 @@ export default function LandingPage() {
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.6 }}
                         >
-                            <div className="inline-flex items-center gap-2 px-4 py-2 bg-mirror-100 rounded-full text-mirror-600 text-sm font-medium mb-6">
-                                <Sparkles className="w-4 h-4" />
-                                AI 驱动的美妆革命
+                            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-pink-100 to-orange-100 rounded-full text-pink-600 text-sm font-bold mb-6">
+                                <span>✨</span>
+                                小红书爆款 · 已帮助 50000+ 女生变美
                             </div>
 
                             <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
-                                遇见您的
-                                <span className="text-gradient"> AI 美妆顾问</span>
+                                手残党的
+                                <span className="text-gradient"> 逆袭神器</span>
                             </h1>
 
-                            <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                                AgenticMirror 智能美妆镜，集成先进的 AI 视觉技术和个性化推荐引擎，
-                                为您提供专业级皮肤分析、定制化妆容推荐和智能购物体验。
+                            <p className="text-xl text-gray-600 mb-4 leading-relaxed">
+                                还在对着镜子发愁不知道怎么变美？
+                            </p>
+                            <p className="text-lg text-gray-700 mb-8 leading-relaxed">
+                                <span className="font-semibold text-mirror-500">3 秒诊断肤质</span> →
+                                <span className="font-semibold text-accent-500"> AI 定制妆容</span> →
+                                <span className="font-semibold text-gold-600"> 手把手教你画</span>
+                                <br/>
+                                <span className="text-gray-500 text-base">就算是化妆小白，也能轻松 get 精致妆容！</span>
                             </p>
 
                             <div className="flex flex-col sm:flex-row gap-4">
@@ -132,16 +160,16 @@ export default function LandingPage() {
 
                             <div className="flex items-center gap-8 mt-10 pt-10 border-t border-gray-200">
                                 <div>
-                                    <div className="text-3xl font-bold text-gray-900">98%</div>
-                                    <div className="text-sm text-gray-500">用户满意度</div>
+                                    <div className="text-3xl font-bold text-mirror-500">+40分</div>
+                                    <div className="text-sm text-gray-500">平均颜值提升</div>
                                 </div>
                                 <div>
-                                    <div className="text-3xl font-bold text-gray-900">50K+</div>
-                                    <div className="text-sm text-gray-500">皮肤分析</div>
+                                    <div className="text-3xl font-bold text-accent-500">50K+</div>
+                                    <div className="text-sm text-gray-500">女生已变美</div>
                                 </div>
                                 <div>
-                                    <div className="text-3xl font-bold text-gray-900">4.9</div>
-                                    <div className="text-sm text-gray-500">用户评分</div>
+                                    <div className="text-3xl font-bold text-gold-500">92%</div>
+                                    <div className="text-sm text-gray-500">复购推荐率</div>
                                 </div>
                             </div>
                         </motion.div>
@@ -242,7 +270,7 @@ export default function LandingPage() {
                 </div>
             </section>
 
-            {/* Features Section */}
+            {/* Features Section - 变美逆袭 */}
             <section className="py-24 bg-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <motion.div
@@ -251,15 +279,20 @@ export default function LandingPage() {
                         viewport={{ once: true }}
                         className="text-center mb-16"
                     >
-                        <h2 className="text-4xl font-bold text-gray-900 mb-4">
-                            四大核心能力
+                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-pink-100 to-purple-100 rounded-full text-pink-600 text-sm font-bold mb-4">
+                            <span>🔥</span>
+                            小红书 10w+ 收藏的变美神器
+                        </div>
+                        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                            素颜 40 分 → 精致 80 分
                         </h2>
                         <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                            融合先进 AI 技术与美妆专业知识，打造您的专属美妆助手
+                            不是你不够美，是没找对方法！<br/>
+                            <span className="text-mirror-500 font-semibold">AI 帮你找到最适合自己的变美路径</span>
                         </p>
                     </motion.div>
 
-                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {features.map((feature, index) => (
                             <motion.div
                                 key={feature.title}
@@ -267,24 +300,73 @@ export default function LandingPage() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.1 }}
-                                className="card-hover p-6 group"
+                                className="card-hover p-6 group relative overflow-hidden"
                             >
-                                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${feature.gradient}
-                                    flex items-center justify-center mb-5 group-hover:scale-110 transition-transform`}>
-                                    <feature.icon className="w-7 h-7 text-white" />
+                                {/* 提升标签 */}
+                                <div className="absolute top-4 right-4 bg-gradient-to-r from-green-400 to-emerald-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                                    {feature.boost} {feature.boostLabel}
                                 </div>
-                                <h3 className="text-lg font-bold text-gray-900 mb-1">
+
+                                {/* Emoji + 图标 */}
+                                <div className="flex items-center gap-3 mb-4">
+                                    <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${feature.gradient}
+                                        flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                                        <feature.icon className="w-6 h-6 text-white" />
+                                    </div>
+                                    <span className="text-2xl">{feature.emoji}</span>
+                                </div>
+
+                                {/* 标题 */}
+                                <h3 className="text-xl font-bold text-gray-900 mb-1">
                                     {feature.title}
                                 </h3>
-                                <p className="text-sm text-gray-500 mb-3">
-                                    {feature.titleEn}
+                                <p className="text-sm text-mirror-500 font-medium mb-4">
+                                    {feature.subtitle}
                                 </p>
-                                <p className="text-gray-600">
-                                    {feature.description}
-                                </p>
+
+                                {/* Before / After */}
+                                <div className="space-y-3">
+                                    <div className="flex items-start gap-2">
+                                        <span className="text-red-400 text-lg">😩</span>
+                                        <div>
+                                            <div className="text-xs text-gray-400 mb-0.5">以前</div>
+                                            <p className="text-sm text-gray-500 line-through decoration-red-300">
+                                                {feature.before}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-start gap-2">
+                                        <span className="text-green-500 text-lg">🥳</span>
+                                        <div>
+                                            <div className="text-xs text-gray-400 mb-0.5">现在</div>
+                                            <p className="text-sm text-gray-700 font-medium">
+                                                {feature.after}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                             </motion.div>
                         ))}
                     </div>
+
+                    {/* 用户证言条 */}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                        className="mt-12 flex flex-wrap justify-center gap-4"
+                    >
+                        {[
+                            { text: '"用了一周，同事问我是不是偷偷做医美了"', author: '@小甜甜' },
+                            { text: '"手残党终于画出了完整的眼妆！"', author: '@化妆小白' },
+                            { text: '"省下的钱够买两支口红了"', author: '@精打细算的Lisa' },
+                        ].map((quote, i) => (
+                            <div key={i} className="bg-gradient-to-r from-pink-50 to-purple-50 px-4 py-2 rounded-full">
+                                <span className="text-sm text-gray-600">{quote.text}</span>
+                                <span className="text-xs text-mirror-500 ml-2">{quote.author}</span>
+                            </div>
+                        ))}
+                    </motion.div>
                 </div>
             </section>
 
@@ -409,7 +491,7 @@ export default function LandingPage() {
             </section>
 
             {/* Testimonials Section */}
-            <section className="py-24 bg-white">
+            <section className="py-24 bg-gradient-to-b from-white to-pink-50/30">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -417,11 +499,15 @@ export default function LandingPage() {
                         viewport={{ once: true }}
                         className="text-center mb-16"
                     >
+                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-pink-100 rounded-full text-pink-600 text-sm font-bold mb-4">
+                            <span>💬</span>
+                            真实用户反馈
+                        </div>
                         <h2 className="text-4xl font-bold text-gray-900 mb-4">
-                            用户心声
+                            她们都变美了
                         </h2>
                         <p className="text-xl text-gray-600">
-                            来自真实用户的使用反馈
+                            看看姐妹们怎么说 👇
                         </p>
                     </motion.div>
 
@@ -433,23 +519,28 @@ export default function LandingPage() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.1 }}
-                                className="card p-6"
+                                className="card p-6 relative"
                             >
+                                {/* 标签 */}
+                                <div className="absolute top-4 right-4 bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+                                    {testimonial.tag}
+                                </div>
+
                                 <div className="flex items-center gap-1 mb-4">
                                     {Array.from({ length: testimonial.rating }).map((_, i) => (
                                         <Star key={i} className="w-5 h-5 fill-gold-500 text-gold-500" />
                                     ))}
                                 </div>
-                                <p className="text-gray-700 mb-6">
+                                <p className="text-gray-700 mb-6 text-lg leading-relaxed">
                                     "{testimonial.content}"
                                 </p>
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-full bg-gradient-mirror flex items-center justify-center text-white font-medium">
-                                        {testimonial.name[0]}
+                                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-pink-100 to-purple-100 flex items-center justify-center text-2xl">
+                                        {testimonial.avatar}
                                     </div>
                                     <div>
-                                        <div className="font-medium text-gray-900">{testimonial.name}</div>
-                                        <div className="text-sm text-gray-500">{testimonial.role}</div>
+                                        <div className="font-bold text-gray-900">{testimonial.name}</div>
+                                        <div className="text-sm text-mirror-500">{testimonial.role}</div>
                                     </div>
                                 </div>
                             </motion.div>
@@ -470,11 +561,15 @@ export default function LandingPage() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                     >
+                        <div className="text-6xl mb-6">✨</div>
                         <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                            准备好开启您的智能美妆之旅？
+                            今天开始，做更美的自己
                         </h2>
-                        <p className="text-xl text-white/80 mb-10">
-                            立即体验 Demo，感受 AI 美妆顾问的魅力
+                        <p className="text-xl text-white/90 mb-4">
+                            别再羡慕别人了，你也可以！
+                        </p>
+                        <p className="text-lg text-white/70 mb-10">
+                            立即体验，3分钟获取你的专属变美方案 💖
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
                             <Link
