@@ -21,6 +21,12 @@ interface SketchFaceProps {
     activeZone?: 'foundation' | 'eyebrow' | 'eyeshadow' | 'blush' | 'lips' | 't_zone' | 'cheeks' | null;
     // Show earring recommendation
     showEarringRecommend?: boolean;
+    // Show robotic arms
+    showRoboticArms?: boolean;
+    // Arm action state
+    armAction?: 'idle' | 'retracted' | 'picking' | 'handing' | 'waving' | 'organizing';
+    // Item being held by arm
+    heldItem?: string;
 }
 
 export default function SketchFace({
@@ -33,6 +39,9 @@ export default function SketchFace({
     showZoneGuides = false,
     activeZone = null,
     showEarringRecommend = false,
+    showRoboticArms = true,
+    armAction = 'idle',
+    heldItem = '',
 }: SketchFaceProps) {
     // Calculate makeup effects based on step
     const hasFoundation = makeupStep >= 1;
@@ -1181,6 +1190,219 @@ export default function SketchFace({
                     <text x="25" y="555" fontSize="8" fill="#10B981">● 水平 ±45°</text>
                     <text x="25" y="568" fontSize="8" fill="#3B82F6">● 垂直 ±30°</text>
                 </motion.g>
+
+                {/* ===== ROBOTIC ARMS ===== */}
+                {showRoboticArms && (
+                    <g>
+                        {/* Left Robotic Arm */}
+                        <motion.g
+                            initial={{ x: 0 }}
+                            animate={{
+                                x: armAction === 'retracted' ? 30 : 0,
+                                rotate: armAction === 'waving' ? [0, -10, 0, -10, 0] :
+                                        armAction === 'picking' ? -15 :
+                                        armAction === 'handing' ? -20 : 0
+                            }}
+                            transition={{
+                                duration: armAction === 'waving' ? 1.5 : 0.5,
+                                repeat: armAction === 'waving' ? Infinity : 0
+                            }}
+                            style={{ transformOrigin: '140px 570px' }}
+                        >
+                            {/* Arm housing on base */}
+                            <ellipse cx="140" cy="575" rx="15" ry="8" fill="#1e293b" stroke="#334155" strokeWidth="1" />
+
+                            {/* Upper arm segment */}
+                            <motion.path
+                                d="M 140 570
+                                   Q 120 550 100 530
+                                   L 105 525
+                                   Q 125 545 145 565"
+                                fill="url(#gimbal-metal)"
+                                stroke="#475569"
+                                strokeWidth="1"
+                            />
+
+                            {/* Elbow joint */}
+                            <motion.circle
+                                cx="100"
+                                cy="528"
+                                r="8"
+                                fill="#334155"
+                                stroke="#E91E63"
+                                strokeWidth="2"
+                                animate={{ stroke: ['#E91E63', '#9C27B0', '#E91E63'] }}
+                                transition={{ duration: 2, repeat: Infinity }}
+                            />
+
+                            {/* Forearm segment */}
+                            <motion.g
+                                animate={{
+                                    rotate: armAction === 'picking' ? -30 :
+                                            armAction === 'handing' ? -45 :
+                                            armAction === 'organizing' ? [-10, 10, -10] : 0
+                                }}
+                                transition={{
+                                    duration: armAction === 'organizing' ? 2 : 0.5,
+                                    repeat: armAction === 'organizing' ? Infinity : 0
+                                }}
+                                style={{ transformOrigin: '100px 528px' }}
+                            >
+                                <path
+                                    d="M 100 522
+                                       Q 70 500 50 485
+                                       L 55 480
+                                       Q 75 495 105 517"
+                                    fill="url(#gimbal-metal)"
+                                    stroke="#475569"
+                                    strokeWidth="1"
+                                />
+
+                                {/* Wrist joint */}
+                                <circle cx="52" cy="482" r="6" fill="#334155" stroke="#64748b" strokeWidth="1" />
+
+                                {/* Gripper/Hand */}
+                                <motion.g
+                                    animate={{
+                                        scale: armAction === 'picking' || armAction === 'handing' ? [1, 0.9, 1] : 1
+                                    }}
+                                    transition={{ duration: 0.5, repeat: armAction === 'picking' ? Infinity : 0 }}
+                                    style={{ transformOrigin: '45px 470px' }}
+                                >
+                                    {/* Gripper fingers */}
+                                    <path d="M 45 478 L 35 465 L 38 462 L 48 475" fill="#64748b" stroke="#475569" strokeWidth="1" />
+                                    <path d="M 52 478 L 55 462 L 58 462 L 55 478" fill="#64748b" stroke="#475569" strokeWidth="1" />
+                                    <path d="M 58 480 L 68 468 L 71 471 L 61 483" fill="#64748b" stroke="#475569" strokeWidth="1" />
+
+                                    {/* Held item indicator */}
+                                    {heldItem && (armAction === 'handing' || armAction === 'picking') && (
+                                        <motion.g
+                                            initial={{ opacity: 0, scale: 0 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                        >
+                                            <ellipse cx="50" cy="455" rx="12" ry="8" fill="#E91E63" opacity="0.8" />
+                                            <text x="50" y="458" textAnchor="middle" fontSize="8" fill="white">💄</text>
+                                        </motion.g>
+                                    )}
+                                </motion.g>
+                            </motion.g>
+
+                            {/* Arm status LED */}
+                            <motion.circle
+                                cx="140"
+                                cy="570"
+                                r="3"
+                                fill={armAction === 'idle' ? '#10B981' : '#E91E63'}
+                                animate={{ opacity: [0.5, 1, 0.5] }}
+                                transition={{ duration: 1, repeat: Infinity }}
+                            />
+                        </motion.g>
+
+                        {/* Right Robotic Arm */}
+                        <motion.g
+                            initial={{ x: 0 }}
+                            animate={{
+                                x: armAction === 'retracted' ? -30 : 0,
+                                rotate: armAction === 'waving' ? [0, 10, 0, 10, 0] :
+                                        armAction === 'organizing' ? 10 : 0
+                            }}
+                            transition={{
+                                duration: armAction === 'waving' ? 1.5 : 0.5,
+                                repeat: armAction === 'waving' ? Infinity : 0,
+                                delay: 0.2
+                            }}
+                            style={{ transformOrigin: '280px 570px' }}
+                        >
+                            {/* Arm housing on base */}
+                            <ellipse cx="280" cy="575" rx="15" ry="8" fill="#1e293b" stroke="#334155" strokeWidth="1" />
+
+                            {/* Upper arm segment */}
+                            <motion.path
+                                d="M 280 570
+                                   Q 300 550 320 530
+                                   L 315 525
+                                   Q 295 545 275 565"
+                                fill="url(#gimbal-metal)"
+                                stroke="#475569"
+                                strokeWidth="1"
+                            />
+
+                            {/* Elbow joint */}
+                            <motion.circle
+                                cx="320"
+                                cy="528"
+                                r="8"
+                                fill="#334155"
+                                stroke="#E91E63"
+                                strokeWidth="2"
+                                animate={{ stroke: ['#E91E63', '#9C27B0', '#E91E63'] }}
+                                transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                            />
+
+                            {/* Forearm segment */}
+                            <motion.g
+                                animate={{
+                                    rotate: armAction === 'organizing' ? [10, -10, 10] : 0
+                                }}
+                                transition={{
+                                    duration: armAction === 'organizing' ? 2 : 0.5,
+                                    repeat: armAction === 'organizing' ? Infinity : 0
+                                }}
+                                style={{ transformOrigin: '320px 528px' }}
+                            >
+                                <path
+                                    d="M 320 522
+                                       Q 350 500 370 485
+                                       L 365 480
+                                       Q 345 495 315 517"
+                                    fill="url(#gimbal-metal)"
+                                    stroke="#475569"
+                                    strokeWidth="1"
+                                />
+
+                                {/* Wrist joint */}
+                                <circle cx="368" cy="482" r="6" fill="#334155" stroke="#64748b" strokeWidth="1" />
+
+                                {/* Gripper/Hand */}
+                                <g>
+                                    <path d="M 375 478 L 385 465 L 382 462 L 372 475" fill="#64748b" stroke="#475569" strokeWidth="1" />
+                                    <path d="M 368 478 L 365 462 L 362 462 L 365 478" fill="#64748b" stroke="#475569" strokeWidth="1" />
+                                    <path d="M 362 480 L 352 468 L 349 471 L 359 483" fill="#64748b" stroke="#475569" strokeWidth="1" />
+                                </g>
+                            </motion.g>
+
+                            {/* Arm status LED */}
+                            <motion.circle
+                                cx="280"
+                                cy="570"
+                                r="3"
+                                fill={armAction === 'idle' ? '#10B981' : '#E91E63'}
+                                animate={{ opacity: [0.5, 1, 0.5] }}
+                                transition={{ duration: 1, repeat: Infinity, delay: 0.3 }}
+                            />
+                        </motion.g>
+
+                        {/* Arm status label */}
+                        <motion.g
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.5 }}
+                        >
+                            <rect x="325" y="520" width="80" height="55" rx="8" fill="rgba(0,0,0,0.7)" />
+                            <text x="365" y="538" textAnchor="middle" fontSize="9" fill="#94a3b8">机械臂状态</text>
+                            <text x="335" y="555" fontSize="8" fill={armAction === 'idle' ? '#10B981' : '#E91E63'}>
+                                ● {armAction === 'idle' ? '待命中' :
+                                   armAction === 'retracted' ? '已收起' :
+                                   armAction === 'picking' ? '拾取中' :
+                                   armAction === 'handing' ? '递送中' :
+                                   armAction === 'waving' ? '打招呼' : '整理中'}
+                            </text>
+                            <text x="335" y="568" fontSize="8" fill="#94a3b8">
+                                {heldItem ? `持有: ${heldItem}` : '空闲'}
+                            </text>
+                        </motion.g>
+                    </g>
+                )}
             </svg>
 
             {/* Beauty Score Badge */}

@@ -18,6 +18,7 @@ import {
     Home,
     PlayCircle,
     Trophy,
+    Heart,
 } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 
@@ -27,6 +28,13 @@ const menuItems = [
         labelEn: 'Workflow',
         href: '/demo/workflow',
         icon: PlayCircle,
+        highlight: true,
+    },
+    {
+        label: 'AI陪伴体验',
+        labelEn: 'Companion',
+        href: '/demo/companion',
+        icon: Heart,
         highlight: true,
     },
     {
