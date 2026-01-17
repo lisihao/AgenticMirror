@@ -870,57 +870,133 @@ export default function SketchFace({
 
                 {/* ===== GIMBAL & BASE STRUCTURE ===== */}
 
-                {/* Gimbal Neck/Arm */}
-                <g>
-                    {/* Upper joint - connects to mirror */}
-                    <motion.ellipse
+                {/* Face tracking target indicator on face */}
+                <motion.g
+                    animate={{
+                        x: [0, 15, 0, -15, 0],
+                        y: [0, -10, 5, -5, 0]
+                    }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                >
+                    {/* Tracking crosshair */}
+                    <motion.circle
                         cx="210"
-                        cy="485"
-                        rx="25"
-                        ry="8"
-                        fill="url(#gimbal-metal)"
-                        stroke="#475569"
-                        strokeWidth="1"
-                        animate={{ rotateX: [0, 5, 0, -5, 0] }}
-                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                        cy="260"
+                        r="35"
+                        fill="none"
+                        stroke="#E91E63"
+                        strokeWidth="2"
+                        strokeDasharray="8 4"
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                        style={{ transformOrigin: '210px 260px' }}
                     />
+                    <line x1="210" y1="220" x2="210" y2="240" stroke="#E91E63" strokeWidth="2" />
+                    <line x1="210" y1="280" x2="210" y2="300" stroke="#E91E63" strokeWidth="2" />
+                    <line x1="170" y1="260" x2="190" y2="260" stroke="#E91E63" strokeWidth="2" />
+                    <line x1="230" y1="260" x2="250" y2="260" stroke="#E91E63" strokeWidth="2" />
 
-                    {/* Main arm segment */}
-                    <motion.path
-                        d="M 195 488
-                           L 190 520
-                           Q 210 530 230 520
-                           L 225 488"
-                        fill="url(#gimbal-metal)"
-                        stroke="#475569"
-                        strokeWidth="1"
+                    {/* Center dot */}
+                    <motion.circle
+                        cx="210"
+                        cy="260"
+                        r="5"
+                        fill="#E91E63"
+                        animate={{ scale: [1, 1.3, 1], opacity: [0.8, 1, 0.8] }}
+                        transition={{ duration: 1, repeat: Infinity }}
                     />
+                </motion.g>
 
-                    {/* Middle rotation joint */}
-                    <motion.g
-                        animate={{ rotate: [-3, 3, -3] }}
-                        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                        style={{ transformOrigin: '210px 525px' }}
-                    >
-                        <ellipse cx="210" cy="525" rx="20" ry="10" fill="#334155" stroke="#1e293b" strokeWidth="2" />
-                        {/* Joint indicator ring */}
-                        <ellipse cx="210" cy="525" rx="12" ry="6" fill="none" stroke="#E91E63" strokeWidth="1.5" opacity="0.6" />
-
-                        {/* Lower arm segment */}
-                        <path
-                            d="M 198 530
-                               L 195 560
-                               Q 210 565 225 560
-                               L 222 530"
+                {/* Entire mirror + gimbal assembly that tilts */}
+                <motion.g
+                    animate={{
+                        rotate: [-3, 3, -2, 4, -3],
+                    }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    style={{ transformOrigin: '210px 525px' }}
+                >
+                    {/* Gimbal Neck/Arm */}
+                    <g>
+                        {/* Upper joint - connects to mirror */}
+                        <ellipse
+                            cx="210"
+                            cy="485"
+                            rx="25"
+                            ry="8"
                             fill="url(#gimbal-metal)"
                             stroke="#475569"
                             strokeWidth="1"
                         />
-                    </motion.g>
 
-                    {/* Base joint */}
-                    <ellipse cx="210" cy="565" rx="28" ry="12" fill="#1e293b" stroke="#334155" strokeWidth="2" />
-                </g>
+                        {/* Tilt motor indicator */}
+                        <motion.circle
+                            cx="235"
+                            cy="485"
+                            r="6"
+                            fill="#1e293b"
+                            stroke="#E91E63"
+                            strokeWidth="2"
+                            animate={{ stroke: ['#E91E63', '#9C27B0', '#E91E63'] }}
+                            transition={{ duration: 1, repeat: Infinity }}
+                        />
+
+                        {/* Main arm segment */}
+                        <path
+                            d="M 195 488
+                               L 190 520
+                               Q 210 530 230 520
+                               L 225 488"
+                            fill="url(#gimbal-metal)"
+                            stroke="#475569"
+                            strokeWidth="1"
+                        />
+                    </g>
+                </motion.g>
+
+                {/* Pan rotation joint - rotates horizontally */}
+                <motion.g
+                    animate={{ rotate: [-5, 5, -5] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                    style={{ transformOrigin: '210px 540px' }}
+                >
+                    <ellipse cx="210" cy="525" rx="22" ry="12" fill="#334155" stroke="#1e293b" strokeWidth="2" />
+                    {/* Joint indicator ring - shows rotation */}
+                    <motion.ellipse
+                        cx="210"
+                        cy="525"
+                        rx="14"
+                        ry="7"
+                        fill="none"
+                        stroke="#E91E63"
+                        strokeWidth="2"
+                        animate={{ opacity: [0.4, 1, 0.4] }}
+                        transition={{ duration: 0.5, repeat: Infinity }}
+                    />
+
+                    {/* Pan motor indicator */}
+                    <motion.circle
+                        cx="232"
+                        cy="525"
+                        r="5"
+                        fill="#10B981"
+                        animate={{ opacity: [0.5, 1, 0.5] }}
+                        transition={{ duration: 0.8, repeat: Infinity }}
+                    />
+
+                    {/* Lower arm segment */}
+                    <path
+                        d="M 198 532
+                           L 195 560
+                           Q 210 568 225 560
+                           L 222 532"
+                        fill="url(#gimbal-metal)"
+                        stroke="#475569"
+                        strokeWidth="1"
+                    />
+                </motion.g>
+
+                {/* Base joint */}
+                <ellipse cx="210" cy="565" rx="28" ry="12" fill="#1e293b" stroke="#334155" strokeWidth="2" />
 
                 {/* Robot Base */}
                 <g>
@@ -981,69 +1057,117 @@ export default function SketchFace({
 
                 {/* Tracking indicators - showing gimbal movement */}
                 <g>
-                    {/* Left tracking arrow */}
+                    {/* Simulated user position indicator - moves to show tracking */}
                     <motion.g
-                        animate={{ x: [-5, 5, -5] }}
+                        animate={{
+                            x: [0, 20, 0, -20, 0],
+                            y: [0, -15, 10, -10, 0]
+                        }}
+                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    >
+                        {/* User position dot */}
+                        <circle cx="50" cy="250" r="8" fill="#3B82F6" opacity="0.8" />
+                        <text x="50" y="275" textAnchor="middle" fontSize="8" fill="#3B82F6">用户</text>
+                    </motion.g>
+
+                    {/* Tracking beam from mirror to user */}
+                    <motion.line
+                        x1="100"
+                        y1="260"
+                        x2="50"
+                        y2="250"
+                        stroke="#E91E63"
+                        strokeWidth="2"
+                        strokeDasharray="4 4"
+                        animate={{
+                            x2: [50, 70, 50, 30, 50],
+                            y2: [250, 235, 260, 240, 250]
+                        }}
+                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                        opacity="0.6"
+                    />
+
+                    {/* Left tracking arrow - larger and more visible */}
+                    <motion.g
+                        animate={{ x: [-8, 8, -8] }}
                         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                     >
                         <path
-                            d="M 120 300 L 100 300 L 108 292 M 100 300 L 108 308"
+                            d="M 115 300 L 90 300 L 100 288 M 90 300 L 100 312"
                             fill="none"
                             stroke="#E91E63"
-                            strokeWidth="2"
+                            strokeWidth="3"
                             strokeLinecap="round"
-                            opacity="0.6"
                         />
+                        <text x="102" y="330" fontSize="8" fill="#E91E63">PAN</text>
                     </motion.g>
 
                     {/* Right tracking arrow */}
                     <motion.g
-                        animate={{ x: [5, -5, 5] }}
+                        animate={{ x: [8, -8, 8] }}
                         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                     >
                         <path
-                            d="M 300 300 L 320 300 L 312 292 M 320 300 L 312 308"
+                            d="M 305 300 L 330 300 L 320 288 M 330 300 L 320 312"
                             fill="none"
                             stroke="#E91E63"
-                            strokeWidth="2"
+                            strokeWidth="3"
                             strokeLinecap="round"
-                            opacity="0.6"
                         />
+                        <text x="318" y="330" fontSize="8" fill="#E91E63">PAN</text>
                     </motion.g>
 
-                    {/* Vertical tracking indicator */}
+                    {/* Vertical tracking indicator - tilt */}
                     <motion.g
-                        animate={{ y: [-3, 3, -3] }}
+                        animate={{ y: [-8, 8, -8] }}
                         transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
                     >
                         <path
-                            d="M 380 200 L 380 180 L 372 188 M 380 180 L 388 188"
+                            d="M 380 195 L 380 170 L 368 182 M 380 170 L 392 182"
                             fill="none"
                             stroke="#9C27B0"
-                            strokeWidth="2"
+                            strokeWidth="3"
                             strokeLinecap="round"
-                            opacity="0.6"
                         />
                         <path
-                            d="M 380 320 L 380 340 L 372 332 M 380 340 L 388 332"
+                            d="M 380 325 L 380 350 L 368 338 M 380 350 L 392 338"
                             fill="none"
                             stroke="#9C27B0"
-                            strokeWidth="2"
+                            strokeWidth="3"
                             strokeLinecap="round"
-                            opacity="0.6"
                         />
+                        <text x="380" y="285" textAnchor="middle" fontSize="8" fill="#9C27B0">TILT</text>
                     </motion.g>
 
-                    {/* "Tracking" label */}
+                    {/* "Face Tracking Active" label */}
                     <motion.g
-                        animate={{ opacity: [0.4, 0.8, 0.4] }}
-                        transition={{ duration: 2, repeat: Infinity }}
+                        animate={{ opacity: [0.6, 1, 0.6], scale: [1, 1.02, 1] }}
+                        transition={{ duration: 1.5, repeat: Infinity }}
+                        style={{ transformOrigin: '385px 265px' }}
                     >
-                        <rect x="355" y="255" width="60" height="20" rx="4" fill="rgba(233, 30, 99, 0.2)" />
-                        <text x="385" y="269" textAnchor="middle" fontSize="9" fill="#E91E63" fontWeight="bold">
-                            TRACKING
-                        </text>
+                        <rect x="340" y="250" width="90" height="30" rx="6" fill="rgba(233, 30, 99, 0.9)" />
+                        <text x="385" y="262" textAnchor="middle" fontSize="8" fill="white">👁️ FACE TRACKING</text>
+                        <text x="385" y="274" textAnchor="middle" fontSize="10" fill="white" fontWeight="bold">ACTIVE</text>
                     </motion.g>
+
+                    {/* Motion trail effect */}
+                    <motion.path
+                        d="M 210 250 Q 220 245 230 250 Q 225 260 210 265 Q 195 260 190 250 Q 200 245 210 250"
+                        fill="none"
+                        stroke="#E91E63"
+                        strokeWidth="1"
+                        opacity="0.3"
+                        animate={{
+                            d: [
+                                "M 210 250 Q 220 245 230 250 Q 225 260 210 265 Q 195 260 190 250 Q 200 245 210 250",
+                                "M 225 245 Q 235 240 245 245 Q 240 255 225 260 Q 210 255 205 245 Q 215 240 225 245",
+                                "M 210 250 Q 220 245 230 250 Q 225 260 210 265 Q 195 260 190 250 Q 200 245 210 250",
+                                "M 195 255 Q 205 250 215 255 Q 210 265 195 270 Q 180 265 175 255 Q 185 250 195 255",
+                                "M 210 250 Q 220 245 230 250 Q 225 260 210 265 Q 195 260 190 250 Q 200 245 210 250"
+                            ]
+                        }}
+                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    />
                 </g>
 
                 {/* 2-Axis gimbal specs indicator */}
