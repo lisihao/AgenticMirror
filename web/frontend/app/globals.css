@@ -1,0 +1,233 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    /* Brand Colors */
+    --mirror-primary: #E91E63;
+    --mirror-secondary: #9C27B0;
+    --mirror-gold: #FFD700;
+
+    /* Background */
+    --bg-primary: #FAFAFA;
+    --bg-secondary: #F5F5F5;
+    --bg-card: #FFFFFF;
+
+    /* Text */
+    --text-primary: #1A1A1A;
+    --text-secondary: #666666;
+    --text-muted: #999999;
+
+    /* Border */
+    --border-light: #E5E5E5;
+    --border-medium: #D0D0D0;
+
+    /* Status */
+    --status-success: #22C55E;
+    --status-warning: #F59E0B;
+    --status-error: #EF4444;
+    --status-info: #3B82F6;
+}
+
+@layer base {
+    body {
+        @apply bg-gray-50 text-gray-900 antialiased;
+        font-feature-settings: 'kern' 1, 'liga' 1;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+        @apply bg-transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        @apply bg-gray-300 rounded-full;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        @apply bg-gray-400;
+    }
+}
+
+@layer components {
+    /* Button styles */
+    .btn-primary {
+        @apply inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-white
+               bg-gradient-to-r from-mirror-500 to-accent-500 rounded-full
+               hover:opacity-90 transition-all duration-200 shadow-lg shadow-mirror-500/25
+               disabled:opacity-50 disabled:cursor-not-allowed;
+    }
+
+    .btn-secondary {
+        @apply inline-flex items-center justify-center px-6 py-3 text-sm font-semibold
+               text-mirror-500 bg-white border-2 border-mirror-500 rounded-full
+               hover:bg-mirror-50 transition-all duration-200
+               disabled:opacity-50 disabled:cursor-not-allowed;
+    }
+
+    .btn-ghost {
+        @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium
+               text-gray-700 hover:bg-gray-100 rounded-lg transition-colors
+               disabled:opacity-50 disabled:cursor-not-allowed;
+    }
+
+    /* Card styles */
+    .card {
+        @apply bg-white rounded-2xl shadow-sm border border-gray-100;
+    }
+
+    .card-hover {
+        @apply card hover:shadow-lg hover:border-mirror-200 transition-all duration-300;
+    }
+
+    /* Gradient text */
+    .text-gradient {
+        @apply bg-gradient-to-r from-mirror-500 to-accent-500 bg-clip-text text-transparent;
+    }
+
+    /* Glass effect */
+    .glass {
+        @apply bg-white/80 backdrop-blur-lg border border-white/20;
+    }
+
+    /* Metric card */
+    .metric-card {
+        @apply card p-4 flex flex-col gap-2;
+    }
+
+    .metric-value {
+        @apply text-2xl font-bold text-gray-900;
+    }
+
+    .metric-label {
+        @apply text-sm text-gray-500;
+    }
+
+    /* Progress ring */
+    .progress-ring {
+        @apply transform -rotate-90;
+    }
+
+    .progress-ring-circle {
+        transition: stroke-dashoffset 0.5s ease-out;
+    }
+
+    /* Sidebar active state */
+    .sidebar-item-active {
+        @apply bg-mirror-50 text-mirror-600 border-r-2 border-mirror-500;
+    }
+
+    /* Face mesh overlay */
+    .face-mesh-canvas {
+        @apply absolute inset-0 pointer-events-none;
+    }
+
+    /* Skin zone highlight */
+    .skin-zone {
+        @apply absolute rounded-full opacity-30 transition-opacity duration-300;
+    }
+
+    .skin-zone:hover {
+        @apply opacity-60;
+    }
+
+    /* Animation utilities */
+    .animate-fade-in {
+        animation: fadeIn 0.5s ease-out forwards;
+    }
+
+    .animate-slide-up {
+        animation: slideUp 0.5s ease-out forwards;
+    }
+
+    .animate-scale-in {
+        animation: scaleIn 0.3s ease-out forwards;
+    }
+}
+
+@layer utilities {
+    /* Gradient backgrounds */
+    .bg-gradient-mirror {
+        background: linear-gradient(135deg, var(--mirror-primary) 0%, var(--mirror-secondary) 100%);
+    }
+
+    .bg-gradient-gold {
+        background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    }
+
+    /* Text shadow for hero */
+    .text-shadow {
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Shimmer effect */
+    .shimmer {
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+        background-size: 200% 100%;
+        animation: shimmer 2s linear infinite;
+    }
+}
+
+/* Keyframes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Monk Skin Tone Scale */
+.monk-scale {
+    @apply flex gap-1;
+}
+
+.monk-scale-item {
+    @apply w-6 h-6 rounded-full cursor-pointer transition-transform hover:scale-110;
+}
+
+.monk-scale-item.active {
+    @apply ring-2 ring-mirror-500 ring-offset-2;
+}
+
+/* Chart customizations */
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+    stroke: #E5E5E5;
+}
+
+.recharts-tooltip-wrapper {
+    @apply !outline-none;
+}
+
+.recharts-default-tooltip {
+    @apply !bg-white !border-gray-200 !rounded-lg !shadow-lg;
+}
