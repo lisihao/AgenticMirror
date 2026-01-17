@@ -35,7 +35,7 @@ const addictiveScenarios = [
             '3分钟快速护肤指导',
             '今日穿搭建议',
         ],
-        addiction: '连续7天早起化妆，解锁"早起女神"称号 + 100积分',
+        reward: '连续7天早起化妆，解锁"早起女神"称号 + 100积分',
         bgColor: 'from-amber-100 to-orange-100',
     },
     {
@@ -49,7 +49,7 @@ const addictiveScenarios = [
             '30秒快速补妆教程',
             '拍照记录对比效果',
         ],
-        addiction: '完成5次午间补妆，解锁"精致女孩"徽章',
+        reward: '完成5次午间补妆，解锁"精致女孩"徽章',
         bgColor: 'from-yellow-100 to-amber-100',
     },
     {
@@ -63,7 +63,7 @@ const addictiveScenarios = [
             '实时追踪化妆进度',
             '紧急突发问题处理',
         ],
-        addiction: '成功完成3次约会妆，获得"恋爱达人"限定教程',
+        reward: '成功完成3次约会妆，获得"恋爱达人"限定教程',
         bgColor: 'from-pink-100 to-rose-100',
     },
     {
@@ -77,7 +77,7 @@ const addictiveScenarios = [
             '皮肤修复建议',
             '舒缓音乐 + 晚安问候',
         ],
-        addiction: '连续14天晚间护肤，解锁"护肤女王"成就',
+        reward: '连续14天晚间护肤，解锁"护肤女王"成就',
         bgColor: 'from-purple-100 to-indigo-100',
     },
     {
@@ -91,7 +91,7 @@ const addictiveScenarios = [
             '双11/618最优购买清单',
             '专属折扣码推送',
         ],
-        addiction: '省钱超过500元，解锁"省钱小能手"成就',
+        reward: '省钱超过500元，解锁"省钱小能手"成就',
         bgColor: 'from-green-100 to-emerald-100',
     },
     {
@@ -105,7 +105,7 @@ const addictiveScenarios = [
             'AI评分打分系统',
             '作品晒图社区',
         ],
-        addiction: '完成10节课程，获得"化妆师认证"电子证书',
+        reward: '完成10节课程，获得"化妆师认证"电子证书',
         bgColor: 'from-blue-100 to-cyan-100',
     },
 ];
@@ -313,11 +313,11 @@ export default function CompanionPage() {
                         </div>
                     </div>
 
-                    {/* Addictive Scenarios */}
+                    {/* Daily Beauty Rituals */}
                     <div className="bg-white rounded-2xl shadow-lg p-5">
                         <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
                             <Heart className="w-5 h-5 text-pink-500" />
-                            让你上瘾的使用场景
+                            专属美丽时刻
                         </h2>
 
                         {/* Scenario Cards */}
@@ -371,8 +371,8 @@ export default function CompanionPage() {
                                         <div className="bg-white/80 rounded-lg p-3">
                                             <div className="flex items-center gap-2 text-sm">
                                                 <Trophy className="w-4 h-4 text-amber-500" />
-                                                <span className="font-medium text-gray-800">成瘾奖励:</span>
-                                                <span className="text-pink-600">{selectedScenario.addiction}</span>
+                                                <span className="font-medium text-gray-800">坚持奖励:</span>
+                                                <span className="text-pink-600">{selectedScenario.reward}</span>
                                             </div>
                                         </div>
                                     </div>
