@@ -1,303 +1,263 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import {
     Camera,
-    CameraOff,
     Sun,
     Sparkles,
     ChevronRight,
-    Settings,
-    RotateCcw,
-    ZoomIn,
-    ZoomOut,
+    Play,
+    Pause,
+    Eye,
+    Droplets,
+    Shield,
+    Zap,
 } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 import { mockAnalysis } from '@/lib/constants/mockData';
+import SketchFace from '@/components/workflow/SketchFace';
 
 const lightingPresets = [
-    { id: 'warm', label: '暖光', temp: '2700K', color: '#FFF4E0' },
-    { id: 'neutral', label: '自然', temp: '4000K', color: '#FFFAF5' },
-    { id: 'cool', label: '冷光', temp: '5500K', color: '#F5F8FF' },
-    { id: 'daylight', label: '日光', temp: '6500K', color: '#F0F5FF' },
+    { id: 'warm', label: '暖光', temp: '2700K', color: 'from-amber-50 to-orange-50' },
+    { id: 'neutral', label: '自然', temp: '4000K', color: 'from-slate-100 to-gray-100' },
+    { id: 'cool', label: '冷光', temp: '5500K', color: 'from-blue-50 to-cyan-50' },
+    { id: 'daylight', label: '日光', temp: '6500K', color: 'from-sky-50 to-indigo-50' },
 ];
 
-// Simulated face landmarks (simplified for demo)
-const generateFaceLandmarks = () => {
-    const landmarks: { x: number; y: number }[] = [];
-    // Face outline
-    for (let i = 0; i < 36; i++) {
-        const angle = (i / 36) * 2 * Math.PI;
-        const radiusX = 120 + Math.sin(i * 0.5) * 10;
-        const radiusY = 150 + Math.cos(i * 0.3) * 10;
-        landmarks.push({
-            x: 200 + Math.cos(angle) * radiusX,
-            y: 200 + Math.sin(angle) * radiusY * 0.9,
-        });
-    }
-    // Eyes
-    for (let i = 0; i < 12; i++) {
-        landmarks.push({ x: 150 + (i % 6) * 8, y: 170 + Math.floor(i / 6) * 5 });
-        landmarks.push({ x: 230 + (i % 6) * 8, y: 170 + Math.floor(i / 6) * 5 });
-    }
-    // Nose
-    for (let i = 0; i < 9; i++) {
-        landmarks.push({ x: 195 + (i % 3) * 5, y: 200 + Math.floor(i / 3) * 15 });
-    }
-    // Mouth
-    for (let i = 0; i < 20; i++) {
-        const angle = (i / 20) * Math.PI;
-        landmarks.push({
-            x: 200 + Math.cos(angle) * 35,
-            y: 280 + Math.sin(angle) * 10,
-        });
-    }
-    return landmarks;
-};
+const zoneOptions = [
+    { id: 't_zone', label: 'T区', icon: '🔺' },
+    { id: 'cheeks', label: '脸颊', icon: '🔴' },
+    { id: 'eyebrow', label: '眉毛', icon: '〰️' },
+    { id: 'eyeshadow', label: '眼部', icon: '👁️' },
+    { id: 'lips', label: '唇部', icon: '👄' },
+];
 
 export default function MirrorPage() {
-    const [cameraEnabled, setCameraEnabled] = useState(false);
-    const [isAnalyzing, setIsAnalyzing] = useState(false);
-    const [showMesh, setShowMesh] = useState(true);
+    const [isScanning, setIsScanning] = useState(false);
+    const [scanComplete, setScanComplete] = useState(false);
     const [selectedLighting, setSelectedLighting] = useState('neutral');
-    const [zoom, setZoom] = useState(1);
-    const videoRef = useRef<HTMLVideoElement>(null);
-    const [landmarks] = useState(generateFaceLandmarks);
-    const [faceDetected, setFaceDetected] = useState(true);
+    const [activeZone, setActiveZone] = useState<string | null>(null);
+    const [showZoneGuides, setShowZoneGuides] = useState(false);
+    const [isAutoDemo, setIsAutoDemo] = useState(false);
+    const [currentDemoStep, setCurrentDemoStep] = useState(0);
 
-    // Simulate face tracking movement
-    const [trackingOffset, setTrackingOffset] = useState({ x: 0, y: 0 });
-
+    // Auto demo mode - cycle through features
     useEffect(() => {
-        if (faceDetected) {
-            const interval = setInterval(() => {
-                setTrackingOffset({
-                    x: Math.sin(Date.now() / 1000) * 3,
-                    y: Math.cos(Date.now() / 800) * 2,
-                });
-            }, 50);
-            return () => clearInterval(interval);
-        }
-    }, [faceDetected]);
+        if (!isAutoDemo) return;
 
-    const handleStartAnalysis = () => {
-        setIsAnalyzing(true);
+        const steps = [
+            () => { setIsScanning(true); setScanComplete(false); },
+            () => { setIsScanning(false); setScanComplete(true); },
+            () => { setShowZoneGuides(true); setActiveZone('t_zone'); },
+            () => { setActiveZone('cheeks'); },
+            () => { setActiveZone('eyeshadow'); },
+            () => { setActiveZone('lips'); },
+            () => { setShowZoneGuides(false); setActiveZone(null); },
+        ];
+
+        const timer = setInterval(() => {
+            setCurrentDemoStep(prev => {
+                const next = (prev + 1) % steps.length;
+                steps[next]();
+                return next;
+            });
+        }, 2000);
+
+        // Initialize first step
+        steps[0]();
+
+        return () => clearInterval(timer);
+    }, [isAutoDemo]);
+
+    const handleStartScan = () => {
+        setIsScanning(true);
+        setScanComplete(false);
         setTimeout(() => {
-            setIsAnalyzing(false);
-            // Navigate to analysis page would happen here
+            setIsScanning(false);
+            setScanComplete(true);
         }, 3000);
     };
 
     const currentLighting = lightingPresets.find(p => p.id === selectedLighting);
 
     return (
-        <div className="min-h-screen p-6">
+        <div className="min-h-screen p-6 bg-gray-50">
             {/* Page Header */}
-            <div className="mb-6">
-                <h1 className="text-2xl font-bold text-gray-900">魔镜体验</h1>
-                <p className="text-gray-600">实时人脸追踪与皮肤分析</p>
+            <div className="mb-6 flex items-center justify-between">
+                <div>
+                    <h1 className="text-2xl font-bold text-gray-900">魔镜体验</h1>
+                    <p className="text-gray-600">AI 智能美妆镜 - 实时皮肤分析与妆容指导</p>
+                </div>
+                <button
+                    onClick={() => setIsAutoDemo(!isAutoDemo)}
+                    className={cn(
+                        "flex items-center gap-2 px-4 py-2 rounded-full transition-all",
+                        isAutoDemo
+                            ? "bg-mirror-500 text-white"
+                            : "bg-white border border-gray-200 text-gray-700 hover:border-mirror-300"
+                    )}
+                >
+                    {isAutoDemo ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+                    <span className="text-sm font-medium">
+                        {isAutoDemo ? '停止演示' : '自动演示'}
+                    </span>
+                </button>
             </div>
 
-            <div className="grid lg:grid-cols-3 gap-6">
-                {/* Main Mirror View */}
-                <div className="lg:col-span-2">
-                    <div className="card overflow-hidden">
-                        {/* Mirror Surface */}
-                        <div
-                            className="relative aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-200"
-                            style={{ backgroundColor: currentLighting?.color }}
-                        >
-                            {/* Demo Face Visualization */}
-                            <svg
-                                className="absolute inset-0 w-full h-full"
-                                viewBox="0 0 400 400"
-                                style={{
-                                    transform: `translate(${trackingOffset.x}px, ${trackingOffset.y}px) scale(${zoom})`,
-                                    transition: 'transform 0.1s ease-out'
-                                }}
-                            >
-                                {/* Face background */}
-                                <ellipse
-                                    cx="200"
-                                    cy="200"
-                                    rx="100"
-                                    ry="130"
-                                    fill="#f5e6d3"
-                                    opacity="0.3"
+            <div className="grid lg:grid-cols-4 gap-6">
+                {/* Main Mirror View - Full Width */}
+                <div className="lg:col-span-3">
+                    <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+                        {/* Mirror Surface with Lighting Effect */}
+                        <div className={cn(
+                            "relative bg-gradient-to-b p-8",
+                            currentLighting?.color || "from-slate-100 to-gray-200"
+                        )}>
+                            {/* Smart Mirror */}
+                            <div className="max-w-xl mx-auto">
+                                <SketchFace
+                                    showScanLine={isScanning}
+                                    showMetrics={scanComplete}
+                                    showZoneGuides={showZoneGuides}
+                                    activeZone={activeZone as any}
+                                    showEarringRecommend={scanComplete}
+                                    beautyScore={mockAnalysis.overallScore}
                                 />
+                            </div>
 
-                                {/* Face mesh points */}
-                                {showMesh && landmarks.map((point, i) => (
-                                    <motion.circle
-                                        key={i}
-                                        cx={point.x}
-                                        cy={point.y}
-                                        r={2}
-                                        fill="#E91E63"
-                                        initial={{ opacity: 0, scale: 0 }}
-                                        animate={{ opacity: 0.6, scale: 1 }}
-                                        transition={{ delay: i * 0.005, duration: 0.3 }}
-                                    />
-                                ))}
-
-                                {/* Face mesh lines */}
-                                {showMesh && (
-                                    <g stroke="#E91E63" strokeWidth="0.5" opacity="0.3" fill="none">
-                                        {/* Simplified mesh connections */}
-                                        <ellipse cx="200" cy="200" rx="100" ry="130" strokeDasharray="4,4" />
-                                        <ellipse cx="155" cy="175" rx="20" ry="10" />
-                                        <ellipse cx="245" cy="175" rx="20" ry="10" />
-                                        <path d="M 180 240 Q 200 260 220 240" />
-                                        <line x1="200" y1="185" x2="200" y2="230" />
-                                    </g>
-                                )}
-
-                                {/* Skin zone highlights */}
-                                {mockAnalysis.problemAreas.map((area, i) => (
-                                    <motion.circle
-                                        key={area.zone}
-                                        cx={area.x * 4}
-                                        cy={area.y * 4 + 20}
-                                        r={15}
-                                        fill={area.severity === 'moderate' ? '#F59E0B' : '#22C55E'}
-                                        opacity={0.2}
-                                        initial={{ scale: 0 }}
-                                        animate={{ scale: [1, 1.2, 1] }}
-                                        transition={{
-                                            delay: i * 0.2 + 0.5,
-                                            duration: 2,
-                                            repeat: Infinity,
-                                        }}
-                                    />
-                                ))}
-                            </svg>
-
-                            {/* Status Indicators */}
-                            <div className="absolute top-4 left-4 flex flex-col gap-2">
-                                <div className="glass rounded-lg px-3 py-2 flex items-center gap-2">
+                            {/* Status Badge */}
+                            <div className="absolute top-4 left-4">
+                                <div className={cn(
+                                    "flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium",
+                                    isScanning
+                                        ? "bg-blue-100 text-blue-700"
+                                        : scanComplete
+                                        ? "bg-green-100 text-green-700"
+                                        : "bg-gray-100 text-gray-600"
+                                )}>
                                     <span className={cn(
                                         "w-2 h-2 rounded-full",
-                                        faceDetected ? "bg-green-500 animate-pulse" : "bg-red-500"
+                                        isScanning
+                                            ? "bg-blue-500 animate-pulse"
+                                            : scanComplete
+                                            ? "bg-green-500"
+                                            : "bg-gray-400"
                                     )} />
-                                    <span className="text-sm font-medium text-gray-700">
-                                        {faceDetected ? '面部追踪中' : '未检测到面部'}
-                                    </span>
-                                </div>
-                                {showMesh && (
-                                    <div className="glass rounded-lg px-3 py-2 text-sm text-gray-600">
-                                        468 特征点检测
-                                    </div>
-                                )}
-                            </div>
-
-                            {/* Quick Score */}
-                            <div className="absolute top-4 right-4 glass rounded-lg px-4 py-3 text-center">
-                                <div className="text-xs text-gray-500 mb-1">皮肤评分</div>
-                                <div className="text-3xl font-bold text-gradient">
-                                    {mockAnalysis.overallScore}
+                                    {isScanning ? '扫描中...' : scanComplete ? '分析完成' : '待扫描'}
                                 </div>
                             </div>
 
-                            {/* Zoom Controls */}
-                            <div className="absolute bottom-4 left-4 flex items-center gap-2">
-                                <button
-                                    onClick={() => setZoom(Math.max(0.8, zoom - 0.1))}
-                                    className="glass p-2 rounded-lg hover:bg-white/90 transition-colors"
-                                >
-                                    <ZoomOut className="w-5 h-5 text-gray-600" />
-                                </button>
-                                <span className="glass px-3 py-2 rounded-lg text-sm font-medium">
-                                    {Math.round(zoom * 100)}%
-                                </span>
-                                <button
-                                    onClick={() => setZoom(Math.min(1.5, zoom + 0.1))}
-                                    className="glass p-2 rounded-lg hover:bg-white/90 transition-colors"
-                                >
-                                    <ZoomIn className="w-5 h-5 text-gray-600" />
-                                </button>
-                            </div>
-
-                            {/* Analysis Overlay */}
-                            {isAnalyzing && (
+                            {/* Score Badge */}
+                            {scanComplete && (
                                 <motion.div
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    className="absolute inset-0 bg-black/50 flex items-center justify-center"
+                                    initial={{ opacity: 0, scale: 0.8 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    className="absolute top-4 right-4 bg-white/90 backdrop-blur rounded-2xl px-4 py-3 shadow-lg"
                                 >
-                                    <div className="text-center text-white">
-                                        <motion.div
-                                            animate={{ rotate: 360 }}
-                                            transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-                                            className="w-16 h-16 border-4 border-white/30 border-t-white rounded-full mx-auto mb-4"
-                                        />
-                                        <div className="text-lg font-medium">AI 分析中...</div>
-                                        <div className="text-sm text-white/70">正在检测皮肤状态</div>
+                                    <div className="text-xs text-gray-500 mb-1">综合评分</div>
+                                    <div className="text-3xl font-bold bg-gradient-to-r from-mirror-500 to-accent-500 bg-clip-text text-transparent">
+                                        {mockAnalysis.overallScore}
                                     </div>
                                 </motion.div>
                             )}
                         </div>
 
-                        {/* Controls Bar */}
-                        <div className="p-4 border-t border-gray-100 flex items-center justify-between">
+                        {/* Control Bar */}
+                        <div className="p-4 border-t border-gray-100 flex items-center justify-between bg-white">
+                            {/* Zone Selection */}
                             <div className="flex items-center gap-2">
-                                <button
-                                    onClick={() => setCameraEnabled(!cameraEnabled)}
-                                    className={cn(
-                                        "flex items-center gap-2 px-4 py-2 rounded-lg transition-colors",
-                                        cameraEnabled
-                                            ? "bg-mirror-100 text-mirror-600"
-                                            : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                                    )}
-                                >
-                                    {cameraEnabled ? (
-                                        <Camera className="w-5 h-5" />
-                                    ) : (
-                                        <CameraOff className="w-5 h-5" />
-                                    )}
-                                    <span className="text-sm font-medium">
-                                        {cameraEnabled ? '关闭摄像头' : '开启摄像头'}
-                                    </span>
-                                </button>
-                                <button
-                                    onClick={() => setShowMesh(!showMesh)}
-                                    className={cn(
-                                        "flex items-center gap-2 px-4 py-2 rounded-lg transition-colors",
-                                        showMesh
-                                            ? "bg-accent-100 text-accent-600"
-                                            : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                                    )}
-                                >
-                                    <Sparkles className="w-5 h-5" />
-                                    <span className="text-sm font-medium">网格</span>
-                                </button>
-                                <button
-                                    onClick={() => setFaceDetected(!faceDetected)}
-                                    className="p-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
-                                >
-                                    <RotateCcw className="w-5 h-5" />
-                                </button>
+                                <span className="text-sm text-gray-500 mr-2">区域查看:</span>
+                                {zoneOptions.map((zone) => (
+                                    <button
+                                        key={zone.id}
+                                        onClick={() => {
+                                            setShowZoneGuides(true);
+                                            setActiveZone(activeZone === zone.id ? null : zone.id);
+                                        }}
+                                        className={cn(
+                                            "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm transition-all",
+                                            activeZone === zone.id
+                                                ? "bg-mirror-100 text-mirror-700 ring-2 ring-mirror-300"
+                                                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                                        )}
+                                    >
+                                        <span>{zone.icon}</span>
+                                        <span>{zone.label}</span>
+                                    </button>
+                                ))}
                             </div>
 
+                            {/* Action Button */}
                             <button
-                                onClick={handleStartAnalysis}
-                                disabled={isAnalyzing}
-                                className="btn-primary"
+                                onClick={handleStartScan}
+                                disabled={isScanning}
+                                className={cn(
+                                    "flex items-center gap-2 px-6 py-2.5 rounded-full font-medium transition-all",
+                                    isScanning
+                                        ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                                        : "bg-gradient-to-r from-mirror-500 to-accent-500 text-white shadow-lg hover:shadow-xl hover:scale-105"
+                                )}
                             >
-                                {isAnalyzing ? '分析中...' : '开始分析'}
-                                <ChevronRight className="w-4 h-4 ml-1" />
+                                <Camera className="w-5 h-5" />
+                                {isScanning ? '分析中...' : '开始扫描'}
                             </button>
                         </div>
                     </div>
+
+                    {/* Quick Metrics Row */}
+                    {scanComplete && (
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="grid grid-cols-4 gap-4 mt-6"
+                        >
+                            {[
+                                { icon: Droplets, label: '水分度', value: 72, color: 'text-blue-500', bg: 'bg-blue-50' },
+                                { icon: Sun, label: '油脂平衡', value: 58, color: 'text-amber-500', bg: 'bg-amber-50' },
+                                { icon: Eye, label: '毛孔状态', value: 65, color: 'text-purple-500', bg: 'bg-purple-50' },
+                                { icon: Shield, label: '敏感度', value: 25, color: 'text-green-500', bg: 'bg-green-50' },
+                            ].map((metric, index) => (
+                                <motion.div
+                                    key={metric.label}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: index * 0.1 }}
+                                    className="bg-white rounded-xl p-4 shadow-sm"
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <div className={cn("p-2 rounded-lg", metric.bg)}>
+                                            <metric.icon className={cn("w-5 h-5", metric.color)} />
+                                        </div>
+                                        <div className="flex-1">
+                                            <div className="text-sm text-gray-500">{metric.label}</div>
+                                            <div className="text-xl font-bold text-gray-900">{metric.value}%</div>
+                                        </div>
+                                    </div>
+                                    <div className="mt-3 h-2 bg-gray-100 rounded-full overflow-hidden">
+                                        <motion.div
+                                            initial={{ width: 0 }}
+                                            animate={{ width: `${metric.value}%` }}
+                                            transition={{ duration: 1, delay: 0.5 + index * 0.1 }}
+                                            className={cn("h-full rounded-full",
+                                                metric.value >= 70 ? "bg-green-500" :
+                                                metric.value >= 50 ? "bg-amber-500" : "bg-red-500"
+                                            )}
+                                        />
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </motion.div>
+                    )}
                 </div>
 
-                {/* Right Panel */}
+                {/* Right Sidebar */}
                 <div className="space-y-6">
                     {/* Lighting Controls */}
-                    <div className="card p-5">
+                    <div className="bg-white rounded-xl p-5 shadow-sm">
                         <div className="flex items-center gap-2 mb-4">
-                            <Sun className="w-5 h-5 text-gold-500" />
+                            <Sun className="w-5 h-5 text-amber-500" />
                             <h2 className="font-semibold text-gray-900">灯光控制</h2>
                         </div>
                         <div className="grid grid-cols-2 gap-3">
@@ -312,10 +272,10 @@ export default function MirrorPage() {
                                             : "border-gray-100 hover:border-gray-200"
                                     )}
                                 >
-                                    <div
-                                        className="w-8 h-8 rounded-full mx-auto mb-2 border border-gray-200"
-                                        style={{ backgroundColor: preset.color }}
-                                    />
+                                    <div className={cn(
+                                        "w-8 h-8 rounded-full mx-auto mb-2 bg-gradient-to-br",
+                                        preset.color
+                                    )} />
                                     <div className="text-sm font-medium text-gray-900">
                                         {preset.label}
                                     </div>
@@ -327,68 +287,56 @@ export default function MirrorPage() {
                         </div>
                     </div>
 
-                    {/* Quick Analysis Preview */}
-                    <div className="card p-5">
-                        <div className="flex items-center justify-between mb-4">
-                            <h2 className="font-semibold text-gray-900">快速检测</h2>
-                            <Link
-                                href="/demo/analysis"
-                                className="text-sm text-mirror-500 hover:text-mirror-600"
-                            >
-                                详细报告 →
-                            </Link>
-                        </div>
+                    {/* Feature Highlights */}
+                    <div className="bg-white rounded-xl p-5 shadow-sm">
+                        <h2 className="font-semibold text-gray-900 mb-4">智能镜功能</h2>
                         <div className="space-y-3">
-                            {Object.entries(mockAnalysis.metrics).slice(0, 4).map(([key, value]) => (
-                                <div key={key} className="flex items-center justify-between">
-                                    <div className="flex items-center gap-2">
-                                        <span>{value.icon}</span>
-                                        <span className="text-sm text-gray-600 capitalize">
-                                            {key === 'hydration' ? '水分' :
-                                             key === 'oil' ? '油脂' :
-                                             key === 'pores' ? '毛孔' :
-                                             key === 'wrinkles' ? '纹理' : key}
-                                        </span>
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                        <div className="w-24 h-2 bg-gray-100 rounded-full overflow-hidden">
-                                            <motion.div
-                                                initial={{ width: 0 }}
-                                                animate={{ width: `${value.score}%` }}
-                                                transition={{ duration: 1, delay: 0.5 }}
-                                                className="h-full bg-gradient-mirror rounded-full"
-                                            />
-                                        </div>
-                                        <span className="text-sm font-medium text-gray-900 w-8">
-                                            {value.score}
-                                        </span>
+                            {[
+                                { icon: '🔍', title: '皮肤扫描', desc: '8项专业指标分析' },
+                                { icon: '🎯', title: '区域引导', desc: '精准定位问题区域' },
+                                { icon: '💎', title: '耳饰推荐', desc: 'AI 配饰搭配建议' },
+                                { icon: '✨', title: '妆容变换', desc: '实时妆效预览' },
+                            ].map((feature) => (
+                                <div key={feature.title} className="flex items-start gap-3 p-3 rounded-lg bg-gray-50">
+                                    <span className="text-xl">{feature.icon}</span>
+                                    <div>
+                                        <div className="font-medium text-gray-900 text-sm">{feature.title}</div>
+                                        <div className="text-xs text-gray-500">{feature.desc}</div>
                                     </div>
                                 </div>
                             ))}
                         </div>
                     </div>
 
-                    {/* Today's Recommendation */}
-                    <div className="card p-5 bg-gradient-to-br from-mirror-50 to-accent-50">
+                    {/* Quick Links */}
+                    <div className="bg-gradient-to-br from-mirror-50 to-accent-50 rounded-xl p-5">
                         <div className="flex items-center gap-2 mb-3">
                             <Sparkles className="w-5 h-5 text-mirror-500" />
-                            <h2 className="font-semibold text-gray-900">今日推荐</h2>
+                            <h2 className="font-semibold text-gray-900">快速导航</h2>
                         </div>
-                        <p className="text-sm text-gray-600 mb-4">
-                            根据您的皮肤状态和今日日程，为您推荐：
-                        </p>
-                        <Link
-                            href="/demo/recommendations"
-                            className="block p-3 bg-white rounded-xl hover:shadow-md transition-shadow"
-                        >
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <div className="font-medium text-gray-900">清透职场妆</div>
-                                    <div className="text-sm text-gray-500">匹配度 95%</div>
-                                </div>
-                                <ChevronRight className="w-5 h-5 text-gray-400" />
-                            </div>
-                        </Link>
+                        <div className="space-y-2">
+                            <Link
+                                href="/demo/analysis"
+                                className="flex items-center justify-between p-3 bg-white rounded-lg hover:shadow-md transition-shadow"
+                            >
+                                <span className="text-sm font-medium text-gray-900">详细皮肤报告</span>
+                                <ChevronRight className="w-4 h-4 text-gray-400" />
+                            </Link>
+                            <Link
+                                href="/demo/workflow"
+                                className="flex items-center justify-between p-3 bg-white rounded-lg hover:shadow-md transition-shadow"
+                            >
+                                <span className="text-sm font-medium text-gray-900">完整工作流演示</span>
+                                <ChevronRight className="w-4 h-4 text-gray-400" />
+                            </Link>
+                            <Link
+                                href="/demo/recommendations"
+                                className="flex items-center justify-between p-3 bg-white rounded-lg hover:shadow-md transition-shadow"
+                            >
+                                <span className="text-sm font-medium text-gray-900">今日妆容推荐</span>
+                                <ChevronRight className="w-4 h-4 text-gray-400" />
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>
