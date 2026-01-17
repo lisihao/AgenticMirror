@@ -61,7 +61,7 @@ export default function SketchFace({
     return (
         <div className="relative w-full">
             <svg
-                viewBox="0 0 420 520"
+                viewBox="0 0 420 620"
                 className="w-full h-auto"
                 preserveAspectRatio="xMidYMid meet"
             >
@@ -92,6 +92,28 @@ export default function SketchFace({
                     <linearGradient id="mirror-highlight" x1="0%" y1="0%" x2="100%" y2="100%">
                         <stop offset="0%" stopColor="white" stopOpacity="0.5" />
                         <stop offset="100%" stopColor="white" stopOpacity="0" />
+                    </linearGradient>
+
+                    {/* Gimbal metal gradient */}
+                    <linearGradient id="gimbal-metal" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#e2e8f0" />
+                        <stop offset="30%" stopColor="#94a3b8" />
+                        <stop offset="70%" stopColor="#64748b" />
+                        <stop offset="100%" stopColor="#475569" />
+                    </linearGradient>
+
+                    {/* Base gradient */}
+                    <linearGradient id="base-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stopColor="#1e293b" />
+                        <stop offset="50%" stopColor="#0f172a" />
+                        <stop offset="100%" stopColor="#020617" />
+                    </linearGradient>
+
+                    {/* LED ring gradient */}
+                    <linearGradient id="led-ring" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#E91E63" />
+                        <stop offset="50%" stopColor="#9C27B0" />
+                        <stop offset="100%" stopColor="#E91E63" />
                     </linearGradient>
 
                     {/* Skin glow gradient */}
@@ -845,6 +867,196 @@ export default function SketchFace({
                         MIRROR
                     </text>
                 </g>
+
+                {/* ===== GIMBAL & BASE STRUCTURE ===== */}
+
+                {/* Gimbal Neck/Arm */}
+                <g>
+                    {/* Upper joint - connects to mirror */}
+                    <motion.ellipse
+                        cx="210"
+                        cy="485"
+                        rx="25"
+                        ry="8"
+                        fill="url(#gimbal-metal)"
+                        stroke="#475569"
+                        strokeWidth="1"
+                        animate={{ rotateX: [0, 5, 0, -5, 0] }}
+                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    />
+
+                    {/* Main arm segment */}
+                    <motion.path
+                        d="M 195 488
+                           L 190 520
+                           Q 210 530 230 520
+                           L 225 488"
+                        fill="url(#gimbal-metal)"
+                        stroke="#475569"
+                        strokeWidth="1"
+                    />
+
+                    {/* Middle rotation joint */}
+                    <motion.g
+                        animate={{ rotate: [-3, 3, -3] }}
+                        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                        style={{ transformOrigin: '210px 525px' }}
+                    >
+                        <ellipse cx="210" cy="525" rx="20" ry="10" fill="#334155" stroke="#1e293b" strokeWidth="2" />
+                        {/* Joint indicator ring */}
+                        <ellipse cx="210" cy="525" rx="12" ry="6" fill="none" stroke="#E91E63" strokeWidth="1.5" opacity="0.6" />
+
+                        {/* Lower arm segment */}
+                        <path
+                            d="M 198 530
+                               L 195 560
+                               Q 210 565 225 560
+                               L 222 530"
+                            fill="url(#gimbal-metal)"
+                            stroke="#475569"
+                            strokeWidth="1"
+                        />
+                    </motion.g>
+
+                    {/* Base joint */}
+                    <ellipse cx="210" cy="565" rx="28" ry="12" fill="#1e293b" stroke="#334155" strokeWidth="2" />
+                </g>
+
+                {/* Robot Base */}
+                <g>
+                    {/* LED Ring around base */}
+                    <motion.ellipse
+                        cx="210"
+                        cy="575"
+                        rx="55"
+                        ry="18"
+                        fill="none"
+                        stroke="url(#led-ring)"
+                        strokeWidth="3"
+                        opacity="0.8"
+                        animate={{ opacity: [0.5, 1, 0.5] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                    />
+
+                    {/* Main base body */}
+                    <ellipse cx="210" cy="580" rx="70" ry="25" fill="url(#base-gradient)" stroke="#334155" strokeWidth="2" />
+
+                    {/* Base top surface */}
+                    <ellipse cx="210" cy="575" rx="60" ry="20" fill="#1e293b" stroke="#475569" strokeWidth="1" />
+
+                    {/* Base bottom rim */}
+                    <ellipse cx="210" cy="595" rx="70" ry="20" fill="#020617" stroke="#1e293b" strokeWidth="1" />
+
+                    {/* Status indicator lights */}
+                    <motion.circle
+                        cx="175"
+                        cy="580"
+                        r="4"
+                        fill="#10B981"
+                        animate={{ opacity: [0.5, 1, 0.5] }}
+                        transition={{ duration: 1.5, repeat: Infinity }}
+                    />
+                    <motion.circle
+                        cx="210"
+                        cy="585"
+                        r="4"
+                        fill="#3B82F6"
+                        animate={{ opacity: [0.5, 1, 0.5] }}
+                        transition={{ duration: 1.5, repeat: Infinity, delay: 0.5 }}
+                    />
+                    <motion.circle
+                        cx="245"
+                        cy="580"
+                        r="4"
+                        fill="#10B981"
+                        animate={{ opacity: [0.5, 1, 0.5] }}
+                        transition={{ duration: 1.5, repeat: Infinity, delay: 1 }}
+                    />
+
+                    {/* Brand name on base */}
+                    <text x="210" y="600" textAnchor="middle" fontSize="10" fill="#64748b" fontFamily="monospace" fontWeight="bold">
+                        AgenticMirror
+                    </text>
+                </g>
+
+                {/* Tracking indicators - showing gimbal movement */}
+                <g>
+                    {/* Left tracking arrow */}
+                    <motion.g
+                        animate={{ x: [-5, 5, -5] }}
+                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                    >
+                        <path
+                            d="M 120 300 L 100 300 L 108 292 M 100 300 L 108 308"
+                            fill="none"
+                            stroke="#E91E63"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            opacity="0.6"
+                        />
+                    </motion.g>
+
+                    {/* Right tracking arrow */}
+                    <motion.g
+                        animate={{ x: [5, -5, 5] }}
+                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                    >
+                        <path
+                            d="M 300 300 L 320 300 L 312 292 M 320 300 L 312 308"
+                            fill="none"
+                            stroke="#E91E63"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            opacity="0.6"
+                        />
+                    </motion.g>
+
+                    {/* Vertical tracking indicator */}
+                    <motion.g
+                        animate={{ y: [-3, 3, -3] }}
+                        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                    >
+                        <path
+                            d="M 380 200 L 380 180 L 372 188 M 380 180 L 388 188"
+                            fill="none"
+                            stroke="#9C27B0"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            opacity="0.6"
+                        />
+                        <path
+                            d="M 380 320 L 380 340 L 372 332 M 380 340 L 388 332"
+                            fill="none"
+                            stroke="#9C27B0"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            opacity="0.6"
+                        />
+                    </motion.g>
+
+                    {/* "Tracking" label */}
+                    <motion.g
+                        animate={{ opacity: [0.4, 0.8, 0.4] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                    >
+                        <rect x="355" y="255" width="60" height="20" rx="4" fill="rgba(233, 30, 99, 0.2)" />
+                        <text x="385" y="269" textAnchor="middle" fontSize="9" fill="#E91E63" fontWeight="bold">
+                            TRACKING
+                        </text>
+                    </motion.g>
+                </g>
+
+                {/* 2-Axis gimbal specs indicator */}
+                <motion.g
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1 }}
+                >
+                    <rect x="15" y="520" width="80" height="55" rx="8" fill="rgba(0,0,0,0.7)" />
+                    <text x="55" y="538" textAnchor="middle" fontSize="9" fill="#94a3b8">云台参数</text>
+                    <text x="25" y="555" fontSize="8" fill="#10B981">● 水平 ±45°</text>
+                    <text x="25" y="568" fontSize="8" fill="#3B82F6">● 垂直 ±30°</text>
+                </motion.g>
             </svg>
 
             {/* Beauty Score Badge */}
