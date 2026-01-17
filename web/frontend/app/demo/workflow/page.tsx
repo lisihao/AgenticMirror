@@ -640,7 +640,7 @@ export default function WorkflowPage() {
                             </motion.div>
                         )}
 
-                        {/* Phase 4: Step Guide - Full Width Mirror with Steps Below */}
+                        {/* Phase 4: Step Guide - Real-time Tracking */}
                         {currentPhase === 4 && (
                             <motion.div
                                 key="phase4"
@@ -649,60 +649,215 @@ export default function WorkflowPage() {
                                 exit={{ opacity: 0, x: -20 }}
                                 className="p-4"
                             >
-                                {/* Header with Beauty Score */}
+                                {/* Header with Tracking Status */}
                                 <div className="flex items-center justify-between mb-4">
                                     <div>
                                         <h2 className="text-xl font-bold text-gray-900">
-                                            {workflowPhases[3].icon} 妆容实时演示
+                                            {workflowPhases[3].icon} 实时跟踪化妆指导
                                         </h2>
                                         <p className="text-gray-500 text-sm">
-                                            点击下方步骤，在镜中查看实时效果变化
+                                            云台追踪您的脸部，实时监控化妆步骤
                                         </p>
                                     </div>
-                                    {/* Beauty Score Progress */}
-                                    <div className="flex items-center gap-4 bg-gradient-to-r from-mirror-500 to-accent-500 px-5 py-3 rounded-2xl text-white">
-                                        <div>
-                                            <div className="text-xs opacity-80">颜值评分</div>
-                                            <motion.div
-                                                className="text-3xl font-bold"
-                                                key={currentMakeupStep}
-                                                initial={{ scale: 1.3 }}
-                                                animate={{ scale: 1 }}
-                                            >
-                                                {60 + (currentMakeupStep + 1) * 4}
-                                            </motion.div>
-                                        </div>
-                                        <div className="w-px h-10 bg-white/30" />
-                                        <div>
-                                            <div className="text-xs opacity-80">提升</div>
-                                            <div className="text-xl font-bold">+{(currentMakeupStep + 1) * 4}</div>
+                                    {/* Tracking Status + Beauty Score */}
+                                    <div className="flex items-center gap-3">
+                                        {/* Tracking Status */}
+                                        <motion.div
+                                            className="flex items-center gap-2 px-4 py-2 bg-green-100 rounded-full"
+                                            animate={{ opacity: [0.7, 1, 0.7] }}
+                                            transition={{ duration: 1.5, repeat: Infinity }}
+                                        >
+                                            <span className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
+                                            <span className="text-green-700 text-sm font-medium">云台追踪中</span>
+                                        </motion.div>
+                                        {/* Beauty Score */}
+                                        <div className="flex items-center gap-4 bg-gradient-to-r from-mirror-500 to-accent-500 px-5 py-3 rounded-2xl text-white">
+                                            <div>
+                                                <div className="text-xs opacity-80">颜值评分</div>
+                                                <motion.div
+                                                    className="text-3xl font-bold"
+                                                    key={currentMakeupStep}
+                                                    initial={{ scale: 1.3 }}
+                                                    animate={{ scale: 1 }}
+                                                >
+                                                    {60 + (currentMakeupStep + 1) * 4}
+                                                </motion.div>
+                                            </div>
+                                            <div className="w-px h-10 bg-white/30" />
+                                            <div>
+                                                <div className="text-xs opacity-80">提升</div>
+                                                <div className="text-xl font-bold">+{(currentMakeupStep + 1) * 4}</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                {/* Full Width Mirror */}
-                                <div className="flex justify-center bg-gradient-to-b from-slate-100 to-slate-200 rounded-2xl p-4 mb-4">
-                                    <div className="w-full max-w-2xl">
-                                        <SketchFace
-                                            makeupStep={currentMakeupStep + 1}
-                                            highlightArea={
-                                                currentMakeupStep === 0 ? 'foundation' :
-                                                currentMakeupStep === 1 ? 'eyebrow' :
-                                                currentMakeupStep === 2 ? 'eyeshadow' :
-                                                currentMakeupStep === 3 ? 'blush' :
-                                                'lips'
-                                            }
-                                            showTransformation={true}
-                                            beautyScore={60 + (currentMakeupStep + 1) * 4}
-                                            showZoneGuides={true}
-                                            activeZone={
-                                                currentMakeupStep === 0 ? 'foundation' :
-                                                currentMakeupStep === 1 ? 'eyebrow' :
-                                                currentMakeupStep === 2 ? 'eyeshadow' :
-                                                currentMakeupStep === 3 ? 'blush' :
-                                                'lips'
-                                            }
-                                        />
+                                {/* Main Content: Mirror + Real-time Feedback Panel */}
+                                <div className="grid lg:grid-cols-3 gap-4 mb-4">
+                                    {/* Mirror with Tracking Overlay */}
+                                    <div className="lg:col-span-2 relative bg-gradient-to-b from-slate-100 to-slate-200 rounded-2xl p-4">
+                                        {/* Voice Prompt Banner */}
+                                        <motion.div
+                                            className="absolute top-2 left-2 right-2 z-10 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-xl flex items-center gap-3"
+                                            animate={{ opacity: [0.9, 1, 0.9] }}
+                                            transition={{ duration: 2, repeat: Infinity }}
+                                        >
+                                            <motion.div
+                                                animate={{ scale: [1, 1.2, 1] }}
+                                                transition={{ duration: 0.5, repeat: Infinity }}
+                                            >
+                                                🔊
+                                            </motion.div>
+                                            <div className="flex-1">
+                                                <div className="text-xs opacity-80">语音指导</div>
+                                                <div className="text-sm font-medium">
+                                                    {currentMakeupStep === 0 && "请将粉底液点涂在额头、鼻子、脸颊和下巴，用海绵轻轻拍开..."}
+                                                    {currentMakeupStep === 1 && "现在画眉毛，从眉头向眉尾轻轻描绘，注意保持自然弧度..."}
+                                                    {currentMakeupStep === 2 && "取适量眼影，从眼窝中央向外晕染，打造深邃眼妆..."}
+                                                    {currentMakeupStep === 3 && "微笑找到苹果肌，用腮红刷斜向上扫，打造自然好气色..."}
+                                                    {currentMakeupStep === 4 && "先用唇笔勾勒唇形，再填充口红，最后用纸巾轻压定妆..."}
+                                                </div>
+                                            </div>
+                                            <div className="flex items-center gap-1">
+                                                <motion.div className="w-1 h-3 bg-white rounded-full" animate={{ scaleY: [0.3, 1, 0.3] }} transition={{ duration: 0.5, repeat: Infinity }} />
+                                                <motion.div className="w-1 h-3 bg-white rounded-full" animate={{ scaleY: [1, 0.3, 1] }} transition={{ duration: 0.5, repeat: Infinity, delay: 0.1 }} />
+                                                <motion.div className="w-1 h-3 bg-white rounded-full" animate={{ scaleY: [0.5, 1, 0.5] }} transition={{ duration: 0.5, repeat: Infinity, delay: 0.2 }} />
+                                            </div>
+                                        </motion.div>
+
+                                        <div className="w-full max-w-xl mx-auto pt-12">
+                                            <SketchFace
+                                                makeupStep={currentMakeupStep + 1}
+                                                highlightArea={
+                                                    currentMakeupStep === 0 ? 'foundation' :
+                                                    currentMakeupStep === 1 ? 'eyebrow' :
+                                                    currentMakeupStep === 2 ? 'eyeshadow' :
+                                                    currentMakeupStep === 3 ? 'blush' :
+                                                    'lips'
+                                                }
+                                                showTransformation={true}
+                                                beautyScore={60 + (currentMakeupStep + 1) * 4}
+                                                showZoneGuides={true}
+                                                activeZone={
+                                                    currentMakeupStep === 0 ? 'foundation' :
+                                                    currentMakeupStep === 1 ? 'eyebrow' :
+                                                    currentMakeupStep === 2 ? 'eyeshadow' :
+                                                    currentMakeupStep === 3 ? 'blush' :
+                                                    'lips'
+                                                }
+                                            />
+                                        </div>
+
+                                        {/* Real-time Action Detection Overlay */}
+                                        <motion.div
+                                            className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur rounded-xl p-3 shadow-lg"
+                                            initial={{ y: 20, opacity: 0 }}
+                                            animate={{ y: 0, opacity: 1 }}
+                                        >
+                                            <div className="flex items-center justify-between">
+                                                <div className="flex items-center gap-3">
+                                                    <motion.div
+                                                        className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center"
+                                                        animate={{ scale: [1, 1.1, 1] }}
+                                                        transition={{ duration: 1, repeat: Infinity }}
+                                                    >
+                                                        <Eye className="w-5 h-5 text-green-600" />
+                                                    </motion.div>
+                                                    <div>
+                                                        <div className="text-sm font-medium text-gray-900">动作识别中</div>
+                                                        <div className="text-xs text-gray-500">
+                                                            检测到: {mockMakeupSteps[currentMakeupStep].title} 操作
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="flex items-center gap-2">
+                                                    <div className="text-right">
+                                                        <div className="text-xs text-gray-500">完成度</div>
+                                                        <div className="text-lg font-bold text-green-600">78%</div>
+                                                    </div>
+                                                    <div className="w-16 h-16 relative">
+                                                        <svg className="w-full h-full -rotate-90">
+                                                            <circle cx="32" cy="32" r="28" fill="none" stroke="#e5e7eb" strokeWidth="4" />
+                                                            <motion.circle
+                                                                cx="32" cy="32" r="28" fill="none" stroke="#10b981" strokeWidth="4"
+                                                                strokeDasharray={175.9}
+                                                                initial={{ strokeDashoffset: 175.9 }}
+                                                                animate={{ strokeDashoffset: 175.9 * 0.22 }}
+                                                                transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
+                                                            />
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </motion.div>
+                                    </div>
+
+                                    {/* Real-time Feedback Side Panel */}
+                                    <div className="space-y-3">
+                                        {/* Current Step Card */}
+                                        <div className="bg-gradient-to-br from-mirror-500 to-accent-500 rounded-xl p-4 text-white">
+                                            <div className="flex items-center gap-2 mb-2">
+                                                <span className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center font-bold">
+                                                    {currentMakeupStep + 1}
+                                                </span>
+                                                <span className="font-semibold">{mockMakeupSteps[currentMakeupStep].title}</span>
+                                            </div>
+                                            <p className="text-sm text-white/80">{mockMakeupSteps[currentMakeupStep].description}</p>
+                                        </div>
+
+                                        {/* Live Detection Feed */}
+                                        <div className="bg-gray-900 rounded-xl p-3 text-white">
+                                            <div className="flex items-center gap-2 mb-2">
+                                                <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+                                                <span className="text-xs text-gray-400">实时检测日志</span>
+                                            </div>
+                                            <div className="space-y-1 text-xs font-mono">
+                                                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-green-400">
+                                                    ✓ 面部定位: 成功
+                                                </motion.div>
+                                                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="text-green-400">
+                                                    ✓ 检测到化妆刷
+                                                </motion.div>
+                                                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} className="text-yellow-400">
+                                                    ⚡ 动作: {mockMakeupSteps[currentMakeupStep].title}
+                                                </motion.div>
+                                                <motion.div
+                                                    initial={{ opacity: 0 }}
+                                                    animate={{ opacity: 1 }}
+                                                    transition={{ delay: 0.9 }}
+                                                    className="text-blue-400"
+                                                >
+                                                    → 区域: {
+                                                        currentMakeupStep === 0 ? '全脸' :
+                                                        currentMakeupStep === 1 ? '眉毛' :
+                                                        currentMakeupStep === 2 ? '眼部' :
+                                                        currentMakeupStep === 3 ? '脸颊' : '唇部'
+                                                    }
+                                                </motion.div>
+                                            </div>
+                                        </div>
+
+                                        {/* Product in Use */}
+                                        <div className="bg-white rounded-xl p-3 border border-gray-200">
+                                            <div className="text-xs text-gray-500 mb-2">正在使用产品</div>
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-10 h-10 rounded-lg bg-gradient-mirror flex items-center justify-center">
+                                                    <ShoppingCart className="w-5 h-5 text-white" />
+                                                </div>
+                                                <div>
+                                                    <div className="text-sm font-medium">{mockMakeupSteps[currentMakeupStep].product.name}</div>
+                                                    <div className="text-xs text-gray-500">{mockMakeupSteps[currentMakeupStep].product.brand}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Quick Tips */}
+                                        <div className="bg-amber-50 rounded-xl p-3 border border-amber-200">
+                                            <div className="text-xs text-amber-700 font-medium mb-2">💡 实时提示</div>
+                                            <div className="text-sm text-amber-800">
+                                                {mockMakeupSteps[currentMakeupStep].tips[0]}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -828,38 +983,227 @@ export default function WorkflowPage() {
                             </motion.div>
                         )}
 
-                        {/* Phase 5: Real-time Feedback */}
+                        {/* Phase 5: Real-time Error Detection & Voice Feedback */}
                         {currentPhase === 5 && (
                             <motion.div
                                 key="phase5"
                                 initial={{ opacity: 0, x: 20 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 exit={{ opacity: 0, x: -20 }}
-                                className="p-6"
+                                className="p-4"
                             >
-                                <h2 className="text-xl font-bold text-gray-900 mb-2">
-                                    {workflowPhases[4].icon} 实时跟踪与反馈
-                                </h2>
-                                <p className="text-gray-600 mb-6">
-                                    AI 监控您的化妆过程，实时发现问题并给出专业建议，同时监控彩妆用品状态。
-                                </p>
-
-                                <div className="grid md:grid-cols-2 gap-6">
-                                    {/* Operation Feedback */}
+                                {/* Header */}
+                                <div className="flex items-center justify-between mb-4">
                                     <div>
-                                        <h3 className="font-semibold text-gray-800 mb-3">
-                                            🎯 操作反馈
+                                        <h2 className="text-xl font-bold text-gray-900">
+                                            {workflowPhases[4].icon} 实时错误识别与语音纠正
+                                        </h2>
+                                        <p className="text-gray-500 text-sm">
+                                            AI 实时监控化妆动作，发现错误立即语音提示
+                                        </p>
+                                    </div>
+                                    {/* AI Status */}
+                                    <motion.div
+                                        className="flex items-center gap-2 px-4 py-2 bg-red-100 rounded-full"
+                                        animate={{ opacity: [0.7, 1, 0.7] }}
+                                        transition={{ duration: 1, repeat: Infinity }}
+                                    >
+                                        <span className="w-3 h-3 bg-red-500 rounded-full animate-pulse" />
+                                        <span className="text-red-700 text-sm font-medium">错误检测中</span>
+                                    </motion.div>
+                                </div>
+
+                                {/* Main Content: Mirror + Error Detection */}
+                                <div className="grid lg:grid-cols-3 gap-4 mb-4">
+                                    {/* Mirror with Error Overlay */}
+                                    <div className="lg:col-span-2 relative bg-gradient-to-b from-slate-100 to-slate-200 rounded-2xl p-4">
+                                        {/* Voice Alert Banner - Error */}
+                                        {showFeedback && (
+                                            <motion.div
+                                                className="absolute top-2 left-2 right-2 z-10 bg-gradient-to-r from-red-600 to-orange-600 text-white px-4 py-3 rounded-xl"
+                                                initial={{ y: -50, opacity: 0 }}
+                                                animate={{ y: 0, opacity: 1 }}
+                                                transition={{ type: "spring" }}
+                                            >
+                                                <div className="flex items-center gap-3">
+                                                    <motion.div
+                                                        className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center"
+                                                        animate={{ scale: [1, 1.2, 1] }}
+                                                        transition={{ duration: 0.5, repeat: Infinity }}
+                                                    >
+                                                        <span className="text-2xl">🔊</span>
+                                                    </motion.div>
+                                                    <div className="flex-1">
+                                                        <div className="text-xs opacity-80 mb-1">⚠️ 语音纠正播放中</div>
+                                                        <motion.div
+                                                            className="text-sm font-medium"
+                                                            animate={{ opacity: [1, 0.7, 1] }}
+                                                            transition={{ duration: 1.5, repeat: Infinity }}
+                                                        >
+                                                            "眼影涂抹范围过小，建议向眼尾方向延伸2毫米，打造更深邃的眼型..."
+                                                        </motion.div>
+                                                    </div>
+                                                    <div className="flex items-center gap-1">
+                                                        <motion.div className="w-1 h-4 bg-white rounded-full" animate={{ scaleY: [0.3, 1, 0.3] }} transition={{ duration: 0.3, repeat: Infinity }} />
+                                                        <motion.div className="w-1 h-4 bg-white rounded-full" animate={{ scaleY: [1, 0.3, 1] }} transition={{ duration: 0.3, repeat: Infinity, delay: 0.1 }} />
+                                                        <motion.div className="w-1 h-4 bg-white rounded-full" animate={{ scaleY: [0.5, 1, 0.5] }} transition={{ duration: 0.3, repeat: Infinity, delay: 0.2 }} />
+                                                        <motion.div className="w-1 h-4 bg-white rounded-full" animate={{ scaleY: [0.8, 0.4, 0.8] }} transition={{ duration: 0.3, repeat: Infinity, delay: 0.15 }} />
+                                                    </div>
+                                                </div>
+                                            </motion.div>
+                                        )}
+
+                                        <div className="w-full max-w-xl mx-auto pt-16">
+                                            <SketchFace
+                                                makeupStep={3}
+                                                highlightArea="eyeshadow"
+                                                showTransformation={true}
+                                                beautyScore={72}
+                                                showZoneGuides={true}
+                                                activeZone="eyeshadow"
+                                            />
+                                        </div>
+
+                                        {/* Error Detection Overlay on Face */}
+                                        {showFeedback && (
+                                            <motion.div
+                                                className="absolute top-1/3 left-1/2 transform -translate-x-1/2"
+                                                initial={{ scale: 0 }}
+                                                animate={{ scale: 1 }}
+                                                transition={{ type: "spring", delay: 0.5 }}
+                                            >
+                                                <motion.div
+                                                    className="w-20 h-20 border-4 border-red-500 rounded-full flex items-center justify-center bg-red-500/20"
+                                                    animate={{ scale: [1, 1.1, 1], borderColor: ['#ef4444', '#f97316', '#ef4444'] }}
+                                                    transition={{ duration: 1, repeat: Infinity }}
+                                                >
+                                                    <span className="text-3xl">❌</span>
+                                                </motion.div>
+                                                <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-red-600 text-white text-xs px-3 py-1 rounded-full whitespace-nowrap">
+                                                    眼影范围不足
+                                                </div>
+                                            </motion.div>
+                                        )}
+                                    </div>
+
+                                    {/* Error Detection Panel */}
+                                    <div className="space-y-3">
+                                        {/* Detected Error Card */}
+                                        {showFeedback && (
+                                            <motion.div
+                                                className="bg-red-50 border-2 border-red-300 rounded-xl p-4"
+                                                initial={{ x: 50, opacity: 0 }}
+                                                animate={{ x: 0, opacity: 1 }}
+                                            >
+                                                <div className="flex items-center gap-2 mb-3">
+                                                    <AlertTriangle className="w-5 h-5 text-red-500" />
+                                                    <span className="font-bold text-red-700">检测到操作错误</span>
+                                                </div>
+                                                <div className="space-y-2 text-sm">
+                                                    <div className="flex justify-between">
+                                                        <span className="text-gray-600">错误类型:</span>
+                                                        <span className="font-medium text-red-700">动作不到位</span>
+                                                    </div>
+                                                    <div className="flex justify-between">
+                                                        <span className="text-gray-600">问题区域:</span>
+                                                        <span className="font-medium text-red-700">眼影区域</span>
+                                                    </div>
+                                                    <div className="flex justify-between">
+                                                        <span className="text-gray-600">使用产品:</span>
+                                                        <span className="font-medium">眼影盘</span>
+                                                    </div>
+                                                    <div className="flex justify-between">
+                                                        <span className="text-gray-600">检测置信度:</span>
+                                                        <span className="font-medium text-red-700">92%</span>
+                                                    </div>
+                                                </div>
+                                            </motion.div>
+                                        )}
+
+                                        {/* Correction Guide */}
+                                        {showFeedback && (
+                                            <motion.div
+                                                className="bg-green-50 border border-green-200 rounded-xl p-4"
+                                                initial={{ x: 50, opacity: 0 }}
+                                                animate={{ x: 0, opacity: 1 }}
+                                                transition={{ delay: 0.3 }}
+                                            >
+                                                <div className="flex items-center gap-2 mb-2">
+                                                    <Check className="w-5 h-5 text-green-600" />
+                                                    <span className="font-bold text-green-700">纠正建议</span>
+                                                </div>
+                                                <ul className="text-sm text-green-800 space-y-1">
+                                                    <li>• 眼影向眼尾延伸 2-3mm</li>
+                                                    <li>• 使用晕染刷轻扫过渡</li>
+                                                    <li>• 眼窝深处加深颜色</li>
+                                                </ul>
+                                            </motion.div>
+                                        )}
+
+                                        {/* Real-time Detection Log */}
+                                        <div className="bg-gray-900 rounded-xl p-3 text-white">
+                                            <div className="flex items-center gap-2 mb-2">
+                                                <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+                                                <span className="text-xs text-gray-400">错误检测日志</span>
+                                            </div>
+                                            <div className="space-y-1 text-xs font-mono max-h-32 overflow-y-auto">
+                                                {showFeedback && (
+                                                    <>
+                                                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-red-400">
+                                                            ✗ 09:32:15 眼影范围检测: 不足
+                                                        </motion.div>
+                                                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="text-yellow-400">
+                                                            ⚠ 09:32:10 晕染力度: 偏轻
+                                                        </motion.div>
+                                                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }} className="text-green-400">
+                                                            ✓ 09:32:05 底色上色: 正确
+                                                        </motion.div>
+                                                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} className="text-green-400">
+                                                            ✓ 09:31:58 产品识别: 眼影盘
+                                                        </motion.div>
+                                                    </>
+                                                )}
+                                            </div>
+                                        </div>
+
+                                        {/* Product Issue */}
+                                        {showFeedback && (
+                                            <motion.div
+                                                className="bg-amber-50 border border-amber-200 rounded-xl p-3"
+                                                initial={{ x: 50, opacity: 0 }}
+                                                animate={{ x: 0, opacity: 1 }}
+                                                transition={{ delay: 0.6 }}
+                                            >
+                                                <div className="flex items-center gap-2 mb-2">
+                                                    <span className="text-amber-600">⚠️</span>
+                                                    <span className="font-medium text-amber-700 text-sm">产品建议</span>
+                                                </div>
+                                                <p className="text-xs text-amber-800">
+                                                    当前眼影盘偏冷色调，与今日暖色妆容不匹配。推荐使用 Urban Decay Naked Heat。
+                                                </p>
+                                            </motion.div>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Bottom: Operation History + Product Monitoring */}
+                                <div className="grid md:grid-cols-2 gap-4">
+                                    {/* Operation Feedback History */}
+                                    <div className="bg-white rounded-xl p-4 border border-gray-200">
+                                        <h3 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                                            <Eye className="w-5 h-5 text-mirror-500" />
+                                            操作记录
                                         </h3>
-                                        <div className="space-y-3">
+                                        <div className="space-y-2 max-h-48 overflow-y-auto">
                                             {showFeedback &&
                                                 mockOperationFeedback.map((feedback, i) => (
                                                     <motion.div
                                                         key={feedback.id}
                                                         initial={{ opacity: 0, x: -20 }}
                                                         animate={{ opacity: 1, x: 0 }}
-                                                        transition={{ delay: i * 0.3 }}
+                                                        transition={{ delay: i * 0.2 }}
                                                         className={cn(
-                                                            "p-4 rounded-xl border-l-4",
+                                                            "p-3 rounded-lg border-l-4 flex items-start gap-3",
                                                             feedback.severity === 'warning'
                                                                 ? "bg-amber-50 border-amber-500"
                                                                 : feedback.severity === 'success'
@@ -867,115 +1211,82 @@ export default function WorkflowPage() {
                                                                 : "bg-blue-50 border-blue-500"
                                                         )}
                                                     >
-                                                        <div className="flex items-start gap-3">
-                                                            {feedback.severity === 'warning' ? (
-                                                                <AlertTriangle className="w-5 h-5 text-amber-500 flex-shrink-0" />
-                                                            ) : feedback.severity === 'success' ? (
-                                                                <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
-                                                            ) : (
-                                                                <Info className="w-5 h-5 text-blue-500 flex-shrink-0" />
-                                                            )}
-                                                            <div>
-                                                                <div className="flex items-center gap-2">
-                                                                    <span className="font-medium text-gray-900">
-                                                                        {feedback.issue}
-                                                                    </span>
-                                                                    <span className="text-xs text-gray-400">
-                                                                        {feedback.timestamp}
-                                                                    </span>
-                                                                </div>
-                                                                <p className="text-sm text-gray-600 mt-1">
-                                                                    {feedback.suggestion}
-                                                                </p>
+                                                        {feedback.severity === 'warning' ? (
+                                                            <AlertTriangle className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
+                                                        ) : feedback.severity === 'success' ? (
+                                                            <Check className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                                                        ) : (
+                                                            <Info className="w-4 h-4 text-blue-500 flex-shrink-0 mt-0.5" />
+                                                        )}
+                                                        <div className="flex-1 min-w-0">
+                                                            <div className="flex items-center gap-2 flex-wrap">
+                                                                <span className="font-medium text-gray-900 text-sm">{feedback.issue}</span>
+                                                                <span className="text-xs text-gray-400">{feedback.timestamp}</span>
+                                                                {feedback.severity === 'warning' && (
+                                                                    <span className="text-xs bg-amber-200 text-amber-800 px-2 py-0.5 rounded-full">已语音提示</span>
+                                                                )}
                                                             </div>
+                                                            <p className="text-xs text-gray-600 mt-1">{feedback.suggestion}</p>
                                                         </div>
                                                     </motion.div>
                                                 ))}
                                         </div>
                                     </div>
 
-                                    {/* Product Alerts */}
-                                    <div>
-                                        <h3 className="font-semibold text-gray-800 mb-3">
-                                            📦 产品监控
+                                    {/* Product Monitoring */}
+                                    <div className="bg-white rounded-xl p-4 border border-gray-200">
+                                        <h3 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                                            <ShoppingCart className="w-5 h-5 text-mirror-500" />
+                                            产品监控 & 补货建议
                                         </h3>
-                                        <div className="space-y-3">
+                                        <div className="space-y-2 max-h-48 overflow-y-auto">
                                             {showFeedback &&
                                                 mockProductAlerts.map((alert, i) => (
                                                     <motion.div
                                                         key={alert.id}
                                                         initial={{ opacity: 0, x: 20 }}
                                                         animate={{ opacity: 1, x: 0 }}
-                                                        transition={{ delay: i * 0.3 + 0.5 }}
+                                                        transition={{ delay: i * 0.2 + 0.5 }}
                                                         className={cn(
-                                                            "p-4 rounded-xl",
+                                                            "p-3 rounded-lg",
                                                             alert.urgency === 'high'
                                                                 ? "bg-red-50 border border-red-200"
-                                                                : "bg-gray-50 border border-gray-200"
+                                                                : "bg-gray-50"
                                                         )}
                                                     >
-                                                        <div className="flex items-start justify-between">
-                                                            <div>
+                                                        <div className="flex items-start justify-between gap-2">
+                                                            <div className="flex-1 min-w-0">
                                                                 <div className="flex items-center gap-2">
                                                                     {alert.urgency === 'high' && (
                                                                         <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
                                                                     )}
-                                                                    <span className="font-medium text-gray-900">
+                                                                    <span className="font-medium text-gray-900 text-sm truncate">
                                                                         {alert.productName}
                                                                     </span>
-                                                                    {alert.brand && (
-                                                                        <span className="text-xs text-gray-500">
-                                                                            {alert.brand}
-                                                                        </span>
-                                                                    )}
                                                                 </div>
-                                                                <p className="text-sm text-gray-600 mt-1">
-                                                                    {alert.message}
-                                                                </p>
+                                                                <p className="text-xs text-gray-600 mt-1">{alert.message}</p>
                                                                 {alert.remaining && (
-                                                                    <div className="mt-2">
-                                                                        <div className="h-2 w-32 bg-gray-200 rounded-full overflow-hidden">
+                                                                    <div className="mt-2 flex items-center gap-2">
+                                                                        <div className="h-1.5 flex-1 bg-gray-200 rounded-full overflow-hidden">
                                                                             <div
                                                                                 className={cn(
                                                                                     "h-full rounded-full",
-                                                                                    alert.remaining < 30
-                                                                                        ? "bg-red-500"
-                                                                                        : "bg-green-500"
+                                                                                    alert.remaining < 30 ? "bg-red-500" : "bg-green-500"
                                                                                 )}
                                                                                 style={{ width: `${alert.remaining}%` }}
                                                                             />
                                                                         </div>
-                                                                        <span className="text-xs text-gray-500">
-                                                                            剩余 {alert.remaining}%
-                                                                        </span>
+                                                                        <span className="text-xs text-gray-500">{alert.remaining}%</span>
                                                                     </div>
                                                                 )}
                                                             </div>
                                                             {alert.suggestedAction && (
-                                                                <button className="flex items-center gap-1 px-3 py-1.5 bg-mirror-500 text-white text-sm rounded-lg hover:bg-mirror-600 transition-colors">
-                                                                    <ShoppingCart className="w-4 h-4" />
+                                                                <button className="flex-shrink-0 flex items-center gap-1 px-2 py-1 bg-mirror-500 text-white text-xs rounded-lg hover:bg-mirror-600">
+                                                                    <ShoppingCart className="w-3 h-3" />
                                                                     {alert.suggestedAction}
                                                                 </button>
                                                             )}
                                                         </div>
-                                                        {alert.suggestedProduct && (
-                                                            <div className="mt-3 p-2 bg-white rounded-lg flex items-center justify-between">
-                                                                <div className="text-sm">
-                                                                    <span className="text-gray-500">推荐替代：</span>
-                                                                    <span className="font-medium text-gray-900">
-                                                                        {alert.suggestedProduct}
-                                                                    </span>
-                                                                </div>
-                                                                <span className="text-mirror-600 font-medium">
-                                                                    ¥{alert.price}
-                                                                </span>
-                                                            </div>
-                                                        )}
-                                                        {alert.salePrice && (
-                                                            <div className="mt-2 text-sm text-green-600">
-                                                                🏷️ {alert.nextSale}特惠价 ¥{alert.salePrice}
-                                                            </div>
-                                                        )}
                                                     </motion.div>
                                                 ))}
                                         </div>
