@@ -148,30 +148,293 @@ const salesProjection = {
     },
 };
 
-// 产品定价策略
+// 产品定价策略 - 2个版本，高端定位
 const pricingStrategy = [
     {
-        tier: '标准版',
-        price: 2999,
-        target: '年轻用户入门',
-        features: ['AI皮肤分析', '基础化妆指导', '产品推荐', '社区功能'],
-        margin: 35,
+        tier: 'Mirror Pro',
+        price: 5999,
+        target: '主力款 - 追求品质生活的都市女性',
+        tagline: '专业级AI美妆顾问',
+        hardwareFeatures: [
+            { name: '4K高清镜面', desc: '医美级肤质检测精度' },
+            { name: '双轴云台', desc: '±45°自动追踪人脸' },
+            { name: '专业补光系统', desc: '模拟自然光/办公光/约会光' },
+            { name: '环形LED指示', desc: '状态显示+氛围灯' },
+        ],
+        aiFeatures: [
+            'AI皮肤深度分析（毛孔/痘痘/皱纹/色斑）',
+            'Agentic 化妆指导（实时纠错）',
+            '个性化妆容推荐（匹配场合/心情）',
+            'AI购物助手（智能比价/一键购买）',
+        ],
+        serviceIncluded: '首年Pro会员（价值¥599）',
+        margin: 45,
     },
     {
-        tier: '专业版',
-        price: 4999,
-        target: '核心用户主推',
-        features: ['全部标准版功能', '云台追踪', '机械臂辅助', '高级AI教程', 'VIP社区'],
-        margin: 42,
-    },
-    {
-        tier: '旗舰版',
-        price: 7999,
-        target: '高端用户/送礼',
-        features: ['全部专业版功能', '真皮肤检测传感器', '限量设计款', '专属客服', '终身免费升级'],
-        margin: 48,
+        tier: 'Mirror Ultra',
+        price: 9999,
+        target: '旗舰款 - 科技美学追求者/高端礼品',
+        tagline: '全能AI美妆机器人',
+        hardwareFeatures: [
+            { name: '8K超清+3D深度摄像头', desc: '亚毫米级皮肤分析' },
+            { name: '三轴云台+手势识别', desc: '解放双手，挥手操控' },
+            { name: '双机械臂系统', desc: '自动递送化妆品' },
+            { name: '多光谱传感器', desc: '真皮层健康检测' },
+            { name: '高保真音响', desc: '沉浸式语音陪伴' },
+        ],
+        aiFeatures: [
+            '全部Pro版AI功能',
+            'Agentic 自主购物代理（授权自动下单）',
+            'AI 私人美妆顾问（7×24实时问答）',
+            '皮肤健康趋势预测（30天预警）',
+            'AR虚拟试妆（实时渲染）',
+            '直播美颜同步（抖音/小红书）',
+        ],
+        serviceIncluded: '终身Ultra会员（价值¥12,000+）',
+        margin: 52,
+        isRecommended: true,
     },
 ];
+
+// 支撑高价的硬件差异化
+const premiumHardwareJustification = [
+    {
+        category: '视觉系统',
+        standard: '普通720P摄像头',
+        ours: '8K+3D深度摄像头+多光谱',
+        value: '医美级检测精度，竞品无法复制',
+        costDelta: 800,
+        perceivedValue: 3000,
+    },
+    {
+        category: '机械结构',
+        standard: '固定支架',
+        ours: '三轴云台+双机械臂',
+        value: '解放双手，差异化明显',
+        costDelta: 600,
+        perceivedValue: 2500,
+    },
+    {
+        category: '传感器',
+        standard: '无',
+        ours: '多光谱皮肤传感器',
+        value: '真皮层检测，专业级数据',
+        costDelta: 400,
+        perceivedValue: 2000,
+    },
+    {
+        category: '交互系统',
+        standard: '触屏',
+        ours: '手势+语音+触控多模态',
+        value: '化妆时无需触碰，卫生便捷',
+        costDelta: 200,
+        perceivedValue: 1000,
+    },
+    {
+        category: '音频系统',
+        standard: '普通喇叭',
+        ours: '高保真立体声+降噪麦克风',
+        value: '沉浸式陪伴体验',
+        costDelta: 150,
+        perceivedValue: 800,
+    },
+];
+
+// Agentic AI 功能价值
+const agenticAIFeatures = [
+    {
+        name: 'Agentic 购物代理',
+        description: '授权AI自主比价、抢购、下单',
+        userValue: '省时省心，不错过优惠',
+        monetization: '交易佣金 3-8%',
+        example: '"帮我盯着这款口红，降价20%就买"',
+        trend: 'Shopify Agentic Storefronts, Amazon Buy for Me',
+    },
+    {
+        name: 'AI 皮肤健康顾问',
+        description: '基于时序数据的皮肤趋势预测',
+        userValue: '提前预警问题，精准护肤',
+        monetization: '订阅服务 ¥49/月',
+        example: '"您的T区出油趋势上升，建议调整护肤方案"',
+        trend: '类似Apple Health的皮肤版',
+    },
+    {
+        name: '实时化妆纠错',
+        description: 'CV识别化妆动作，即时语音指导',
+        userValue: '每次化妆都能进步',
+        monetization: '高级教程 ¥199/套',
+        example: '"眼线画太粗了，建议用棉签修正边缘"',
+        trend: 'AI教练模式，Peloton式体验',
+    },
+    {
+        name: 'AR虚拟试妆',
+        description: '实时渲染口红、眼影、腮红效果',
+        userValue: '购前预览，减少踩雷',
+        monetization: '品牌合作费 ¥5-10/次试妆',
+        example: '试遍MAC所有色号，不用去柜台',
+        trend: 'Revieve, ModiFace技术',
+    },
+    {
+        name: '社交内容生成',
+        description: '自动生成对比图、短视频、笔记',
+        userValue: '轻松产出优质内容',
+        monetization: '高级模板 ¥9.9/套',
+        example: '一键生成小红书爆款格式的化妆日记',
+        trend: 'AIGC内容创作',
+    },
+    {
+        name: 'Agent-to-Agent 协作',
+        description: '与品牌AI、电商AI直接对话交易',
+        userValue: '无缝购物，最优价格',
+        monetization: '交易流水分成',
+        example: '我们的AI与天猫AI自动谈判优惠券',
+        trend: 'Shopify UCP协议, Google Agentic Commerce',
+    },
+];
+
+// 服务收费模式
+const serviceRevenueModel = {
+    subscription: [
+        {
+            tier: '基础会员',
+            price: 0,
+            period: '永久',
+            features: ['基础皮肤分析', '每日3次化妆指导', '社区浏览'],
+            targetUsers: '所有硬件用户',
+        },
+        {
+            tier: 'Pro会员',
+            price: 599,
+            period: '年',
+            features: [
+                '无限次AI化妆指导',
+                '皮肤健康趋势报告',
+                '专属化妆教程库',
+                '优先客服',
+                'AR试妆无限制',
+            ],
+            targetUsers: '活跃用户60%转化',
+            arpu: 599,
+        },
+        {
+            tier: 'Ultra会员',
+            price: 1999,
+            period: '年',
+            features: [
+                '全部Pro功能',
+                'Agentic购物代理权限',
+                'AI私人顾问7×24',
+                '皮肤问题预警',
+                '直播美颜同步',
+                '专属1v1美妆师咨询（4次/年）',
+            ],
+            targetUsers: '高净值用户15%',
+            arpu: 1999,
+        },
+    ],
+    transaction: [
+        {
+            type: 'Agentic购物佣金',
+            rate: '3-8%',
+            scenario: '用户通过AI代理购买美妆产品',
+            estimatedGMV: '人均¥3000/年',
+            estimatedRevenue: '¥120-240/用户/年',
+        },
+        {
+            type: '品牌AR试妆费',
+            rate: '¥5-10/次',
+            scenario: '用户虚拟试用品牌产品',
+            estimatedVolume: '人均50次/年',
+            estimatedRevenue: '¥250-500/用户/年',
+        },
+        {
+            type: '内容变现分成',
+            rate: '10-20%',
+            scenario: '用户分享购买链接产生销售',
+            estimatedGMV: '活跃创作者¥5000/年',
+            estimatedRevenue: '¥500-1000/创作者/年',
+        },
+    ],
+    b2b: [
+        {
+            type: '品牌数据服务',
+            price: '¥50万-200万/年',
+            scenario: '向美妆品牌提供脱敏用户洞察',
+            clients: '头部美妆品牌20+',
+        },
+        {
+            type: '新品测试平台',
+            price: '¥10万/次',
+            scenario: '品牌新品上市前用户测试',
+            clients: '年50+次测试',
+        },
+    ],
+};
+
+// Agentic Commerce 趋势整合
+const agenticCommerceTrends = {
+    marketSize: {
+        current: 209, // 亿美元 2026
+        projected2030: 10000, // 亿美元
+        cagr: 45,
+    },
+    keyPlayers: [
+        { name: 'Shopify', move: 'Agentic Storefronts + UCP协议', implication: '我们接入UCP，产品可被全球AI发现' },
+        { name: 'Google', move: 'AI Shopping Mode', implication: '与Google合作，成为推荐设备' },
+        { name: 'Amazon', move: 'Buy for Me + Rufus Auto Buy', implication: '用户授权我们的AI自动在亚马逊下单' },
+        { name: 'OpenAI', move: 'ChatGPT Instant Checkout', implication: '接入ChatGPT购物生态' },
+        { name: 'Mastercard', move: 'Agent Pay', implication: '支持AI代理安全支付' },
+    ],
+    ourStrategy: [
+        {
+            phase: '2025',
+            action: '接入Shopify UCP协议',
+            goal: '产品被AI购物助手推荐',
+        },
+        {
+            phase: '2026',
+            action: '上线Agentic购物代理',
+            goal: '用户授权自主购物',
+        },
+        {
+            phase: '2027',
+            action: 'Agent-to-Agent交易',
+            goal: '与品牌AI直接谈判',
+        },
+        {
+            phase: '2028',
+            action: '开放AI代理API',
+            goal: '成为美妆垂直领域的AI入口',
+        },
+    ],
+};
+
+// 更新后的收入预测（含服务收入）
+const revenueProjectionWithServices = {
+    years: ['2025', '2026', '2027', '2028', '2029'],
+    hardware: {
+        units: [80000, 280000, 650000, 1100000, 1800000],
+        avgPrice: [7200, 7500, 7800, 8000, 8200], // 均价提升
+        revenue: [5.76, 21, 50.7, 88, 147.6], // 亿
+    },
+    subscription: {
+        activeUsers: [60000, 220000, 520000, 900000, 1500000],
+        conversionRate: [0.4, 0.5, 0.55, 0.6, 0.65],
+        arpu: [400, 500, 600, 700, 800],
+        revenue: [0.96, 5.5, 17.16, 37.8, 78], // 亿
+    },
+    transaction: {
+        gmv: [1.2, 6.6, 20.8, 45, 90], // 亿
+        takeRate: [0.05, 0.055, 0.06, 0.065, 0.07],
+        revenue: [0.06, 0.36, 1.25, 2.93, 6.3], // 亿
+    },
+    b2b: {
+        clients: [5, 15, 30, 50, 80],
+        avgContract: [80, 100, 120, 150, 180], // 万
+        revenue: [0.04, 0.15, 0.36, 0.75, 1.44], // 亿
+    },
+    total: [6.82, 27.01, 69.47, 129.48, 233.34], // 亿
+};
 
 // 竞争格局
 const competitors = [
@@ -404,13 +667,14 @@ const huaweiStrategy = {
 };
 
 export default function InvestmentPage() {
-    const [activeTab, setActiveTab] = useState<'overview' | 'market' | 'audience' | 'projection' | 'competition' | 'risk' | 'huawei'>('overview');
+    const [activeTab, setActiveTab] = useState<'overview' | 'market' | 'audience' | 'projection' | 'agentic' | 'competition' | 'risk' | 'huawei'>('overview');
 
     const tabs = [
         { id: 'overview', label: '投资概览', icon: BarChart3 },
         { id: 'market', label: '市场分析', icon: Globe },
         { id: 'audience', label: '目标用户', icon: Users },
-        { id: 'projection', label: '销售预测', icon: TrendingUp },
+        { id: 'projection', label: '收入预测', icon: TrendingUp },
+        { id: 'agentic', label: 'Agentic商业', icon: Zap, highlight: true },
         { id: 'competition', label: '竞争格局', icon: Target },
         { id: 'risk', label: '风险分析', icon: AlertTriangle },
         { id: 'huawei', label: '华为战略', icon: Layers, highlight: true },
@@ -471,19 +735,20 @@ export default function InvestmentPage() {
                             <div className="prose text-gray-600 max-w-none">
                                 <p className="text-lg leading-relaxed">
                                     <strong>AgenticMirror</strong> 是全球首款<strong>具身智能美妆机器人</strong>，
-                                    集成 AI 皮肤分析、云台人脸追踪、机械臂辅助、实时化妆指导于一体。
-                                    产品瞄准中国及东南亚地区 <strong>5亿+</strong> 潜在女性用户，
-                                    预计 <strong>2029年</strong> 实现年收入 <strong>50亿+</strong> 人民币。
+                                    集成 AI 皮肤分析、云台人脸追踪、机械臂辅助、Agentic AI 自主购物于一体。
+                                    采用 <strong>硬件+服务</strong> 双轮驱动模式，
+                                    预计 <strong>2029年</strong> 实现年收入 <strong>233亿</strong> 人民币，
+                                    其中服务收入占比 <strong>37%</strong>。
                                 </p>
                             </div>
 
                             {/* Key Metrics */}
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
                                 {[
-                                    { label: '目标市场规模', value: '6,120亿', unit: '人民币', growth: '+8.5%' },
-                                    { label: '潜在用户', value: '4.2亿', unit: '人', growth: '中国女性' },
-                                    { label: '2029年预计收入', value: '49.3亿', unit: '人民币', growth: 'CAGR 85%' },
-                                    { label: '预计市场占有率', value: '11%', unit: '', growth: '智能美妆赛道' },
+                                    { label: '2029年总收入', value: '233亿', unit: '人民币', growth: 'CAGR 103%' },
+                                    { label: '硬件收入', value: '148亿', unit: '人民币', growth: '180万台/年' },
+                                    { label: '服务收入', value: '86亿', unit: '人民币', growth: '订阅+交易+B2B' },
+                                    { label: 'Agentic GMV', value: '90亿', unit: '人民币', growth: 'AI代理交易额' },
                                 ].map((metric, i) => (
                                     <div key={i} className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4">
                                         <div className="text-2xl font-bold text-blue-600">{metric.value}</div>
@@ -513,43 +778,114 @@ export default function InvestmentPage() {
                             </div>
                         </div>
 
-                        {/* Pricing Strategy */}
+                        {/* Pricing Strategy - 2 Tiers */}
                         <div className="bg-white rounded-2xl shadow-lg p-6">
-                            <h2 className="text-xl font-bold text-gray-900 mb-4">产品定价策略</h2>
-                            <div className="grid md:grid-cols-3 gap-4">
+                            <h2 className="text-xl font-bold text-gray-900 mb-2">产品定价策略</h2>
+                            <p className="text-sm text-gray-500 mb-4">高端定位，2个版本覆盖核心用户群</p>
+                            <div className="grid md:grid-cols-2 gap-6">
                                 {pricingStrategy.map((tier, i) => (
                                     <div
                                         key={i}
                                         className={cn(
-                                            "rounded-xl p-5 border-2 transition-all",
-                                            i === 1 ? "border-blue-500 bg-blue-50" : "border-gray-200 bg-white"
+                                            "rounded-2xl p-6 border-2 transition-all relative",
+                                            'isRecommended' in tier && tier.isRecommended
+                                                ? "border-purple-500 bg-gradient-to-br from-purple-50 to-pink-50"
+                                                : "border-gray-200 bg-white"
                                         )}
                                     >
-                                        {i === 1 && (
-                                            <div className="text-xs bg-blue-600 text-white px-2 py-1 rounded-full w-fit mb-2">
-                                                主推款
+                                        {'isRecommended' in tier && tier.isRecommended && (
+                                            <div className="absolute -top-3 left-6 text-xs bg-gradient-to-r from-purple-600 to-pink-600 text-white px-3 py-1 rounded-full">
+                                                推荐旗舰
                                             </div>
                                         )}
-                                        <h3 className="text-lg font-bold text-gray-800">{tier.tier}</h3>
-                                        <div className="text-3xl font-bold text-blue-600 my-2">
-                                            ¥{tier.price.toLocaleString()}
+                                        <div className="flex items-start justify-between mb-4">
+                                            <div>
+                                                <h3 className="text-xl font-bold text-gray-800">{tier.tier}</h3>
+                                                <p className="text-sm text-gray-500">{tier.tagline}</p>
+                                            </div>
+                                            <div className="text-right">
+                                                <div className="text-3xl font-bold text-purple-600">¥{tier.price.toLocaleString()}</div>
+                                                <div className="text-xs text-gray-400">毛利率 {tier.margin}%</div>
+                                            </div>
                                         </div>
-                                        <div className="text-sm text-gray-500 mb-3">{tier.target}</div>
-                                        <ul className="space-y-2">
-                                            {tier.features.map((feature, j) => (
-                                                <li key={j} className="flex items-center gap-2 text-sm text-gray-600">
-                                                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
-                                                    {feature}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                        <div className="mt-4 pt-4 border-t border-gray-100">
-                                            <div className="text-sm text-gray-500">
-                                                毛利率: <span className="font-bold text-green-600">{tier.margin}%</span>
+                                        <div className="text-sm text-purple-600 mb-4">{tier.target}</div>
+
+                                        <div className="mb-4">
+                                            <h4 className="text-xs font-bold text-gray-500 uppercase mb-2">硬件配置</h4>
+                                            <div className="grid grid-cols-2 gap-2">
+                                                {tier.hardwareFeatures.map((hw, j) => (
+                                                    <div key={j} className="bg-white/80 rounded-lg p-2">
+                                                        <div className="font-medium text-gray-800 text-sm">{hw.name}</div>
+                                                        <div className="text-xs text-gray-500">{hw.desc}</div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        <div className="mb-4">
+                                            <h4 className="text-xs font-bold text-gray-500 uppercase mb-2">AI 功能</h4>
+                                            <ul className="space-y-1">
+                                                {tier.aiFeatures.map((feature, j) => (
+                                                    <li key={j} className="flex items-start gap-2 text-sm text-gray-600">
+                                                        <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                                                        {feature}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+
+                                        <div className="bg-gradient-to-r from-amber-100 to-orange-100 rounded-lg p-3">
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-lg">🎁</span>
+                                                <span className="text-sm font-medium text-amber-800">{tier.serviceIncluded}</span>
                                             </div>
                                         </div>
                                     </div>
                                 ))}
+                            </div>
+                        </div>
+
+                        {/* Premium Hardware Justification */}
+                        <div className="bg-white rounded-2xl shadow-lg p-6">
+                            <h2 className="text-xl font-bold text-gray-900 mb-2">高价支撑点分析</h2>
+                            <p className="text-sm text-gray-500 mb-4">硬件差异化创造感知价值溢价</p>
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-sm">
+                                    <thead>
+                                        <tr className="border-b border-gray-200">
+                                            <th className="text-left py-2 px-3">模块</th>
+                                            <th className="text-left py-2 px-3">竞品方案</th>
+                                            <th className="text-left py-2 px-3">我们的方案</th>
+                                            <th className="text-right py-2 px-3">成本增量</th>
+                                            <th className="text-right py-2 px-3">感知价值</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {premiumHardwareJustification.map((item, i) => (
+                                            <tr key={i} className="border-b border-gray-100">
+                                                <td className="py-2 px-3 font-medium">{item.category}</td>
+                                                <td className="py-2 px-3 text-gray-500">{item.standard}</td>
+                                                <td className="py-2 px-3 text-purple-600 font-medium">{item.ours}</td>
+                                                <td className="py-2 px-3 text-right text-gray-500">+¥{item.costDelta}</td>
+                                                <td className="py-2 px-3 text-right text-green-600 font-bold">+¥{item.perceivedValue.toLocaleString()}</td>
+                                            </tr>
+                                        ))}
+                                        <tr className="bg-purple-50 font-bold">
+                                            <td className="py-2 px-3" colSpan={3}>合计</td>
+                                            <td className="py-2 px-3 text-right">+¥2,150</td>
+                                            <td className="py-2 px-3 text-right text-green-600">+¥9,300</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div className="mt-4 bg-green-50 rounded-lg p-4">
+                                <div className="flex items-center gap-2">
+                                    <CheckCircle className="w-5 h-5 text-green-600" />
+                                    <span className="text-sm text-green-800">
+                                        <strong>结论：</strong>成本增加约¥2,150，但用户感知价值增加¥9,300，
+                                        支撑售价¥9,999完全合理，毛利率可达52%
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </motion.div>
@@ -837,114 +1173,108 @@ export default function InvestmentPage() {
                         animate={{ opacity: 1, y: 0 }}
                         className="space-y-6"
                     >
-                        {/* Revenue Projection */}
+                        {/* Revenue Projection with Services */}
                         <div className="bg-white rounded-2xl shadow-lg p-6">
                             <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                                 <TrendingUp className="w-6 h-6 text-green-600" />
-                                五年销售预测 (2025-2029)
+                                五年收入预测 (硬件+服务)
                             </h2>
 
-                            {/* Chart Visualization */}
-                            <div className="grid md:grid-cols-2 gap-6 mb-6">
-                                {/* China */}
-                                <div className="bg-red-50 rounded-xl p-4">
-                                    <h3 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
-                                        <span>🇨🇳</span> 中国市场
-                                    </h3>
-                                    <div className="space-y-3">
-                                        {salesProjection.years.map((year, i) => (
-                                            <div key={year} className="flex items-center gap-3">
-                                                <div className="w-12 text-sm font-medium text-gray-600">{year}</div>
-                                                <div className="flex-1">
-                                                    <div className="h-6 bg-gray-200 rounded-full overflow-hidden">
-                                                        <motion.div
-                                                            className="h-full bg-gradient-to-r from-red-500 to-orange-500"
-                                                            initial={{ width: 0 }}
-                                                            animate={{ width: `${(salesProjection.china.revenue[i] / 36) * 100}%` }}
-                                                            transition={{ duration: 1, delay: i * 0.1 }}
-                                                        />
-                                                    </div>
-                                                </div>
-                                                <div className="w-20 text-right">
-                                                    <div className="font-bold text-red-600">¥{salesProjection.china.revenue[i]}亿</div>
-                                                    <div className="text-xs text-gray-500">{salesProjection.china.units[i].toLocaleString()}台</div>
-                                                </div>
+                            {/* Stacked Bar Chart */}
+                            <div className="space-y-4 mb-6">
+                                {revenueProjectionWithServices.years.map((year, i) => (
+                                    <div key={year} className="flex items-center gap-4">
+                                        <div className="w-12 text-sm font-bold text-gray-600">{year}</div>
+                                        <div className="flex-1">
+                                            <div className="h-10 bg-gray-100 rounded-lg overflow-hidden flex">
+                                                <motion.div
+                                                    className="h-full bg-blue-500 flex items-center justify-center text-white text-xs"
+                                                    initial={{ width: 0 }}
+                                                    animate={{ width: `${(revenueProjectionWithServices.hardware.revenue[i] / revenueProjectionWithServices.total[i]) * 100}%` }}
+                                                    transition={{ duration: 1 }}
+                                                >
+                                                    {revenueProjectionWithServices.hardware.revenue[i] > 10 && `¥${revenueProjectionWithServices.hardware.revenue[i]}亿`}
+                                                </motion.div>
+                                                <motion.div
+                                                    className="h-full bg-purple-500 flex items-center justify-center text-white text-xs"
+                                                    initial={{ width: 0 }}
+                                                    animate={{ width: `${(revenueProjectionWithServices.subscription.revenue[i] / revenueProjectionWithServices.total[i]) * 100}%` }}
+                                                    transition={{ duration: 1, delay: 0.2 }}
+                                                >
+                                                    {revenueProjectionWithServices.subscription.revenue[i] > 5 && `¥${revenueProjectionWithServices.subscription.revenue[i]}亿`}
+                                                </motion.div>
+                                                <motion.div
+                                                    className="h-full bg-pink-500"
+                                                    initial={{ width: 0 }}
+                                                    animate={{ width: `${(revenueProjectionWithServices.transaction.revenue[i] / revenueProjectionWithServices.total[i]) * 100}%` }}
+                                                    transition={{ duration: 1, delay: 0.3 }}
+                                                />
+                                                <motion.div
+                                                    className="h-full bg-amber-500"
+                                                    initial={{ width: 0 }}
+                                                    animate={{ width: `${(revenueProjectionWithServices.b2b.revenue[i] / revenueProjectionWithServices.total[i]) * 100}%` }}
+                                                    transition={{ duration: 1, delay: 0.4 }}
+                                                />
                                             </div>
-                                        ))}
+                                        </div>
+                                        <div className="w-24 text-right">
+                                            <div className="text-lg font-bold text-gray-800">¥{revenueProjectionWithServices.total[i]}亿</div>
+                                        </div>
                                     </div>
-                                </div>
+                                ))}
+                            </div>
 
-                                {/* Southeast Asia */}
-                                <div className="bg-emerald-50 rounded-xl p-4">
-                                    <h3 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
-                                        <span>🌏</span> 东南亚市场
-                                    </h3>
-                                    <div className="space-y-3">
-                                        {salesProjection.years.map((year, i) => (
-                                            <div key={year} className="flex items-center gap-3">
-                                                <div className="w-12 text-sm font-medium text-gray-600">{year}</div>
-                                                <div className="flex-1">
-                                                    <div className="h-6 bg-gray-200 rounded-full overflow-hidden">
-                                                        <motion.div
-                                                            className="h-full bg-gradient-to-r from-emerald-500 to-teal-500"
-                                                            initial={{ width: 0 }}
-                                                            animate={{ width: `${(salesProjection.southeastAsia.revenue[i] / 13.3) * 100}%` }}
-                                                            transition={{ duration: 1, delay: i * 0.1 }}
-                                                        />
-                                                    </div>
-                                                </div>
-                                                <div className="w-20 text-right">
-                                                    <div className="font-bold text-emerald-600">¥{salesProjection.southeastAsia.revenue[i]}亿</div>
-                                                    <div className="text-xs text-gray-500">{salesProjection.southeastAsia.units[i].toLocaleString()}台</div>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
+                            {/* Legend */}
+                            <div className="flex flex-wrap gap-4 mb-6">
+                                <div className="flex items-center gap-2"><div className="w-4 h-4 bg-blue-500 rounded" /><span className="text-sm">硬件销售</span></div>
+                                <div className="flex items-center gap-2"><div className="w-4 h-4 bg-purple-500 rounded" /><span className="text-sm">订阅服务</span></div>
+                                <div className="flex items-center gap-2"><div className="w-4 h-4 bg-pink-500 rounded" /><span className="text-sm">交易佣金</span></div>
+                                <div className="flex items-center gap-2"><div className="w-4 h-4 bg-amber-500 rounded" /><span className="text-sm">B2B服务</span></div>
                             </div>
 
                             {/* Summary */}
                             <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-6 text-white">
                                 <div className="grid md:grid-cols-4 gap-4 text-center">
                                     <div>
-                                        <div className="text-3xl font-bold">158万</div>
-                                        <div className="text-blue-200">2029年总销量</div>
-                                    </div>
-                                    <div>
-                                        <div className="text-3xl font-bold">¥49.3亿</div>
+                                        <div className="text-3xl font-bold">¥233亿</div>
                                         <div className="text-blue-200">2029年总收入</div>
                                     </div>
                                     <div>
-                                        <div className="text-3xl font-bold">85%</div>
+                                        <div className="text-3xl font-bold">180万</div>
+                                        <div className="text-blue-200">年销量（台）</div>
+                                    </div>
+                                    <div>
+                                        <div className="text-3xl font-bold">103%</div>
                                         <div className="text-blue-200">5年CAGR</div>
                                     </div>
                                     <div>
-                                        <div className="text-3xl font-bold">11%</div>
-                                        <div className="text-blue-200">目标市占率</div>
+                                        <div className="text-3xl font-bold">37%</div>
+                                        <div className="text-blue-200">服务收入占比</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Revenue Breakdown */}
+                        {/* Revenue Breakdown 2029 */}
                         <div className="bg-white rounded-2xl shadow-lg p-6">
-                            <h2 className="text-xl font-bold text-gray-900 mb-4">收入构成分析 (2029年预测)</h2>
+                            <h2 className="text-xl font-bold text-gray-900 mb-4">2029年收入构成详解</h2>
                             <div className="grid md:grid-cols-2 gap-6">
                                 <div className="space-y-4">
                                     {[
-                                        { source: '硬件销售', amount: 35.2, percentage: 71, color: 'bg-blue-500' },
-                                        { source: '耗材复购', amount: 6.8, percentage: 14, color: 'bg-purple-500' },
-                                        { source: '电商分佣', amount: 4.4, percentage: 9, color: 'bg-pink-500' },
-                                        { source: '会员订阅', amount: 2.9, percentage: 6, color: 'bg-orange-500' },
+                                        { source: '硬件销售', amount: 147.6, percentage: 63, color: 'bg-blue-500', detail: '180万台 × ¥8,200均价' },
+                                        { source: '订阅服务', amount: 78, percentage: 33, color: 'bg-purple-500', detail: '150万活跃用户 × ¥800 ARPU' },
+                                        { source: '交易佣金', amount: 6.3, percentage: 3, color: 'bg-pink-500', detail: '¥90亿GMV × 7%佣金' },
+                                        { source: 'B2B服务', amount: 1.44, percentage: 1, color: 'bg-amber-500', detail: '80个品牌客户 × ¥180万/年' },
                                     ].map((item, i) => (
                                         <div key={i} className="flex items-center gap-4">
                                             <div className={`w-4 h-4 rounded-full ${item.color}`} />
                                             <div className="flex-1">
                                                 <div className="flex justify-between mb-1">
                                                     <span className="text-sm font-medium text-gray-700">{item.source}</span>
-                                                    <span className="text-sm text-gray-500">¥{item.amount}亿 ({item.percentage}%)</span>
+                                                    <span className="text-sm font-bold text-gray-800">¥{item.amount}亿 ({item.percentage}%)</span>
                                                 </div>
-                                                <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                                                <div className="text-xs text-gray-500">{item.detail}</div>
+                                                <div className="h-2 bg-gray-100 rounded-full overflow-hidden mt-1">
                                                     <motion.div
                                                         className={`h-full ${item.color}`}
                                                         initial={{ width: 0 }}
@@ -956,26 +1286,37 @@ export default function InvestmentPage() {
                                         </div>
                                     ))}
                                 </div>
-                                <div className="bg-gray-50 rounded-xl p-4">
-                                    <h3 className="font-bold text-gray-800 mb-3">收入增长策略</h3>
-                                    <ul className="space-y-2 text-sm text-gray-600">
-                                        <li className="flex items-start gap-2">
-                                            <span className="text-blue-500">●</span>
-                                            <span><strong>硬件销售:</strong> 差异化产品线，覆盖不同价位段</span>
-                                        </li>
-                                        <li className="flex items-start gap-2">
-                                            <span className="text-purple-500">●</span>
-                                            <span><strong>耗材复购:</strong> 专属化妆棉、清洁液、滤镜膜等周边</span>
-                                        </li>
-                                        <li className="flex items-start gap-2">
-                                            <span className="text-pink-500">●</span>
-                                            <span><strong>电商分佣:</strong> 推荐购买彩妆产品，与品牌分成</span>
-                                        </li>
-                                        <li className="flex items-start gap-2">
-                                            <span className="text-orange-500">●</span>
-                                            <span><strong>会员订阅:</strong> 高级AI功能、独家教程、优先服务</span>
-                                        </li>
-                                    </ul>
+                                <div>
+                                    <div className="bg-purple-50 rounded-xl p-4 mb-4">
+                                        <h3 className="font-bold text-purple-800 mb-2">服务收入亮点</h3>
+                                        <ul className="space-y-2 text-sm text-purple-700">
+                                            <li>• 订阅转化率从40%提升至65%</li>
+                                            <li>• ARPU从¥400增长至¥800</li>
+                                            <li>• Agentic GMV达¥90亿，佣金率7%</li>
+                                            <li>• B2B客户数从5家增至80家</li>
+                                        </ul>
+                                    </div>
+                                    <div className="bg-green-50 rounded-xl p-4">
+                                        <h3 className="font-bold text-green-800 mb-2">单用户LTV估算</h3>
+                                        <div className="space-y-1 text-sm text-green-700">
+                                            <div className="flex justify-between">
+                                                <span>硬件购买</span>
+                                                <span className="font-bold">¥8,200</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span>3年订阅（按65%转化）</span>
+                                                <span className="font-bold">¥1,560</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span>3年交易佣金</span>
+                                                <span className="font-bold">¥630</span>
+                                            </div>
+                                            <div className="flex justify-between border-t border-green-200 pt-1 mt-1">
+                                                <span className="font-bold">用户LTV</span>
+                                                <span className="font-bold text-lg">¥10,390</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -990,13 +1331,13 @@ export default function InvestmentPage() {
                                 <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gray-200" />
                                 <div className="space-y-6">
                                     {[
-                                        { year: '2025 Q1', milestone: '产品发布', desc: '标准版上市，开启预售' },
-                                        { year: '2025 Q3', milestone: '销量破5万', desc: '完成种子用户积累，口碑传播' },
-                                        { year: '2026 Q1', milestone: '东南亚出海', desc: '新加坡、马来西亚首发' },
-                                        { year: '2026 Q4', milestone: '销量破20万', desc: '完成A轮融资，扩大产能' },
-                                        { year: '2027 Q2', milestone: '推出旗舰版', desc: '高端市场布局，提升品牌' },
-                                        { year: '2028 Q1', milestone: '销量破100万', desc: '成为品类头部玩家' },
-                                        { year: '2029 Q4', milestone: '年收入50亿', desc: '筹备IPO' },
+                                        { year: '2025 Q1', milestone: '双版本发布', desc: 'Pro ¥5,999 + Ultra ¥9,999 上市' },
+                                        { year: '2025 Q3', milestone: '接入Shopify UCP', desc: '成为AI购物可推荐产品' },
+                                        { year: '2026 Q2', milestone: 'Agentic购物上线', desc: '用户授权AI自主下单' },
+                                        { year: '2026 Q4', milestone: '服务收入破5亿', desc: '订阅+交易双轮驱动' },
+                                        { year: '2027 Q3', milestone: 'Agent-to-Agent', desc: '与品牌AI直接谈判' },
+                                        { year: '2028 Q2', milestone: '累计用户破300万', desc: '成为品类绝对领导者' },
+                                        { year: '2029 Q4', milestone: '年收入233亿', desc: '服务占比37%，筹备IPO' },
                                     ].map((item, i) => (
                                         <div key={i} className="flex items-start gap-4 relative">
                                             <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold text-xs text-center z-10">
@@ -1008,6 +1349,197 @@ export default function InvestmentPage() {
                                             </div>
                                         </div>
                                     ))}
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+
+                {/* Agentic Commerce Tab */}
+                {activeTab === 'agentic' && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="space-y-6"
+                    >
+                        {/* Agentic Commerce Header */}
+                        <div className="bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 rounded-2xl shadow-lg p-6 text-white">
+                            <div className="flex items-center gap-4 mb-4">
+                                <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center">
+                                    <Zap className="w-10 h-10" />
+                                </div>
+                                <div>
+                                    <h2 className="text-2xl font-bold">Agentic Commerce 战略</h2>
+                                    <p className="text-purple-200">AI代理自主购物 — 下一代电商革命</p>
+                                </div>
+                            </div>
+                            <div className="grid md:grid-cols-4 gap-4 mt-6">
+                                {[
+                                    { label: '2026全球市场', value: '$209亿', sub: 'AI购物交易额' },
+                                    { label: '2030预测', value: '$1万亿', sub: '年增速45%' },
+                                    { label: '用户接受度', value: '53%', sub: '愿意使用AI购物' },
+                                    { label: '流量增长', value: '4700%', sub: 'AI导流同比增速' },
+                                ].map((stat, i) => (
+                                    <div key={i} className="bg-white/10 backdrop-blur rounded-xl p-4 text-center">
+                                        <div className="text-2xl font-bold">{stat.value}</div>
+                                        <div className="text-sm text-purple-200">{stat.label}</div>
+                                        <div className="text-xs text-purple-300 mt-1">{stat.sub}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Industry Trends */}
+                        <div className="bg-white rounded-2xl shadow-lg p-6">
+                            <h2 className="text-xl font-bold text-gray-900 mb-4">行业巨头布局</h2>
+                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {agenticCommerceTrends.keyPlayers.map((player, i) => (
+                                    <div key={i} className="bg-gray-50 rounded-xl p-4">
+                                        <div className="font-bold text-gray-800 mb-1">{player.name}</div>
+                                        <div className="text-sm text-purple-600 mb-2">{player.move}</div>
+                                        <div className="text-xs text-gray-500">{player.implication}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Our Agentic AI Features */}
+                        <div className="bg-white rounded-2xl shadow-lg p-6">
+                            <h2 className="text-xl font-bold text-gray-900 mb-4">Agentic AI 功能矩阵</h2>
+                            <div className="grid md:grid-cols-2 gap-4">
+                                {agenticAIFeatures.map((feature, i) => (
+                                    <motion.div
+                                        key={i}
+                                        className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-4"
+                                        whileHover={{ scale: 1.02 }}
+                                    >
+                                        <h3 className="font-bold text-gray-800 mb-1">{feature.name}</h3>
+                                        <p className="text-sm text-gray-600 mb-2">{feature.description}</p>
+                                        <div className="bg-white rounded-lg p-2 mb-2">
+                                            <div className="text-xs text-gray-500">用户价值</div>
+                                            <div className="text-sm text-purple-600">{feature.userValue}</div>
+                                        </div>
+                                        <div className="flex justify-between items-center">
+                                            <div className="text-xs text-gray-500">
+                                                变现: <span className="text-green-600 font-medium">{feature.monetization}</span>
+                                            </div>
+                                            <div className="text-xs bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full">
+                                                {feature.trend}
+                                            </div>
+                                        </div>
+                                        <div className="mt-2 text-xs text-gray-400 italic">"{feature.example}"</div>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Service Revenue Model */}
+                        <div className="bg-white rounded-2xl shadow-lg p-6">
+                            <h2 className="text-xl font-bold text-gray-900 mb-4">服务收费模式</h2>
+
+                            {/* Subscription Tiers */}
+                            <h3 className="font-bold text-gray-700 mb-3">订阅服务</h3>
+                            <div className="grid md:grid-cols-3 gap-4 mb-6">
+                                {serviceRevenueModel.subscription.map((tier, i) => (
+                                    <div
+                                        key={i}
+                                        className={cn(
+                                            "rounded-xl p-4 border-2",
+                                            i === 2 ? "border-purple-500 bg-purple-50" : "border-gray-200"
+                                        )}
+                                    >
+                                        <div className="flex justify-between items-start mb-2">
+                                            <h4 className="font-bold text-gray-800">{tier.tier}</h4>
+                                            <div className="text-right">
+                                                <div className="text-xl font-bold text-purple-600">
+                                                    {tier.price === 0 ? '免费' : `¥${tier.price}`}
+                                                </div>
+                                                <div className="text-xs text-gray-500">/{tier.period}</div>
+                                            </div>
+                                        </div>
+                                        <ul className="space-y-1 mb-3">
+                                            {tier.features.map((f, j) => (
+                                                <li key={j} className="text-sm text-gray-600 flex items-start gap-1">
+                                                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                                                    {f}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                        <div className="text-xs text-gray-500">{tier.targetUsers}</div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Transaction Fees */}
+                            <h3 className="font-bold text-gray-700 mb-3">交易佣金</h3>
+                            <div className="grid md:grid-cols-3 gap-4 mb-6">
+                                {serviceRevenueModel.transaction.map((item, i) => (
+                                    <div key={i} className="bg-pink-50 rounded-xl p-4">
+                                        <div className="font-bold text-gray-800 mb-1">{item.type}</div>
+                                        <div className="text-2xl font-bold text-pink-600 mb-2">{item.rate}</div>
+                                        <div className="text-sm text-gray-600 mb-2">{item.scenario}</div>
+                                        <div className="text-xs text-green-600 font-medium">{item.estimatedRevenue}</div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* B2B Services */}
+                            <h3 className="font-bold text-gray-700 mb-3">B2B 服务</h3>
+                            <div className="grid md:grid-cols-2 gap-4">
+                                {serviceRevenueModel.b2b.map((item, i) => (
+                                    <div key={i} className="bg-amber-50 rounded-xl p-4">
+                                        <div className="flex justify-between items-start">
+                                            <div>
+                                                <div className="font-bold text-gray-800">{item.type}</div>
+                                                <div className="text-sm text-gray-600">{item.scenario}</div>
+                                            </div>
+                                            <div className="text-right">
+                                                <div className="text-xl font-bold text-amber-600">{item.price}</div>
+                                                <div className="text-xs text-gray-500">{item.clients}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Our Roadmap */}
+                        <div className="bg-white rounded-2xl shadow-lg p-6">
+                            <h2 className="text-xl font-bold text-gray-900 mb-4">Agentic Commerce 路线图</h2>
+                            <div className="grid md:grid-cols-4 gap-4">
+                                {agenticCommerceTrends.ourStrategy.map((step, i) => (
+                                    <div key={i} className="relative">
+                                        <div className="bg-gradient-to-br from-purple-100 to-pink-100 rounded-xl p-4 h-full">
+                                            <div className="text-sm font-bold text-purple-600 mb-2">{step.phase}</div>
+                                            <h4 className="font-bold text-gray-800 mb-1">{step.action}</h4>
+                                            <p className="text-sm text-gray-600">{step.goal}</p>
+                                        </div>
+                                        {i < 3 && (
+                                            <div className="hidden md:block absolute top-1/2 -right-2 text-purple-400 text-xl">→</div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Summary */}
+                        <div className="bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-2xl shadow-lg p-6 text-white">
+                            <h2 className="text-xl font-bold mb-4">Agentic Commerce 价值总结</h2>
+                            <div className="grid md:grid-cols-3 gap-6">
+                                <div className="bg-white/10 backdrop-blur rounded-xl p-4">
+                                    <div className="text-3xl font-bold mb-2">¥90亿</div>
+                                    <div className="text-purple-200">2029年Agentic GMV</div>
+                                    <div className="text-xs text-purple-300 mt-1">用户授权AI自主购物的交易总额</div>
+                                </div>
+                                <div className="bg-white/10 backdrop-blur rounded-xl p-4">
+                                    <div className="text-3xl font-bold mb-2">¥78亿</div>
+                                    <div className="text-purple-200">订阅服务收入</div>
+                                    <div className="text-xs text-purple-300 mt-1">高粘性可预测现金流</div>
+                                </div>
+                                <div className="bg-white/10 backdrop-blur rounded-xl p-4">
+                                    <div className="text-3xl font-bold mb-2">¥6.3亿</div>
+                                    <div className="text-purple-200">交易佣金收入</div>
+                                    <div className="text-xs text-purple-300 mt-1">美妆电商分润</div>
                                 </div>
                             </div>
                         </div>
