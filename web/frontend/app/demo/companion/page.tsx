@@ -22,91 +22,103 @@ import { cn } from '@/lib/utils/cn';
 import SketchFace from '@/components/workflow/SketchFace';
 import CompanionChat from '@/components/workflow/CompanionChat';
 
-// 成瘾使用场景
-const addictiveScenarios = [
+// 核心体验场景 - 获得感、成就感、仪式感、炫耀感
+const coreExperiences = [
     {
-        id: 'morning-ritual',
-        title: '晨间唤醒仪式',
-        icon: '🌅',
-        description: '每天早起，小镜用温柔的声音叫醒您，递上洁面产品，开启美丽的一天',
+        id: 'social-share',
+        title: '妆容打卡分享',
+        icon: '📸',
+        category: '炫耀感',
+        description: '一键生成精美妆容对比图，分享到小红书/朋友圈，收获点赞和羡慕',
         features: [
-            '语音唤醒 + 天气播报',
-            '机械臂递送洁面乳',
-            '3分钟快速护肤指导',
-            '今日穿搭建议',
+            'Before/After 智能对比图生成',
+            '自动添加产品标签水印',
+            '一键分享小红书/抖音/朋友圈',
+            '闺蜜圈互动点赞评论',
         ],
-        reward: '连续7天早起化妆，解锁"早起女神"称号 + 100积分',
-        bgColor: 'from-amber-100 to-orange-100',
-    },
-    {
-        id: 'lunch-touch-up',
-        title: '午间补妆闺蜜',
-        icon: '☀️',
-        description: '午餐后，小镜贴心提醒您补妆，帮您整理化妆包，递上补妆产品',
-        features: [
-            '智能检测妆容脱落',
-            '机械臂递送补妆产品',
-            '30秒快速补妆教程',
-            '拍照记录对比效果',
-        ],
-        reward: '完成5次午间补妆，解锁"精致女孩"徽章',
-        bgColor: 'from-yellow-100 to-amber-100',
-    },
-    {
-        id: 'date-prep',
-        title: '约会前紧急美颜',
-        icon: '💕',
-        description: '约会前1小时，小镜帮您挑选最适合的妆容，全程语音指导',
-        features: [
-            '根据约会场合推荐妆容',
-            '机械臂整理所需产品',
-            '实时追踪化妆进度',
-            '紧急突发问题处理',
-        ],
-        reward: '成功完成3次约会妆，获得"恋爱达人"限定教程',
+        reward: '分享获赞超100，兑换YSL口红小样',
+        stats: '已有 12,847 位姐妹分享',
         bgColor: 'from-pink-100 to-rose-100',
     },
     {
-        id: 'night-care',
-        title: '睡前护肤仪式',
-        icon: '🌙',
-        description: '晚间护肤时光，小镜陪您卸妆，聊聊今天的心情，推荐助眠音乐',
+        id: 'points-exchange',
+        title: '积分兑换彩妆',
+        icon: '🎁',
+        category: '获得感',
+        description: '每日打卡、完成任务、分享互动都能获得积分，兑换真实大牌彩妆',
         features: [
-            '卸妆步骤语音指导',
-            '机械臂递送护肤品',
-            '皮肤修复建议',
-            '舒缓音乐 + 晚安问候',
+            '500分兑换口红小样',
+            '1500分兑换眼影盘',
+            '3000分兑换正装护肤品',
+            '限量联名款优先兑换权',
         ],
-        reward: '连续14天晚间护肤，解锁"护肤女王"成就',
+        reward: '本月已有 2,341 人成功兑换',
+        stats: '合作品牌：MAC、YSL、兰蔻、雅诗兰黛',
+        bgColor: 'from-amber-100 to-orange-100',
+    },
+    {
+        id: 'live-makeover',
+        title: '直播变装秀',
+        icon: '🎬',
+        category: '仪式感',
+        description: '开启直播模式，AI全程指导化妆，闺蜜实时围观打气，记录蜕变全过程',
+        features: [
+            '直播化妆全程记录',
+            '闺蜜可连线围观+弹幕',
+            'AI实时点评鼓励',
+            '自动剪辑精彩片段',
+        ],
+        reward: '直播时长超30分钟，获得"直播女王"勋章',
+        stats: '平均每场直播收获 156 条打气弹幕',
         bgColor: 'from-purple-100 to-indigo-100',
     },
     {
-        id: 'shopping-advisor',
-        title: '智能购物顾问',
-        icon: '🛍️',
-        description: '根据您的使用习惯，小镜自动追踪产品余量，推荐最优购买时机',
+        id: 'ai-compliment',
+        title: 'AI闺蜜夸夸群',
+        icon: '💬',
+        category: '成就感',
+        description: 'AI化身您的专属闺蜜团，随时随地花式夸奖，治愈您的每一天',
         features: [
-            '产品余量智能监测',
-            '价格波动提醒',
-            '双11/618最优购买清单',
-            '专属折扣码推送',
+            '每日定制甜言蜜语',
+            '化妆进步实时表扬',
+            '低落时暖心鼓励',
+            '生日/纪念日特别惊喜',
         ],
-        reward: '省钱超过500元，解锁"省钱小能手"成就',
-        bgColor: 'from-green-100 to-emerald-100',
+        reward: '累计收到1000条夸奖，解锁"万人迷"称号',
+        stats: '今日已发送 89,234 条甜言蜜语',
+        bgColor: 'from-pink-100 to-purple-100',
     },
     {
-        id: 'skill-upgrade',
-        title: '化妆技能升级',
-        icon: '📚',
-        description: '每周解锁新的化妆教程，从入门到进阶，机械臂手把手示范',
+        id: 'ranking-glory',
+        title: '变美排行榜',
+        icon: '🏆',
+        category: '成就感',
+        description: '每周评选进步最大的美妆达人，登上荣誉榜，获得专属奖励',
         features: [
-            '阶梯式教程解锁',
-            '机械臂示范动作',
-            'AI评分打分系统',
-            '作品晒图社区',
+            '周榜/月榜/总榜三榜齐发',
+            '进步值、分享量、互动量多维度',
+            '前10名获得实物奖励',
+            '登榜专属头像框+称号',
         ],
-        reward: '完成10节课程，获得"化妆师认证"电子证书',
-        bgColor: 'from-blue-100 to-cyan-100',
+        reward: '登上周榜 Top10，获得 500 积分 + 限定头像框',
+        stats: '本周榜首：@小仙女Coco 进步值 +89',
+        bgColor: 'from-yellow-100 to-amber-100',
+    },
+    {
+        id: 'bestie-circle',
+        title: '闺蜜美妆圈',
+        icon: '👯',
+        category: '炫耀感',
+        description: '邀请闺蜜一起变美，组建专属美妆圈，互相监督打卡，一起兑换奖励',
+        features: [
+            '创建/加入闺蜜圈（最多8人）',
+            '圈内打卡互相可见',
+            '组队任务双倍积分',
+            '圈内排名良性竞争',
+        ],
+        reward: '邀请3位闺蜜加入，双方各得200积分',
+        stats: '已有 5,621 个闺蜜圈在一起变美',
+        bgColor: 'from-green-100 to-emerald-100',
     },
 ];
 
@@ -140,7 +152,7 @@ const limitedEvents = [
 ];
 
 export default function CompanionPage() {
-    const [selectedScenario, setSelectedScenario] = useState(addictiveScenarios[0]);
+    const [selectedScenario, setSelectedScenario] = useState(coreExperiences[0]);
     const [armAction, setArmAction] = useState<'idle' | 'picking' | 'handing' | 'waving' | 'organizing'>('idle');
     const [isPlaying, setIsPlaying] = useState(false);
     const [voiceEnabled, setVoiceEnabled] = useState(true);
@@ -320,14 +332,31 @@ export default function CompanionPage() {
                             专属美丽时刻
                         </h2>
 
-                        {/* Scenario Cards */}
+                        {/* Category Filter */}
+                        <div className="flex gap-2 mb-4 flex-wrap">
+                            {['全部', '获得感', '成就感', '仪式感', '炫耀感'].map((cat) => (
+                                <button
+                                    key={cat}
+                                    className={cn(
+                                        "px-3 py-1.5 rounded-full text-sm font-medium transition-all",
+                                        cat === '全部'
+                                            ? "bg-pink-500 text-white"
+                                            : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                                    )}
+                                >
+                                    {cat}
+                                </button>
+                            ))}
+                        </div>
+
+                        {/* Experience Cards */}
                         <div className="grid md:grid-cols-3 gap-3 mb-4">
-                            {addictiveScenarios.map((scenario) => (
+                            {coreExperiences.map((scenario) => (
                                 <motion.div
                                     key={scenario.id}
                                     onClick={() => setSelectedScenario(scenario)}
                                     className={cn(
-                                        "p-4 rounded-xl cursor-pointer transition-all border-2",
+                                        "p-4 rounded-xl cursor-pointer transition-all border-2 relative",
                                         selectedScenario.id === scenario.id
                                             ? "border-pink-500 bg-pink-50"
                                             : "border-transparent bg-gray-50 hover:bg-gray-100"
@@ -335,13 +364,23 @@ export default function CompanionPage() {
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                 >
+                                    {/* Category Badge */}
+                                    <span className={cn(
+                                        "absolute top-2 right-2 text-xs px-2 py-0.5 rounded-full",
+                                        scenario.category === '获得感' ? "bg-amber-100 text-amber-700" :
+                                        scenario.category === '成就感' ? "bg-purple-100 text-purple-700" :
+                                        scenario.category === '仪式感' ? "bg-blue-100 text-blue-700" :
+                                        "bg-pink-100 text-pink-700"
+                                    )}>
+                                        {scenario.category}
+                                    </span>
                                     <div className="text-2xl mb-2">{scenario.icon}</div>
                                     <h3 className="font-semibold text-gray-800 text-sm">{scenario.title}</h3>
                                 </motion.div>
                             ))}
                         </div>
 
-                        {/* Selected Scenario Detail */}
+                        {/* Selected Experience Detail */}
                         <AnimatePresence mode="wait">
                             <motion.div
                                 key={selectedScenario.id}
@@ -356,7 +395,18 @@ export default function CompanionPage() {
                                 <div className="flex items-start gap-4">
                                     <span className="text-4xl">{selectedScenario.icon}</span>
                                     <div className="flex-1">
-                                        <h3 className="text-xl font-bold text-gray-800 mb-2">{selectedScenario.title}</h3>
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <h3 className="text-xl font-bold text-gray-800">{selectedScenario.title}</h3>
+                                            <span className={cn(
+                                                "text-xs px-2 py-0.5 rounded-full",
+                                                selectedScenario.category === '获得感' ? "bg-amber-200 text-amber-800" :
+                                                selectedScenario.category === '成就感' ? "bg-purple-200 text-purple-800" :
+                                                selectedScenario.category === '仪式感' ? "bg-blue-200 text-blue-800" :
+                                                "bg-pink-200 text-pink-800"
+                                            )}>
+                                                {selectedScenario.category}
+                                            </span>
+                                        </div>
                                         <p className="text-gray-600 mb-4">{selectedScenario.description}</p>
 
                                         <div className="grid md:grid-cols-2 gap-3 mb-4">
@@ -368,11 +418,19 @@ export default function CompanionPage() {
                                             ))}
                                         </div>
 
-                                        <div className="bg-white/80 rounded-lg p-3">
-                                            <div className="flex items-center gap-2 text-sm">
-                                                <Trophy className="w-4 h-4 text-amber-500" />
-                                                <span className="font-medium text-gray-800">坚持奖励:</span>
-                                                <span className="text-pink-600">{selectedScenario.reward}</span>
+                                        <div className="space-y-2">
+                                            <div className="bg-white/80 rounded-lg p-3">
+                                                <div className="flex items-center gap-2 text-sm">
+                                                    <Gift className="w-4 h-4 text-pink-500" />
+                                                    <span className="font-medium text-gray-800">奖励:</span>
+                                                    <span className="text-pink-600">{selectedScenario.reward}</span>
+                                                </div>
+                                            </div>
+                                            <div className="bg-white/60 rounded-lg p-2">
+                                                <div className="flex items-center gap-2 text-xs text-gray-500">
+                                                    <Sparkles className="w-3 h-3" />
+                                                    {selectedScenario.stats}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
