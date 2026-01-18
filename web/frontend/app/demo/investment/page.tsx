@@ -19,6 +19,14 @@ import {
     ShoppingBag,
     Smartphone,
     Heart,
+    Layers,
+    Wifi,
+    Watch,
+    Tv,
+    Headphones,
+    Car,
+    Home,
+    Lightbulb,
 } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 
@@ -267,8 +275,136 @@ const investmentHighlights = [
     },
 ];
 
+// 华为战略合作分析
+const huaweiStrategy = {
+    // 1+8+N 战略定位
+    ecosystem: {
+        one: { name: '手机', icon: Smartphone, desc: '华为 Mate/P 系列', role: '中枢控制、数据同步、远程查看' },
+        eight: [
+            { name: '平板', icon: Tv, desc: 'MatePad', role: '大屏教程、精细化妆指导' },
+            { name: '手表', icon: Watch, desc: 'WATCH GT', role: '健康数据同步、生理期追踪' },
+            { name: '耳机', icon: Headphones, desc: 'FreeBuds', role: '语音指导、音乐播放' },
+            { name: '智慧屏', icon: Tv, desc: 'Vision', role: '客厅场景、家庭分享' },
+            { name: 'PC', icon: Smartphone, desc: 'MateBook', role: '内容创作、社区管理' },
+            { name: '车机', icon: Car, desc: '鸿蒙车载', role: '通勤补妆提醒' },
+            { name: '音箱', icon: Headphones, desc: 'Sound', role: '语音交互、氛围音乐' },
+            { name: 'VR/AR', icon: Layers, desc: 'Vision Glass', role: 'AR试妆、虚拟教程' },
+        ],
+        n: [
+            { name: '智能美妆镜', icon: Target, desc: 'AgenticMirror', isOurs: true },
+            { name: '智能灯光', icon: Lightbulb, desc: '全彩氛围', role: '化妆补光' },
+            { name: '智能窗帘', icon: Home, desc: '自动遮光', role: '光线控制' },
+            { name: '智能秤', icon: BarChart3, desc: '体脂秤', role: '身体数据' },
+        ],
+    },
+    // 鸿蒙生态优势
+    harmonyAdvantages: [
+        {
+            title: '超级终端',
+            desc: '一拉即合，设备无缝协同',
+            detail: '手机轻触魔镜，自动配对；手表检测到用户起床，魔镜自动开机预热',
+        },
+        {
+            title: '分布式能力',
+            desc: '能力跨设备调用',
+            detail: '魔镜调用手机摄像头多角度拍摄；调用平板大屏显示详细教程',
+        },
+        {
+            title: '统一账号',
+            desc: '华为账号一键登录',
+            detail: '无需额外注册，用户数据全端同步，无缝迁移',
+        },
+        {
+            title: '原子化服务',
+            desc: '免安装即用',
+            detail: '小艺语音唤起"美妆助手"卡片，无需下载App即可使用核心功能',
+        },
+        {
+            title: '隐私安全',
+            desc: '端侧AI+可信执行',
+            detail: '面部数据本地处理，符合华为隐私标准，增强用户信任',
+        },
+    ],
+    // 产品设计契合度
+    designAlignment: {
+        aesthetic: [
+            { aspect: '极简主义', huawei: '少即是多的设计哲学', mirror: '简洁机身，隐藏机械臂' },
+            { aspect: '圆润边角', huawei: 'Mate系列标志性圆角', mirror: '圆形镜面，柔和曲线' },
+            { aspect: '星耀纹理', huawei: '背板星环设计', mirror: '底座星耀光环' },
+            { aspect: '配色方案', huawei: '曜金黑、冰霜银、雅丹翠', mirror: '可定制华为同款配色' },
+        ],
+        materials: [
+            { material: '素皮', desc: '环保素皮材质，手感温润' },
+            { material: '陶瓷', desc: '纳米微晶陶瓷，耐磨高端' },
+            { material: '金属', desc: '航空铝合金一体成型' },
+        ],
+    },
+    // 渠道优势
+    channels: [
+        { channel: '华为体验店', count: '10,000+', advantage: '全国覆盖，高端形象' },
+        { channel: '华为商城', users: '3亿+', advantage: '官方背书，高转化' },
+        { channel: '华为花粉俱乐部', users: '1亿+', advantage: '忠诚粉丝，口碑传播' },
+        { channel: '智选生态', brands: '200+', advantage: '生态认证，品质背书' },
+    ],
+    // 华为合作后的销售预测
+    projectionWithHuawei: {
+        years: ['2025', '2026', '2027', '2028', '2029'],
+        standalone: {
+            units: [50000, 180000, 420000, 750000, 1200000],
+            revenue: [1.5, 5.4, 12.6, 22.5, 36],
+        },
+        withHuawei: {
+            units: [150000, 600000, 1500000, 3000000, 5000000],
+            revenue: [4.5, 18, 45, 90, 150],
+        },
+        multiplier: [3, 3.3, 3.6, 4, 4.2],
+    },
+    // 目标用户与华为用户重合度
+    userOverlap: {
+        huaweiUserProfile: [
+            '35-55岁中高收入人群',
+            '注重品质与品牌',
+            '科技接受度高',
+            '家庭消费决策者',
+            '对国产品牌认同感强',
+        ],
+        overlapRate: 72,
+        additionalReach: '通过华为渠道可触达 8000万+ 新增潜在用户',
+    },
+    // 合作模式
+    cooperationModels: [
+        {
+            model: '华为智选',
+            desc: '生态合作伙伴',
+            investment: '低',
+            revenue: '分成模式',
+            brand: '双品牌',
+            pros: ['快速入驻', '品牌背书', '渠道资源'],
+            cons: ['分成较高', '品牌独立性弱'],
+        },
+        {
+            model: '战略投资',
+            desc: '华为资本注资',
+            investment: '中',
+            revenue: '独立定价',
+            brand: '独立品牌+华为生态',
+            pros: ['资金支持', '深度合作', '技术赋能'],
+            cons: ['谈判周期长', '需让渡股权'],
+        },
+        {
+            model: '联合开发',
+            desc: '深度定制华为版',
+            investment: '高',
+            revenue: '买断+分成',
+            brand: 'HUAWEI x Mirror',
+            pros: ['最高溢价', '华为全力推广', '独家产品'],
+            cons: ['研发投入大', '依赖度高'],
+        },
+    ],
+};
+
 export default function InvestmentPage() {
-    const [activeTab, setActiveTab] = useState<'overview' | 'market' | 'audience' | 'projection' | 'competition' | 'risk'>('overview');
+    const [activeTab, setActiveTab] = useState<'overview' | 'market' | 'audience' | 'projection' | 'competition' | 'risk' | 'huawei'>('overview');
 
     const tabs = [
         { id: 'overview', label: '投资概览', icon: BarChart3 },
@@ -277,6 +413,7 @@ export default function InvestmentPage() {
         { id: 'projection', label: '销售预测', icon: TrendingUp },
         { id: 'competition', label: '竞争格局', icon: Target },
         { id: 'risk', label: '风险分析', icon: AlertTriangle },
+        { id: 'huawei', label: '华为战略', icon: Layers, highlight: true },
     ];
 
     return (
@@ -299,12 +436,19 @@ export default function InvestmentPage() {
                         className={cn(
                             "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all",
                             activeTab === tab.id
-                                ? "bg-blue-600 text-white shadow-lg"
-                                : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
+                                ? tab.id === 'huawei'
+                                    ? "bg-gradient-to-r from-red-600 to-red-500 text-white shadow-lg"
+                                    : "bg-blue-600 text-white shadow-lg"
+                                : 'highlight' in tab && tab.highlight
+                                    ? "bg-gradient-to-r from-red-50 to-orange-50 text-red-600 border border-red-200 hover:from-red-100 hover:to-orange-100"
+                                    : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
                         )}
                     >
                         <tab.icon className="w-4 h-4" />
                         {tab.label}
+                        {'highlight' in tab && tab.highlight && activeTab !== tab.id && (
+                            <span className="text-xs bg-red-500 text-white px-1.5 py-0.5 rounded-full">NEW</span>
+                        )}
                     </button>
                 ))}
             </div>
@@ -1221,6 +1365,404 @@ export default function InvestmentPage() {
                                 <p className="text-blue-200">
                                     目前寻求天使轮投资，诚邀有美妆、消费电子、AI背景的战略投资人
                                 </p>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+
+                {/* Huawei Strategy Tab */}
+                {activeTab === 'huawei' && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="space-y-6"
+                    >
+                        {/* Header Banner */}
+                        <div className="bg-gradient-to-r from-red-600 via-red-500 to-orange-500 rounded-2xl shadow-lg p-6 text-white">
+                            <div className="flex items-center gap-4 mb-4">
+                                <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center">
+                                    <span className="text-3xl font-bold text-red-600">华</span>
+                                </div>
+                                <div>
+                                    <h2 className="text-2xl font-bold">华为战略合作分析</h2>
+                                    <p className="text-red-100">如果华为来做，结合鸿蒙生态与 1+8+N 战略</p>
+                                </div>
+                            </div>
+                            <div className="grid md:grid-cols-4 gap-4 mt-6">
+                                {[
+                                    { label: '华为用户', value: '7.3亿', sub: '全球设备激活量' },
+                                    { label: '鸿蒙设备', value: '9亿+', sub: '生态设备数' },
+                                    { label: '用户重合度', value: '72%', sub: '目标用户匹配' },
+                                    { label: '销售倍增', value: '4.2x', sub: '合作后预期增幅' },
+                                ].map((stat, i) => (
+                                    <div key={i} className="bg-white/10 backdrop-blur rounded-xl p-4 text-center">
+                                        <div className="text-2xl font-bold">{stat.value}</div>
+                                        <div className="text-sm text-red-100">{stat.label}</div>
+                                        <div className="text-xs text-red-200 mt-1">{stat.sub}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* 1+8+N Strategy */}
+                        <div className="bg-white rounded-2xl shadow-lg p-6">
+                            <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                                <Layers className="w-6 h-6 text-red-600" />
+                                1+8+N 生态定位
+                            </h2>
+
+                            {/* The "1" - Phone */}
+                            <div className="mb-6">
+                                <div className="flex items-center gap-2 mb-3">
+                                    <span className="w-8 h-8 bg-red-600 text-white rounded-full flex items-center justify-center font-bold">1</span>
+                                    <span className="font-bold text-gray-800">核心中枢 - 手机</span>
+                                </div>
+                                <div className="bg-red-50 rounded-xl p-4 flex items-center gap-4">
+                                    <Smartphone className="w-12 h-12 text-red-600" />
+                                    <div>
+                                        <div className="font-bold text-gray-800">{huaweiStrategy.ecosystem.one.desc}</div>
+                                        <div className="text-sm text-gray-600">{huaweiStrategy.ecosystem.one.role}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* The "8" - Secondary Devices */}
+                            <div className="mb-6">
+                                <div className="flex items-center gap-2 mb-3">
+                                    <span className="w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center font-bold">8</span>
+                                    <span className="font-bold text-gray-800">八大入口 - 协同设备</span>
+                                </div>
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                    {huaweiStrategy.ecosystem.eight.map((device, i) => (
+                                        <div key={i} className="bg-orange-50 rounded-xl p-3 text-center">
+                                            <device.icon className="w-8 h-8 text-orange-600 mx-auto mb-2" />
+                                            <div className="font-medium text-gray-800 text-sm">{device.name}</div>
+                                            <div className="text-xs text-gray-500">{device.role}</div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* The "N" - IoT Devices */}
+                            <div>
+                                <div className="flex items-center gap-2 mb-3">
+                                    <span className="w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center font-bold">N</span>
+                                    <span className="font-bold text-gray-800">泛 IoT 设备 - 智能家居</span>
+                                </div>
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                    {huaweiStrategy.ecosystem.n.map((device, i) => (
+                                        <div
+                                            key={i}
+                                            className={cn(
+                                                "rounded-xl p-3 text-center",
+                                                'isOurs' in device && device.isOurs
+                                                    ? "bg-gradient-to-br from-red-100 to-orange-100 border-2 border-red-300"
+                                                    : "bg-amber-50"
+                                            )}
+                                        >
+                                            <device.icon className={cn(
+                                                "w-8 h-8 mx-auto mb-2",
+                                                'isOurs' in device && device.isOurs ? "text-red-600" : "text-amber-600"
+                                            )} />
+                                            <div className="font-medium text-gray-800 text-sm">{device.name}</div>
+                                            {'isOurs' in device && device.isOurs && (
+                                                <div className="text-xs text-red-600 font-bold mt-1">⭐ 我们的产品</div>
+                                            )}
+                                            {'role' in device && <div className="text-xs text-gray-500">{device.role}</div>}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* HarmonyOS Advantages */}
+                        <div className="bg-white rounded-2xl shadow-lg p-6">
+                            <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                                <Wifi className="w-6 h-6 text-red-600" />
+                                鸿蒙生态优势
+                            </h2>
+                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {huaweiStrategy.harmonyAdvantages.map((advantage, i) => (
+                                    <motion.div
+                                        key={i}
+                                        className="bg-gradient-to-br from-red-50 to-orange-50 rounded-xl p-4"
+                                        whileHover={{ scale: 1.02 }}
+                                    >
+                                        <h3 className="font-bold text-gray-800 mb-1">{advantage.title}</h3>
+                                        <p className="text-sm text-red-600 mb-2">{advantage.desc}</p>
+                                        <p className="text-xs text-gray-600">{advantage.detail}</p>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Design Alignment */}
+                        <div className="bg-white rounded-2xl shadow-lg p-6">
+                            <h2 className="text-xl font-bold text-gray-900 mb-4">产品设计契合度</h2>
+                            <div className="grid md:grid-cols-2 gap-6">
+                                {/* Aesthetic */}
+                                <div>
+                                    <h3 className="font-bold text-gray-700 mb-3">设计语言对照</h3>
+                                    <div className="space-y-3">
+                                        {huaweiStrategy.designAlignment.aesthetic.map((item, i) => (
+                                            <div key={i} className="bg-gray-50 rounded-lg p-3">
+                                                <div className="font-medium text-gray-800 mb-2">{item.aspect}</div>
+                                                <div className="grid grid-cols-2 gap-2 text-sm">
+                                                    <div className="bg-red-50 rounded p-2">
+                                                        <span className="text-red-600 font-medium">华为:</span>
+                                                        <span className="text-gray-600 ml-1">{item.huawei}</span>
+                                                    </div>
+                                                    <div className="bg-blue-50 rounded p-2">
+                                                        <span className="text-blue-600 font-medium">魔镜:</span>
+                                                        <span className="text-gray-600 ml-1">{item.mirror}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                                {/* Materials */}
+                                <div>
+                                    <h3 className="font-bold text-gray-700 mb-3">材质选择</h3>
+                                    <div className="space-y-3 mb-6">
+                                        {huaweiStrategy.designAlignment.materials.map((item, i) => (
+                                            <div key={i} className="flex items-center gap-3 bg-gray-50 rounded-lg p-3">
+                                                <div className="w-12 h-12 bg-gradient-to-br from-gray-200 to-gray-300 rounded-lg" />
+                                                <div>
+                                                    <div className="font-medium text-gray-800">{item.material}</div>
+                                                    <div className="text-sm text-gray-500">{item.desc}</div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <h3 className="font-bold text-gray-700 mb-3">华为同款配色</h3>
+                                    <div className="flex gap-3">
+                                        <div className="flex-1 h-16 bg-gradient-to-r from-gray-900 to-amber-900 rounded-lg flex items-center justify-center text-white text-sm">曜金黑</div>
+                                        <div className="flex-1 h-16 bg-gradient-to-r from-gray-300 to-gray-100 rounded-lg flex items-center justify-center text-gray-700 text-sm">冰霜银</div>
+                                        <div className="flex-1 h-16 bg-gradient-to-r from-emerald-700 to-emerald-500 rounded-lg flex items-center justify-center text-white text-sm">雅丹翠</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Channel Advantages */}
+                        <div className="bg-white rounded-2xl shadow-lg p-6">
+                            <h2 className="text-xl font-bold text-gray-900 mb-4">渠道资源优势</h2>
+                            <div className="grid md:grid-cols-4 gap-4">
+                                {huaweiStrategy.channels.map((ch, i) => (
+                                    <div key={i} className="bg-gradient-to-br from-red-50 to-orange-50 rounded-xl p-4 text-center">
+                                        <div className="text-2xl font-bold text-red-600">
+                                            {'count' in ch ? ch.count : ch.users || ch.brands}
+                                        </div>
+                                        <div className="font-medium text-gray-800">{ch.channel}</div>
+                                        <div className="text-xs text-gray-500 mt-1">{ch.advantage}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Sales Projection Comparison */}
+                        <div className="bg-white rounded-2xl shadow-lg p-6">
+                            <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                                <TrendingUp className="w-6 h-6 text-green-600" />
+                                销售预测对比 (独立 vs 华为合作)
+                            </h2>
+                            <div className="space-y-4">
+                                {huaweiStrategy.projectionWithHuawei.years.map((year, i) => (
+                                    <div key={year} className="grid md:grid-cols-2 gap-4">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-16 text-sm font-medium text-gray-600">{year}</div>
+                                            <div className="flex-1">
+                                                <div className="text-xs text-gray-500 mb-1">独立运营</div>
+                                                <div className="h-6 bg-gray-100 rounded-full overflow-hidden">
+                                                    <motion.div
+                                                        className="h-full bg-blue-500"
+                                                        initial={{ width: 0 }}
+                                                        animate={{ width: `${(huaweiStrategy.projectionWithHuawei.standalone.revenue[i] / 150) * 100}%` }}
+                                                        transition={{ duration: 1, delay: i * 0.1 }}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="w-20 text-right font-bold text-blue-600">
+                                                ¥{huaweiStrategy.projectionWithHuawei.standalone.revenue[i]}亿
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center gap-3">
+                                            <div className="flex-1">
+                                                <div className="text-xs text-gray-500 mb-1">华为合作</div>
+                                                <div className="h-6 bg-gray-100 rounded-full overflow-hidden">
+                                                    <motion.div
+                                                        className="h-full bg-gradient-to-r from-red-500 to-orange-500"
+                                                        initial={{ width: 0 }}
+                                                        animate={{ width: `${(huaweiStrategy.projectionWithHuawei.withHuawei.revenue[i] / 150) * 100}%` }}
+                                                        transition={{ duration: 1, delay: i * 0.1 }}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="w-20 text-right font-bold text-red-600">
+                                                ¥{huaweiStrategy.projectionWithHuawei.withHuawei.revenue[i]}亿
+                                            </div>
+                                            <div className="w-16 text-right text-green-600 font-bold">
+                                                ×{huaweiStrategy.projectionWithHuawei.multiplier[i]}
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="mt-6 bg-gradient-to-r from-red-600 to-orange-500 rounded-xl p-4 text-white text-center">
+                                <div className="text-3xl font-bold">¥150亿</div>
+                                <div className="text-red-100">2029年华为合作后预计年收入</div>
+                                <div className="text-sm text-red-200 mt-1">相比独立运营增长 4.2 倍</div>
+                            </div>
+                        </div>
+
+                        {/* User Overlap */}
+                        <div className="bg-white rounded-2xl shadow-lg p-6">
+                            <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                                <Users className="w-6 h-6 text-blue-600" />
+                                目标用户重合度分析
+                            </h2>
+                            <div className="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <h3 className="font-bold text-gray-700 mb-3">华为核心用户画像</h3>
+                                    <ul className="space-y-2">
+                                        {huaweiStrategy.userOverlap.huaweiUserProfile.map((item, i) => (
+                                            <li key={i} className="flex items-center gap-2 text-sm text-gray-600">
+                                                <CheckCircle className="w-4 h-4 text-red-500" />
+                                                {item}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                <div className="flex flex-col items-center justify-center">
+                                    <div className="relative w-48 h-48">
+                                        <svg viewBox="0 0 100 100" className="w-full h-full">
+                                            <circle cx="35" cy="50" r="30" fill="rgba(59, 130, 246, 0.3)" stroke="#3B82F6" strokeWidth="2" />
+                                            <circle cx="65" cy="50" r="30" fill="rgba(239, 68, 68, 0.3)" stroke="#EF4444" strokeWidth="2" />
+                                            <text x="20" y="50" fontSize="8" fill="#3B82F6">魔镜用户</text>
+                                            <text x="60" y="50" fontSize="8" fill="#EF4444">华为用户</text>
+                                            <text x="50" y="55" fontSize="12" fontWeight="bold" textAnchor="middle" fill="#7C3AED">72%</text>
+                                        </svg>
+                                    </div>
+                                    <div className="text-center mt-4">
+                                        <div className="text-2xl font-bold text-purple-600">{huaweiStrategy.userOverlap.overlapRate}%</div>
+                                        <div className="text-sm text-gray-500">用户画像重合度</div>
+                                        <div className="text-xs text-green-600 mt-1">{huaweiStrategy.userOverlap.additionalReach}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Cooperation Models */}
+                        <div className="bg-white rounded-2xl shadow-lg p-6">
+                            <h2 className="text-xl font-bold text-gray-900 mb-4">合作模式选择</h2>
+                            <div className="grid md:grid-cols-3 gap-4">
+                                {huaweiStrategy.cooperationModels.map((model, i) => (
+                                    <div
+                                        key={i}
+                                        className={cn(
+                                            "rounded-xl p-5 border-2 transition-all",
+                                            i === 2 ? "border-red-500 bg-red-50" : "border-gray-200 bg-white"
+                                        )}
+                                    >
+                                        {i === 2 && (
+                                            <div className="text-xs bg-red-600 text-white px-2 py-1 rounded-full w-fit mb-2">
+                                                推荐
+                                            </div>
+                                        )}
+                                        <h3 className="text-lg font-bold text-gray-800">{model.model}</h3>
+                                        <p className="text-sm text-gray-500 mb-3">{model.desc}</p>
+
+                                        <div className="space-y-2 text-sm mb-4">
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-500">投入程度</span>
+                                                <span className="font-medium">{model.investment}</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-500">收益模式</span>
+                                                <span className="font-medium">{model.revenue}</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-500">品牌策略</span>
+                                                <span className="font-medium">{model.brand}</span>
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-2">
+                                            <div className="text-xs text-gray-500">优势:</div>
+                                            <div className="flex flex-wrap gap-1">
+                                                {model.pros.map((pro, j) => (
+                                                    <span key={j} className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">
+                                                        {pro}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                            <div className="text-xs text-gray-500 mt-2">挑战:</div>
+                                            <div className="flex flex-wrap gap-1">
+                                                {model.cons.map((con, j) => (
+                                                    <span key={j} className="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">
+                                                        {con}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Summary */}
+                        <div className="bg-gradient-to-r from-red-600 via-red-500 to-orange-500 rounded-2xl shadow-lg p-6 text-white">
+                            <h2 className="text-xl font-bold mb-4">华为合作战略总结</h2>
+                            <div className="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <h3 className="font-bold mb-3">为什么选择华为？</h3>
+                                    <ul className="space-y-2 text-sm text-red-100">
+                                        <li className="flex items-start gap-2">
+                                            <CheckCircle className="w-4 h-4 text-white mt-0.5 flex-shrink-0" />
+                                            鸿蒙生态设备数超9亿，现成的用户池
+                                        </li>
+                                        <li className="flex items-start gap-2">
+                                            <CheckCircle className="w-4 h-4 text-white mt-0.5 flex-shrink-0" />
+                                            1+8+N 战略完美契合智能家居场景
+                                        </li>
+                                        <li className="flex items-start gap-2">
+                                            <CheckCircle className="w-4 h-4 text-white mt-0.5 flex-shrink-0" />
+                                            华为品牌背书，快速建立市场信任
+                                        </li>
+                                        <li className="flex items-start gap-2">
+                                            <CheckCircle className="w-4 h-4 text-white mt-0.5 flex-shrink-0" />
+                                            全国10000+体验店，线下触达能力强
+                                        </li>
+                                        <li className="flex items-start gap-2">
+                                            <CheckCircle className="w-4 h-4 text-white mt-0.5 flex-shrink-0" />
+                                            华为用户与目标用户高度重合 (72%)
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h3 className="font-bold mb-3">合作价值</h3>
+                                    <div className="space-y-4">
+                                        <div className="bg-white/10 backdrop-blur rounded-xl p-4">
+                                            <div className="flex justify-between items-center">
+                                                <span>销售规模提升</span>
+                                                <span className="text-2xl font-bold">4.2×</span>
+                                            </div>
+                                        </div>
+                                        <div className="bg-white/10 backdrop-blur rounded-xl p-4">
+                                            <div className="flex justify-between items-center">
+                                                <span>2029年预计收入</span>
+                                                <span className="text-2xl font-bold">¥150亿</span>
+                                            </div>
+                                        </div>
+                                        <div className="bg-white/10 backdrop-blur rounded-xl p-4">
+                                            <div className="flex justify-between items-center">
+                                                <span>新增触达用户</span>
+                                                <span className="text-2xl font-bold">8000万+</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </motion.div>
