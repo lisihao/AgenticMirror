@@ -240,7 +240,252 @@ const premiumHardwareJustification = [
     },
 ];
 
-// Agentic AI 功能价值
+// ========== AgenticMirror 电商深度整合 ==========
+
+// 镜子硬件创造的独特电商优势
+const mirrorCommerceAdvantages = [
+    {
+        category: '实时感知',
+        icon: '👁️',
+        traditional: '用户主动搜索产品',
+        agenticMirror: '镜子主动发现问题，推荐解决方案',
+        example: '检测到眼下细纹加深 → 推荐眼霜 → AR试用 → 一键购买',
+        valueMultiplier: '转化率提升 3-5x',
+    },
+    {
+        category: '精准匹配',
+        icon: '🎯',
+        traditional: '基于浏览历史推荐',
+        agenticMirror: '基于真实肤质、肤色、脸型推荐',
+        example: '分析肤色为暖黄调 → 只推荐适合的口红色号',
+        valueMultiplier: '退货率降低 60%',
+    },
+    {
+        category: '消耗追踪',
+        icon: '📦',
+        traditional: '用户手动补货',
+        agenticMirror: 'AI追踪产品使用量，自动补货',
+        example: '检测粉底液剩余20% → 询问是否补货 → 自动下单',
+        valueMultiplier: '复购率提升 2x',
+    },
+    {
+        category: '效果验证',
+        icon: '📊',
+        traditional: '看评价决策',
+        agenticMirror: '用前/用后对比，数据化效果',
+        example: '使用精华28天 → 毛孔缩小12% → 确认有效继续购买',
+        valueMultiplier: 'LTV 提升 80%',
+    },
+    {
+        category: '场景理解',
+        icon: '🎭',
+        traditional: '通用产品推荐',
+        agenticMirror: '根据日程、心情、天气推荐',
+        example: '今天有重要会议 → 推荐持久底妆产品',
+        valueMultiplier: '客单价提升 40%',
+    },
+    {
+        category: '信任积累',
+        icon: '💎',
+        traditional: '每次购买都是新决策',
+        agenticMirror: '每天互动建立深度信任',
+        example: '连续3个月见证皮肤改善 → 信任AI推荐 → 授权自主购物',
+        valueMultiplier: 'Agentic授权率 45%',
+    },
+];
+
+// 完整购物场景流程
+const shoppingScenarios = [
+    {
+        id: 'proactive',
+        name: '主动发现型',
+        trigger: 'AI检测到问题',
+        icon: '🔍',
+        flow: [
+            { step: '检测', desc: '镜子发现黑眼圈加重', time: '每日' },
+            { step: '诊断', desc: 'AI分析：睡眠不足+用眼过度', time: '即时' },
+            { step: '推荐', desc: '推荐3款遮瑕+眼部精华组合', time: '即时' },
+            { step: 'AR试用', desc: '在脸上实时预览遮瑕效果', time: '30秒' },
+            { step: '比价', desc: 'Agent自动比价天猫/京东/小红书', time: '5秒' },
+            { step: '下单', desc: '确认最优价格，一键购买', time: '即时' },
+        ],
+        revenue: { type: '佣金', rate: '5-8%', avgOrder: 280 },
+        conversionRate: 35,
+    },
+    {
+        id: 'replenish',
+        name: '智能补货型',
+        trigger: '产品即将用完',
+        icon: '🔄',
+        flow: [
+            { step: '监测', desc: '持续追踪产品使用量', time: '持续' },
+            { step: '预警', desc: '检测到精华液剩余约15%', time: '自动' },
+            { step: '询问', desc: '"您的神仙水快用完了，要补货吗？"', time: '即时' },
+            { step: '优化', desc: '查找是否有更优惠的渠道/组合', time: '3秒' },
+            { step: '确认', desc: '用户说"好的"即完成下单', time: '语音' },
+            { step: '追踪', desc: '显示物流，预计送达时间', time: '持续' },
+        ],
+        revenue: { type: '订阅佣金', rate: '3-5%', avgOrder: 450 },
+        conversionRate: 72,
+    },
+    {
+        id: 'exploration',
+        name: '探索种草型',
+        trigger: '用户有化妆需求',
+        icon: '✨',
+        flow: [
+            { step: '场景', desc: '用户说"我下周有个婚礼"', time: '语音' },
+            { step: '搜索', desc: 'Agent搜索小红书婚礼妆容趋势', time: '2秒' },
+            { step: '匹配', desc: '结合用户脸型、肤色筛选适合的', time: '即时' },
+            { step: '展示', desc: 'AR实时试妆3种风格', time: '30秒' },
+            { step: '清单', desc: '生成购物清单：口红+腮红+高光', time: '即时' },
+            { step: '比价下单', desc: 'Agent一键完成最优购买', time: '10秒' },
+        ],
+        revenue: { type: '佣金+品牌费', rate: '8-12%', avgOrder: 680 },
+        conversionRate: 28,
+    },
+    {
+        id: 'subscription',
+        name: '订阅盒子型',
+        trigger: 'AI生成个性化方案',
+        icon: '📦',
+        flow: [
+            { step: '分析', desc: '综合3个月皮肤数据+偏好', time: '自动' },
+            { step: '策划', desc: 'AI策划本月护肤/彩妆方案', time: '月初' },
+            { step: '推荐', desc: '推送个性化产品组合', time: '即时' },
+            { step: '定制', desc: '用户可微调替换', time: '可选' },
+            { step: '发货', desc: '每月自动配送', time: '固定日期' },
+            { step: '反馈', desc: '使用后评分，优化下月方案', time: '持续' },
+        ],
+        revenue: { type: '订阅费', rate: '¥299-599/月', avgOrder: 450 },
+        conversionRate: 15,
+    },
+];
+
+// Agent-to-Agent 交易协议
+const agentProtocols = [
+    {
+        protocol: 'Shopify UCP',
+        fullName: 'Universal Commerce Protocol',
+        description: '让商品信息被AI购物助手理解和推荐',
+        integration: '接入UCP → 我们的产品推荐被ChatGPT/Claude等理解',
+        benefit: '全球AI生态曝光',
+        timeline: '2025 Q2',
+    },
+    {
+        protocol: 'Brand Connect API',
+        fullName: 'AgenticMirror品牌对接协议',
+        description: '品牌AI直接与用户镜子AI对话',
+        integration: '雅诗兰黛AI → 我们的AI → 个性化推荐给用户',
+        benefit: '品牌直连，去中间商',
+        timeline: '2025 Q4',
+    },
+    {
+        protocol: 'Mastercard Agent Pay',
+        fullName: 'AI代理支付协议',
+        description: '授权AI在预算内自主完成支付',
+        integration: '用户设置月消费上限 → AI自主决策购买',
+        benefit: '真正的自主购物',
+        timeline: '2026 Q2',
+    },
+    {
+        protocol: 'Skin Data Exchange',
+        fullName: '皮肤数据交换标准',
+        description: '标准化的皮肤分析数据格式',
+        integration: '与皮肤科AI、品牌研发AI共享数据',
+        benefit: '生态价值最大化',
+        timeline: '2026 Q4',
+    },
+];
+
+// 平台经济模型
+const platformEconomyModel = {
+    stages: [
+        {
+            phase: '产品销售期',
+            year: '2025',
+            model: '硬件为主',
+            revenue: { hardware: 85, service: 10, commission: 5 },
+            description: '通过优质硬件获取用户',
+            keyMetric: '设备销量 8万台',
+        },
+        {
+            phase: '服务增长期',
+            year: '2026',
+            model: '硬件+订阅',
+            revenue: { hardware: 60, service: 30, commission: 10 },
+            description: '订阅服务成为重要收入',
+            keyMetric: '订阅用户 22万',
+        },
+        {
+            phase: '平台成型期',
+            year: '2027',
+            model: '订阅+电商',
+            revenue: { hardware: 45, service: 35, commission: 20 },
+            description: 'Agentic购物佣金快速增长',
+            keyMetric: 'GMV ¥20.8亿',
+        },
+        {
+            phase: '生态主导期',
+            year: '2028-29',
+            model: '平台经济',
+            revenue: { hardware: 35, service: 40, commission: 25 },
+            description: '成为美妆消费入口',
+            keyMetric: '月活 150万+',
+        },
+    ],
+    flywheel: [
+        { node: '用户购买镜子', next: '每日使用积累数据' },
+        { node: '每日使用积累数据', next: 'AI越来越懂用户' },
+        { node: 'AI越来越懂用户', next: '推荐越来越精准' },
+        { node: '推荐越来越精准', next: '购买转化率提升' },
+        { node: '购买转化率提升', next: '更多品牌入驻' },
+        { node: '更多品牌入驻', next: '产品选择更丰富' },
+        { node: '产品选择更丰富', next: '用户粘性增强' },
+        { node: '用户粘性增强', next: 'LTV持续提升' },
+    ],
+};
+
+// 竞争壁垒分析
+const competitiveModat = [
+    {
+        barrier: '硬件入口壁垒',
+        description: '每天5-15分钟的"镜子时间"是刚需场景',
+        competitors: '手机App无法替代物理镜子',
+        defensibility: '⭐⭐⭐⭐⭐',
+        detail: '用户不会在手机上化妆，必须用镜子',
+    },
+    {
+        barrier: '数据资产壁垒',
+        description: '时序皮肤数据+行为数据不可复制',
+        competitors: '新竞争者无法获取用户历史数据',
+        defensibility: '⭐⭐⭐⭐⭐',
+        detail: '3年皮肤变化数据是无价资产',
+    },
+    {
+        barrier: '信任关系壁垒',
+        description: '日积月累的AI信任无法速成',
+        competitors: '新App需要从零建立信任',
+        defensibility: '⭐⭐⭐⭐',
+        detail: '用户见证过AI推荐效果后才会授权Agentic购物',
+    },
+    {
+        barrier: '供应链壁垒',
+        description: '硬件研发+品牌合作需要长期积累',
+        competitors: '纯软件公司难以切入',
+        defensibility: '⭐⭐⭐⭐',
+        detail: '机械臂、多光谱传感器等核心技术需要积累',
+    },
+    {
+        barrier: '网络效应壁垒',
+        description: '用户分享内容 → 吸引新用户',
+        competitors: '后来者难以建立社区',
+        defensibility: '⭐⭐⭐',
+        detail: '化妆对比、护肤日记形成UGC生态',
+    },
+];
+
+// Agentic AI 功能价值（保留原有但优化）
 const agenticAIFeatures = [
     {
         name: 'Agentic 购物代理',
@@ -249,6 +494,7 @@ const agenticAIFeatures = [
         monetization: '交易佣金 3-8%',
         example: '"帮我盯着这款口红，降价20%就买"',
         trend: 'Shopify Agentic Storefronts, Amazon Buy for Me',
+        mirrorAdvantage: '知道用户肤色，只推荐合适的色号',
     },
     {
         name: 'AI 皮肤健康顾问',
@@ -257,14 +503,16 @@ const agenticAIFeatures = [
         monetization: '订阅服务 ¥49/月',
         example: '"您的T区出油趋势上升，建议调整护肤方案"',
         trend: '类似Apple Health的皮肤版',
+        mirrorAdvantage: '每天检测，建立完整皮肤档案',
     },
     {
-        name: '实时化妆纠错',
-        description: 'CV识别化妆动作，即时语音指导',
-        userValue: '每次化妆都能进步',
-        monetization: '高级教程 ¥199/套',
-        example: '"眼线画太粗了，建议用棉签修正边缘"',
-        trend: 'AI教练模式，Peloton式体验',
+        name: '智能库存管理',
+        description: '追踪产品使用量，预测补货时间',
+        userValue: '永远不会断货',
+        monetization: '自动补货佣金 3-5%',
+        example: '"检测到粉底液剩余约15%，已加入购物车"',
+        trend: 'Amazon Subscribe & Save 美妆版',
+        mirrorAdvantage: '摄像头实时监测产品使用量',
     },
     {
         name: 'AR虚拟试妆',
@@ -273,14 +521,16 @@ const agenticAIFeatures = [
         monetization: '品牌合作费 ¥5-10/次试妆',
         example: '试遍MAC所有色号，不用去柜台',
         trend: 'Revieve, ModiFace技术',
+        mirrorAdvantage: '在真实脸上试妆，非手机自拍',
     },
     {
-        name: '社交内容生成',
-        description: '自动生成对比图、短视频、笔记',
-        userValue: '轻松产出优质内容',
-        monetization: '高级模板 ¥9.9/套',
-        example: '一键生成小红书爆款格式的化妆日记',
-        trend: 'AIGC内容创作',
+        name: '效果追踪购物',
+        description: '追踪产品效果，验证后再复购',
+        userValue: '只买真正有效的产品',
+        monetization: '效果验证服务 ¥19.9/次',
+        example: '"这款精华使用30天，毛孔改善15%"',
+        trend: '数据驱动消费决策',
+        mirrorAdvantage: '用前/用后对比数据化',
     },
     {
         name: 'Agent-to-Agent 协作',
@@ -289,6 +539,7 @@ const agenticAIFeatures = [
         monetization: '交易流水分成',
         example: '我们的AI与天猫AI自动谈判优惠券',
         trend: 'Shopify UCP协议, Google Agentic Commerce',
+        mirrorAdvantage: '携带用户皮肤数据谈判个性化方案',
     },
 ];
 
@@ -371,40 +622,73 @@ const serviceRevenueModel = {
     ],
 };
 
-// Agentic Commerce 趋势整合
+// Agentic Commerce 趋势整合 - 与AgenticMirror深度结合
 const agenticCommerceTrends = {
     marketSize: {
         current: 209, // 亿美元 2026
         projected2030: 10000, // 亿美元
         cagr: 45,
     },
-    keyPlayers: [
-        { name: 'Shopify', move: 'Agentic Storefronts + UCP协议', implication: '我们接入UCP，产品可被全球AI发现' },
-        { name: 'Google', move: 'AI Shopping Mode', implication: '与Google合作，成为推荐设备' },
-        { name: 'Amazon', move: 'Buy for Me + Rufus Auto Buy', implication: '用户授权我们的AI自动在亚马逊下单' },
-        { name: 'OpenAI', move: 'ChatGPT Instant Checkout', implication: '接入ChatGPT购物生态' },
-        { name: 'Mastercard', move: 'Agent Pay', implication: '支持AI代理安全支付' },
+    // 从行业趋势到产品应用的映射
+    industryToProduct: [
+        {
+            trend: 'Shopify Agentic Storefronts',
+            description: '商家创建AI可理解的店铺',
+            agenticMirrorPlay: '镜子成为"物理化的Agentic Storefront"',
+            implementation: '用户在镜子前 → AI推荐 → 直接购买',
+            advantage: '不是让用户找商品，而是商品找用户',
+        },
+        {
+            trend: 'Amazon Buy for Me',
+            description: '用户授权AI自主购物',
+            agenticMirrorPlay: '基于皮肤状态触发的自主购物',
+            implementation: '检测问题 → 推荐产品 → 用户授权 → 自动下单',
+            advantage: '有"为什么买"的理由，不是盲目购物',
+        },
+        {
+            trend: 'Google AI Shopping Mode',
+            description: 'AI整合全网比价购物',
+            agenticMirrorPlay: '垂直美妆领域的专业比价',
+            implementation: '不只比价格，还比成分、适合度',
+            advantage: '了解用户肤质，推荐真正合适的',
+        },
+        {
+            trend: 'ChatGPT Instant Checkout',
+            description: 'AI对话式购物',
+            agenticMirrorPlay: '边化妆边对话式购物',
+            implementation: '"这个口红不太衬我肤色" → AI推荐替代品',
+            advantage: '在使用场景中自然产生购买需求',
+        },
     ],
+    // 我们的差异化战略
     ourStrategy: [
         {
-            phase: '2025',
-            action: '接入Shopify UCP协议',
-            goal: '产品被AI购物助手推荐',
+            phase: '2025 Q1-Q2',
+            action: '基础电商能力',
+            details: ['接入主流电商API', 'AR试妆+比价功能', '基础推荐系统'],
+            milestone: '月交易额 ¥500万',
+            icon: '🛒',
+        },
+        {
+            phase: '2025 Q3-Q4',
+            action: 'Agentic能力上线',
+            details: ['用户授权自主购物', '库存监测自动补货', '接入Shopify UCP'],
+            milestone: 'Agentic授权率 20%',
+            icon: '🤖',
         },
         {
             phase: '2026',
-            action: '上线Agentic购物代理',
-            goal: '用户授权自主购物',
+            action: '平台化运营',
+            details: ['品牌直连API', 'Agent-to-Agent谈判', '订阅盒子服务'],
+            milestone: 'GMV ¥6.6亿',
+            icon: '🏪',
         },
         {
-            phase: '2027',
-            action: 'Agent-to-Agent交易',
-            goal: '与品牌AI直接谈判',
-        },
-        {
-            phase: '2028',
-            action: '开放AI代理API',
-            goal: '成为美妆垂直领域的AI入口',
+            phase: '2027-28',
+            action: '生态主导',
+            details: ['美妆AI开放平台', '数据交换标准', '跨境Agentic购物'],
+            milestone: '成为美妆AI入口',
+            icon: '🌐',
         },
     ],
 };
@@ -1362,23 +1646,29 @@ export default function InvestmentPage() {
                         animate={{ opacity: 1, y: 0 }}
                         className="space-y-6"
                     >
-                        {/* Agentic Commerce Header */}
+                        {/* Header - AgenticMirror Commerce Vision */}
                         <div className="bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 rounded-2xl shadow-lg p-6 text-white">
                             <div className="flex items-center gap-4 mb-4">
                                 <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center">
                                     <Zap className="w-10 h-10" />
                                 </div>
                                 <div>
-                                    <h2 className="text-2xl font-bold">Agentic Commerce 战略</h2>
-                                    <p className="text-purple-200">AI代理自主购物 — 下一代电商革命</p>
+                                    <h2 className="text-2xl font-bold">AgenticMirror 电商战略</h2>
+                                    <p className="text-purple-200">物理世界的 Agentic Storefront — 镜子就是购物入口</p>
                                 </div>
                             </div>
-                            <div className="grid md:grid-cols-4 gap-4 mt-6">
+                            <div className="bg-white/10 backdrop-blur rounded-xl p-4 mb-4">
+                                <p className="text-sm leading-relaxed">
+                                    传统电商：用户主动搜索 → 浏览 → 比较 → 决策 → 购买<br />
+                                    <span className="text-yellow-300 font-medium">AgenticMirror：AI主动发现问题 → 推荐方案 → AR试用 → 自动比价 → 一键购买</span>
+                                </p>
+                            </div>
+                            <div className="grid md:grid-cols-4 gap-4">
                                 {[
-                                    { label: '2026全球市场', value: '$209亿', sub: 'AI购物交易额' },
-                                    { label: '2030预测', value: '$1万亿', sub: '年增速45%' },
-                                    { label: '用户接受度', value: '53%', sub: '愿意使用AI购物' },
-                                    { label: '流量增长', value: '4700%', sub: 'AI导流同比增速' },
+                                    { label: '2026全球市场', value: '$209亿', sub: 'Agentic Commerce' },
+                                    { label: '我们的目标', value: '¥20.8亿', sub: '2027年GMV' },
+                                    { label: '转化率优势', value: '3-5x', sub: 'vs 传统电商' },
+                                    { label: 'Agentic授权率', value: '45%', sub: '2029年目标' },
                                 ].map((stat, i) => (
                                     <div key={i} className="bg-white/10 backdrop-blur rounded-xl p-4 text-center">
                                         <div className="text-2xl font-bold">{stat.value}</div>
@@ -1389,113 +1679,119 @@ export default function InvestmentPage() {
                             </div>
                         </div>
 
-                        {/* Industry Trends */}
+                        {/* Mirror Commerce Advantages */}
                         <div className="bg-white rounded-2xl shadow-lg p-6">
-                            <h2 className="text-xl font-bold text-gray-900 mb-4">行业巨头布局</h2>
+                            <h2 className="text-xl font-bold text-gray-900 mb-2">镜子硬件创造的电商优势</h2>
+                            <p className="text-sm text-gray-500 mb-4">为什么 AgenticMirror 能做到手机App做不到的事</p>
                             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                {agenticCommerceTrends.keyPlayers.map((player, i) => (
-                                    <div key={i} className="bg-gray-50 rounded-xl p-4">
-                                        <div className="font-bold text-gray-800 mb-1">{player.name}</div>
-                                        <div className="text-sm text-purple-600 mb-2">{player.move}</div>
-                                        <div className="text-xs text-gray-500">{player.implication}</div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* Our Agentic AI Features */}
-                        <div className="bg-white rounded-2xl shadow-lg p-6">
-                            <h2 className="text-xl font-bold text-gray-900 mb-4">Agentic AI 功能矩阵</h2>
-                            <div className="grid md:grid-cols-2 gap-4">
-                                {agenticAIFeatures.map((feature, i) => (
+                                {mirrorCommerceAdvantages.map((adv, i) => (
                                     <motion.div
                                         key={i}
-                                        className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-4"
-                                        whileHover={{ scale: 1.02 }}
+                                        className="bg-gradient-to-br from-gray-50 to-purple-50 rounded-xl p-4 border border-purple-100"
+                                        whileHover={{ scale: 1.02, boxShadow: '0 4px 20px rgba(139, 92, 246, 0.15)' }}
                                     >
-                                        <h3 className="font-bold text-gray-800 mb-1">{feature.name}</h3>
-                                        <p className="text-sm text-gray-600 mb-2">{feature.description}</p>
-                                        <div className="bg-white rounded-lg p-2 mb-2">
-                                            <div className="text-xs text-gray-500">用户价值</div>
-                                            <div className="text-sm text-purple-600">{feature.userValue}</div>
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <span className="text-2xl">{adv.icon}</span>
+                                            <h3 className="font-bold text-gray-800">{adv.category}</h3>
                                         </div>
-                                        <div className="flex justify-between items-center">
-                                            <div className="text-xs text-gray-500">
-                                                变现: <span className="text-green-600 font-medium">{feature.monetization}</span>
+                                        <div className="space-y-2 text-sm">
+                                            <div className="flex items-start gap-2">
+                                                <span className="text-red-400 font-medium shrink-0">传统:</span>
+                                                <span className="text-gray-500">{adv.traditional}</span>
                                             </div>
-                                            <div className="text-xs bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full">
-                                                {feature.trend}
+                                            <div className="flex items-start gap-2">
+                                                <span className="text-green-500 font-medium shrink-0">我们:</span>
+                                                <span className="text-gray-700">{adv.agenticMirror}</span>
                                             </div>
                                         </div>
-                                        <div className="mt-2 text-xs text-gray-400 italic">"{feature.example}"</div>
+                                        <div className="mt-3 bg-white rounded-lg p-2">
+                                            <div className="text-xs text-gray-400">场景示例</div>
+                                            <div className="text-xs text-purple-600">{adv.example}</div>
+                                        </div>
+                                        <div className="mt-2 inline-block bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full font-medium">
+                                            {adv.valueMultiplier}
+                                        </div>
                                     </motion.div>
                                 ))}
                             </div>
                         </div>
 
-                        {/* Service Revenue Model */}
+                        {/* Shopping Scenarios */}
                         <div className="bg-white rounded-2xl shadow-lg p-6">
-                            <h2 className="text-xl font-bold text-gray-900 mb-4">服务收费模式</h2>
-
-                            {/* Subscription Tiers */}
-                            <h3 className="font-bold text-gray-700 mb-3">订阅服务</h3>
-                            <div className="grid md:grid-cols-3 gap-4 mb-6">
-                                {serviceRevenueModel.subscription.map((tier, i) => (
-                                    <div
+                            <h2 className="text-xl font-bold text-gray-900 mb-2">四大购物场景</h2>
+                            <p className="text-sm text-gray-500 mb-4">从被动响应到主动服务的购物体验革命</p>
+                            <div className="space-y-4">
+                                {shoppingScenarios.map((scenario, i) => (
+                                    <motion.div
                                         key={i}
-                                        className={cn(
-                                            "rounded-xl p-4 border-2",
-                                            i === 2 ? "border-purple-500 bg-purple-50" : "border-gray-200"
-                                        )}
+                                        className="border border-gray-200 rounded-xl overflow-hidden"
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: i * 0.1 }}
                                     >
-                                        <div className="flex justify-between items-start mb-2">
-                                            <h4 className="font-bold text-gray-800">{tier.tier}</h4>
-                                            <div className="text-right">
-                                                <div className="text-xl font-bold text-purple-600">
-                                                    {tier.price === 0 ? '免费' : `¥${tier.price}`}
+                                        <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-4 flex items-center justify-between">
+                                            <div className="flex items-center gap-3">
+                                                <span className="text-3xl">{scenario.icon}</span>
+                                                <div>
+                                                    <h3 className="font-bold text-gray-800">{scenario.name}</h3>
+                                                    <p className="text-sm text-gray-600">触发：{scenario.trigger}</p>
                                                 </div>
-                                                <div className="text-xs text-gray-500">/{tier.period}</div>
+                                            </div>
+                                            <div className="text-right">
+                                                <div className="text-lg font-bold text-purple-600">{scenario.conversionRate}%</div>
+                                                <div className="text-xs text-gray-500">转化率</div>
                                             </div>
                                         </div>
-                                        <ul className="space-y-1 mb-3">
-                                            {tier.features.map((f, j) => (
-                                                <li key={j} className="text-sm text-gray-600 flex items-start gap-1">
-                                                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
-                                                    {f}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                        <div className="text-xs text-gray-500">{tier.targetUsers}</div>
-                                    </div>
-                                ))}
-                            </div>
-
-                            {/* Transaction Fees */}
-                            <h3 className="font-bold text-gray-700 mb-3">交易佣金</h3>
-                            <div className="grid md:grid-cols-3 gap-4 mb-6">
-                                {serviceRevenueModel.transaction.map((item, i) => (
-                                    <div key={i} className="bg-pink-50 rounded-xl p-4">
-                                        <div className="font-bold text-gray-800 mb-1">{item.type}</div>
-                                        <div className="text-2xl font-bold text-pink-600 mb-2">{item.rate}</div>
-                                        <div className="text-sm text-gray-600 mb-2">{item.scenario}</div>
-                                        <div className="text-xs text-green-600 font-medium">{item.estimatedRevenue}</div>
-                                    </div>
-                                ))}
-                            </div>
-
-                            {/* B2B Services */}
-                            <h3 className="font-bold text-gray-700 mb-3">B2B 服务</h3>
-                            <div className="grid md:grid-cols-2 gap-4">
-                                {serviceRevenueModel.b2b.map((item, i) => (
-                                    <div key={i} className="bg-amber-50 rounded-xl p-4">
-                                        <div className="flex justify-between items-start">
-                                            <div>
-                                                <div className="font-bold text-gray-800">{item.type}</div>
-                                                <div className="text-sm text-gray-600">{item.scenario}</div>
+                                        <div className="p-4">
+                                            <div className="flex items-center gap-2 overflow-x-auto pb-2">
+                                                {scenario.flow.map((step, j) => (
+                                                    <div key={j} className="flex items-center shrink-0">
+                                                        <div className="bg-white border border-purple-200 rounded-lg p-2 min-w-[120px]">
+                                                            <div className="text-xs text-purple-600 font-medium">{step.step}</div>
+                                                            <div className="text-xs text-gray-600 mt-1">{step.desc}</div>
+                                                            <div className="text-xs text-gray-400 mt-1">{step.time}</div>
+                                                        </div>
+                                                        {j < scenario.flow.length - 1 && (
+                                                            <div className="text-purple-300 mx-1">→</div>
+                                                        )}
+                                                    </div>
+                                                ))}
                                             </div>
-                                            <div className="text-right">
-                                                <div className="text-xl font-bold text-amber-600">{item.price}</div>
-                                                <div className="text-xs text-gray-500">{item.clients}</div>
+                                            <div className="mt-3 flex items-center gap-4 text-sm">
+                                                <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">
+                                                    {scenario.revenue.type}: {scenario.revenue.rate}
+                                                </span>
+                                                <span className="text-gray-500">
+                                                    平均客单价: ¥{scenario.revenue.avgOrder}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Industry Trends to Product */}
+                        <div className="bg-white rounded-2xl shadow-lg p-6">
+                            <h2 className="text-xl font-bold text-gray-900 mb-2">行业趋势 → 产品落地</h2>
+                            <p className="text-sm text-gray-500 mb-4">如何将 Agentic Commerce 趋势转化为产品优势</p>
+                            <div className="space-y-4">
+                                {agenticCommerceTrends.industryToProduct.map((item, i) => (
+                                    <div key={i} className="bg-gray-50 rounded-xl p-4">
+                                        <div className="flex items-start gap-4">
+                                            <div className="w-1/3">
+                                                <div className="text-xs text-gray-400 mb-1">行业趋势</div>
+                                                <div className="font-bold text-gray-800">{item.trend}</div>
+                                                <div className="text-sm text-gray-500 mt-1">{item.description}</div>
+                                            </div>
+                                            <div className="text-2xl text-purple-400">→</div>
+                                            <div className="flex-1">
+                                                <div className="text-xs text-purple-600 mb-1">AgenticMirror 应用</div>
+                                                <div className="font-bold text-purple-700">{item.agenticMirrorPlay}</div>
+                                                <div className="text-sm text-gray-600 mt-1">{item.implementation}</div>
+                                                <div className="mt-2 inline-block bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">
+                                                    优势: {item.advantage}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -1503,16 +1799,149 @@ export default function InvestmentPage() {
                             </div>
                         </div>
 
-                        {/* Our Roadmap */}
+                        {/* Agent Protocols */}
+                        <div className="bg-white rounded-2xl shadow-lg p-6">
+                            <h2 className="text-xl font-bold text-gray-900 mb-2">Agent-to-Agent 协议接入</h2>
+                            <p className="text-sm text-gray-500 mb-4">构建开放的 AI 商业生态</p>
+                            <div className="grid md:grid-cols-2 gap-4">
+                                {agentProtocols.map((protocol, i) => (
+                                    <div key={i} className="border border-gray-200 rounded-xl p-4">
+                                        <div className="flex items-center justify-between mb-2">
+                                            <div className="font-bold text-gray-800">{protocol.protocol}</div>
+                                            <div className="text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded-full">
+                                                {protocol.timeline}
+                                            </div>
+                                        </div>
+                                        <div className="text-xs text-gray-400 mb-2">{protocol.fullName}</div>
+                                        <div className="text-sm text-gray-600 mb-2">{protocol.description}</div>
+                                        <div className="bg-gray-50 rounded-lg p-2 text-xs">
+                                            <span className="text-gray-500">整合方式: </span>
+                                            <span className="text-gray-700">{protocol.integration}</span>
+                                        </div>
+                                        <div className="mt-2 text-xs text-green-600 font-medium">✓ {protocol.benefit}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Platform Economy Model */}
+                        <div className="bg-white rounded-2xl shadow-lg p-6">
+                            <h2 className="text-xl font-bold text-gray-900 mb-2">平台经济演进路径</h2>
+                            <p className="text-sm text-gray-500 mb-4">从硬件销售到平台生态的商业模式升级</p>
+
+                            {/* Stages */}
+                            <div className="grid md:grid-cols-4 gap-4 mb-6">
+                                {platformEconomyModel.stages.map((stage, i) => (
+                                    <div key={i} className="relative">
+                                        <div className={cn(
+                                            "rounded-xl p-4 h-full",
+                                            i === 3 ? "bg-gradient-to-br from-purple-500 to-pink-500 text-white" : "bg-gray-50"
+                                        )}>
+                                            <div className={cn("text-xs mb-1", i === 3 ? "text-purple-200" : "text-gray-400")}>
+                                                {stage.year}
+                                            </div>
+                                            <div className={cn("font-bold mb-2", i === 3 ? "text-white" : "text-gray-800")}>
+                                                {stage.phase}
+                                            </div>
+                                            <div className={cn("text-sm mb-3", i === 3 ? "text-purple-100" : "text-gray-600")}>
+                                                {stage.description}
+                                            </div>
+                                            <div className="space-y-1">
+                                                <div className="flex items-center justify-between text-xs">
+                                                    <span className={i === 3 ? "text-purple-200" : "text-gray-500"}>硬件</span>
+                                                    <span className={i === 3 ? "text-white" : "text-gray-700"}>{stage.revenue.hardware}%</span>
+                                                </div>
+                                                <div className="flex items-center justify-between text-xs">
+                                                    <span className={i === 3 ? "text-purple-200" : "text-gray-500"}>服务</span>
+                                                    <span className={i === 3 ? "text-white" : "text-gray-700"}>{stage.revenue.service}%</span>
+                                                </div>
+                                                <div className="flex items-center justify-between text-xs">
+                                                    <span className={i === 3 ? "text-purple-200" : "text-gray-500"}>佣金</span>
+                                                    <span className={i === 3 ? "text-white" : "text-gray-700"}>{stage.revenue.commission}%</span>
+                                                </div>
+                                            </div>
+                                            <div className={cn(
+                                                "mt-3 text-xs font-medium",
+                                                i === 3 ? "text-yellow-300" : "text-purple-600"
+                                            )}>
+                                                {stage.keyMetric}
+                                            </div>
+                                        </div>
+                                        {i < 3 && (
+                                            <div className="hidden md:block absolute top-1/2 -right-2 text-gray-300 text-xl z-10">→</div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Flywheel */}
+                            <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-4">
+                                <h3 className="font-bold text-gray-800 mb-3">增长飞轮</h3>
+                                <div className="flex flex-wrap items-center justify-center gap-2">
+                                    {platformEconomyModel.flywheel.map((item, i) => (
+                                        <div key={i} className="flex items-center">
+                                            <div className="bg-white rounded-lg px-3 py-2 text-xs text-gray-700 shadow-sm">
+                                                {item.node}
+                                            </div>
+                                            {i < platformEconomyModel.flywheel.length - 1 && (
+                                                <div className="text-purple-400 mx-1">→</div>
+                                            )}
+                                        </div>
+                                    ))}
+                                    <div className="text-purple-400 mx-1">↻</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Competitive Moat */}
+                        <div className="bg-white rounded-2xl shadow-lg p-6">
+                            <h2 className="text-xl font-bold text-gray-900 mb-2">竞争壁垒分析</h2>
+                            <p className="text-sm text-gray-500 mb-4">为什么竞争对手难以复制</p>
+                            <div className="space-y-3">
+                                {competitiveModat.map((moat, i) => (
+                                    <div key={i} className="bg-gray-50 rounded-xl p-4">
+                                        <div className="flex items-start justify-between">
+                                            <div className="flex-1">
+                                                <div className="flex items-center gap-2 mb-1">
+                                                    <h3 className="font-bold text-gray-800">{moat.barrier}</h3>
+                                                    <div className="text-sm">{moat.defensibility}</div>
+                                                </div>
+                                                <p className="text-sm text-gray-600 mb-2">{moat.description}</p>
+                                                <div className="flex items-start gap-4 text-xs">
+                                                    <div>
+                                                        <span className="text-red-500 font-medium">竞品挑战: </span>
+                                                        <span className="text-gray-500">{moat.competitors}</span>
+                                                    </div>
+                                                </div>
+                                                <div className="mt-2 text-xs text-purple-600">{moat.detail}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Roadmap */}
                         <div className="bg-white rounded-2xl shadow-lg p-6">
                             <h2 className="text-xl font-bold text-gray-900 mb-4">Agentic Commerce 路线图</h2>
                             <div className="grid md:grid-cols-4 gap-4">
                                 {agenticCommerceTrends.ourStrategy.map((step, i) => (
                                     <div key={i} className="relative">
                                         <div className="bg-gradient-to-br from-purple-100 to-pink-100 rounded-xl p-4 h-full">
-                                            <div className="text-sm font-bold text-purple-600 mb-2">{step.phase}</div>
-                                            <h4 className="font-bold text-gray-800 mb-1">{step.action}</h4>
-                                            <p className="text-sm text-gray-600">{step.goal}</p>
+                                            <div className="text-3xl mb-2">{step.icon}</div>
+                                            <div className="text-sm font-bold text-purple-600 mb-1">{step.phase}</div>
+                                            <h4 className="font-bold text-gray-800 mb-2">{step.action}</h4>
+                                            <ul className="space-y-1 mb-3">
+                                                {step.details.map((detail, j) => (
+                                                    <li key={j} className="text-xs text-gray-600 flex items-start gap-1">
+                                                        <span className="text-purple-400">•</span>
+                                                        {detail}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                            <div className="text-xs font-medium text-green-600 bg-green-50 rounded-lg px-2 py-1 inline-block">
+                                                {step.milestone}
+                                            </div>
                                         </div>
                                         {i < 3 && (
                                             <div className="hidden md:block absolute top-1/2 -right-2 text-purple-400 text-xl">→</div>
@@ -1524,22 +1953,38 @@ export default function InvestmentPage() {
 
                         {/* Summary */}
                         <div className="bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-2xl shadow-lg p-6 text-white">
-                            <h2 className="text-xl font-bold mb-4">Agentic Commerce 价值总结</h2>
-                            <div className="grid md:grid-cols-3 gap-6">
+                            <h2 className="text-xl font-bold mb-4">AgenticMirror 电商价值总结</h2>
+                            <div className="grid md:grid-cols-4 gap-4 mb-6">
                                 <div className="bg-white/10 backdrop-blur rounded-xl p-4">
                                     <div className="text-3xl font-bold mb-2">¥90亿</div>
-                                    <div className="text-purple-200">2029年Agentic GMV</div>
-                                    <div className="text-xs text-purple-300 mt-1">用户授权AI自主购物的交易总额</div>
-                                </div>
-                                <div className="bg-white/10 backdrop-blur rounded-xl p-4">
-                                    <div className="text-3xl font-bold mb-2">¥78亿</div>
-                                    <div className="text-purple-200">订阅服务收入</div>
-                                    <div className="text-xs text-purple-300 mt-1">高粘性可预测现金流</div>
+                                    <div className="text-purple-200">2029年GMV</div>
+                                    <div className="text-xs text-purple-300 mt-1">Agentic购物交易总额</div>
                                 </div>
                                 <div className="bg-white/10 backdrop-blur rounded-xl p-4">
                                     <div className="text-3xl font-bold mb-2">¥6.3亿</div>
                                     <div className="text-purple-200">交易佣金收入</div>
-                                    <div className="text-xs text-purple-300 mt-1">美妆电商分润</div>
+                                    <div className="text-xs text-purple-300 mt-1">平均Take Rate 7%</div>
+                                </div>
+                                <div className="bg-white/10 backdrop-blur rounded-xl p-4">
+                                    <div className="text-3xl font-bold mb-2">45%</div>
+                                    <div className="text-purple-200">Agentic授权率</div>
+                                    <div className="text-xs text-purple-300 mt-1">用户信任AI自主购物</div>
+                                </div>
+                                <div className="bg-white/10 backdrop-blur rounded-xl p-4">
+                                    <div className="text-3xl font-bold mb-2">60%</div>
+                                    <div className="text-purple-200">退货率降低</div>
+                                    <div className="text-xs text-purple-300 mt-1">精准推荐减少错误购买</div>
+                                </div>
+                            </div>
+                            <div className="bg-white/10 backdrop-blur rounded-xl p-4">
+                                <div className="text-center">
+                                    <div className="text-lg font-medium mb-2">核心差异化</div>
+                                    <div className="text-2xl font-bold text-yellow-300">
+                                        "不是让用户找商品，而是让商品找到对的用户"
+                                    </div>
+                                    <div className="text-sm text-purple-200 mt-2">
+                                        AgenticMirror = 物理世界的 Agentic Storefront + 知道你皮肤的 AI 购物代理
+                                    </div>
                                 </div>
                             </div>
                         </div>
