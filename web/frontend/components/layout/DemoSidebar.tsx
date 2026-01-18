@@ -19,6 +19,7 @@ import {
     PlayCircle,
     Trophy,
     Heart,
+    TrendingUp,
 } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 
@@ -42,6 +43,13 @@ const menuItems = [
         labelEn: 'Competition',
         href: '/demo/competition',
         icon: Trophy,
+    },
+    {
+        label: '投资分析',
+        labelEn: 'Investment',
+        href: '/demo/investment',
+        icon: TrendingUp,
+        highlight: true,
     },
     {
         label: '魔镜体验',
