@@ -54,9 +54,9 @@ export default function TutorialDetailPage({
     };
 
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div className="min-h-screen bg-gray-100 dark:bg-gray-950">
             {/* Header */}
-            <div className="bg-white border-b border-gray-100 px-6 py-4">
+            <div className="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 px-6 py-4">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
                         <Link
@@ -66,8 +66,8 @@ export default function TutorialDetailPage({
                             <ChevronLeft className="w-5 h-5 text-gray-600" />
                         </Link>
                         <div>
-                            <h1 className="font-semibold text-gray-900">{tutorial.title}</h1>
-                            <div className="flex items-center gap-3 text-sm text-gray-500">
+                            <h1 className="font-semibold text-gray-900 dark:text-gray-100">{tutorial.title}</h1>
+                            <div className="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
                                 <span className="flex items-center gap-1">
                                     <Clock className="w-4 h-4" />
                                     {tutorial.duration} 分钟
@@ -80,7 +80,7 @@ export default function TutorialDetailPage({
                     {/* Progress */}
                     <div className="flex items-center gap-4">
                         <div className="hidden md:flex items-center gap-2">
-                            <div className="w-32 h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div className="w-32 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                                 <motion.div
                                     className="h-full bg-gradient-mirror"
                                     animate={{ width: `${progress}%` }}
@@ -102,7 +102,7 @@ export default function TutorialDetailPage({
                         {/* Main Video/Preview Area */}
                         <div className="lg:col-span-2 space-y-6">
                             {/* Video Player */}
-                            <div className="card overflow-hidden">
+                            <div className="card dark:bg-gray-900 overflow-hidden">
                                 <div className="relative aspect-video bg-gradient-to-br from-mirror-100 to-accent-100">
                                     {/* AR Overlay Visualization */}
                                     <svg className="absolute inset-0 w-full h-full" viewBox="0 0 400 300">
@@ -180,7 +180,7 @@ export default function TutorialDetailPage({
                                 </div>
 
                                 {/* Step Navigation */}
-                                <div className="p-4 border-t border-gray-100 flex items-center justify-between">
+                                <div className="p-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
                                     <button
                                         onClick={handlePrevStep}
                                         disabled={currentStep === 1}
@@ -215,27 +215,27 @@ export default function TutorialDetailPage({
                             </div>
 
                             {/* Step Details */}
-                            <div className="card p-5">
+                            <div className="card dark:bg-gray-900 p-5">
                                 <div className="flex items-start gap-4">
                                     <div className="w-10 h-10 rounded-full bg-gradient-mirror flex items-center justify-center text-white font-bold flex-shrink-0">
                                         {currentStep}
                                     </div>
                                     <div className="flex-1">
-                                        <h2 className="text-lg font-semibold text-gray-900 mb-2">
+                                        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
                                             {step.title}
                                         </h2>
-                                        <p className="text-gray-600 mb-4">{step.description}</p>
+                                        <p className="text-gray-600 dark:text-gray-400 mb-4">{step.description}</p>
 
                                         {/* Tips */}
                                         {step.tips.length > 0 && (
-                                            <div className="bg-amber-50 rounded-xl p-4">
+                                            <div className="bg-amber-50 dark:bg-amber-900/20 rounded-xl p-4">
                                                 <div className="flex items-center gap-2 text-amber-600 font-medium mb-2">
                                                     <Lightbulb className="w-4 h-4" />
                                                     小技巧
                                                 </div>
                                                 <ul className="space-y-1">
                                                     {step.tips.map((tip, i) => (
-                                                        <li key={i} className="text-sm text-amber-700 flex items-start gap-2">
+                                                        <li key={i} className="text-sm text-amber-700 dark:text-amber-300 flex items-start gap-2">
                                                             <span className="text-amber-400">•</span>
                                                             {tip}
                                                         </li>
@@ -251,8 +251,8 @@ export default function TutorialDetailPage({
                         {/* Sidebar */}
                         <div className="space-y-6">
                             {/* Steps Progress */}
-                            <div className="card p-5">
-                                <h3 className="font-semibold text-gray-900 mb-4">教程步骤</h3>
+                            <div className="card dark:bg-gray-900 p-5">
+                                <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-4">教程步骤</h3>
                                 <div className="space-y-2">
                                     {tutorial.steps.map((s, index) => (
                                         <button
@@ -261,10 +261,10 @@ export default function TutorialDetailPage({
                                             className={cn(
                                                 "w-full flex items-center gap-3 p-3 rounded-xl transition-all text-left",
                                                 currentStep === index + 1
-                                                    ? "bg-mirror-50 border border-mirror-200"
+                                                    ? "bg-mirror-50 dark:bg-mirror-900/20 border border-mirror-200 dark:border-mirror-800"
                                                     : completedSteps.includes(index + 1)
-                                                    ? "bg-green-50"
-                                                    : "hover:bg-gray-50"
+                                                    ? "bg-green-50 dark:bg-green-900/20"
+                                                    : "hover:bg-gray-50 dark:hover:bg-gray-800"
                                             )}
                                         >
                                             <div className={cn(
@@ -284,7 +284,7 @@ export default function TutorialDetailPage({
                                             <div className="flex-1 min-w-0">
                                                 <div className={cn(
                                                     "text-sm font-medium truncate",
-                                                    currentStep === index + 1 ? "text-mirror-600" : "text-gray-700"
+                                                    currentStep === index + 1 ? "text-mirror-600" : "text-gray-700 dark:text-gray-300"
                                                 )}>
                                                     {s.title}
                                                 </div>
@@ -298,9 +298,9 @@ export default function TutorialDetailPage({
                             </div>
 
                             {/* Products for this step */}
-                            <div className="card p-5">
+                            <div className="card dark:bg-gray-900 p-5">
                                 <div className="flex items-center justify-between mb-4">
-                                    <h3 className="font-semibold text-gray-900">使用产品</h3>
+                                    <h3 className="font-semibold text-gray-900 dark:text-gray-100">使用产品</h3>
                                     <ShoppingBag className="w-5 h-5 text-gray-400" />
                                 </div>
                                 <div className="space-y-3">
@@ -311,16 +311,16 @@ export default function TutorialDetailPage({
                                             return (
                                                 <div
                                                     key={product.id}
-                                                    className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl"
+                                                    className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-xl"
                                                 >
                                                     <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-mirror-100 to-accent-100 flex items-center justify-center flex-shrink-0">
                                                         <ShoppingBag className="w-5 h-5 text-mirror-400" />
                                                     </div>
                                                     <div className="flex-1 min-w-0">
-                                                        <div className="text-sm font-medium text-gray-900 truncate">
+                                                        <div className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
                                                             {product.name}
                                                         </div>
-                                                        <div className="text-xs text-gray-500">
+                                                        <div className="text-xs text-gray-500 dark:text-gray-400">
                                                             {product.brand}
                                                         </div>
                                                     </div>
@@ -331,7 +331,7 @@ export default function TutorialDetailPage({
                                             );
                                         })
                                     ) : (
-                                        <p className="text-sm text-gray-500 text-center py-4">
+                                        <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-4">
                                             此步骤无需特定产品
                                         </p>
                                     )}

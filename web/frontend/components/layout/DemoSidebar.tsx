@@ -20,8 +20,14 @@ import {
     Trophy,
     Heart,
     TrendingUp,
+    Shirt,
+    ShoppingCart,
+    ClipboardList,
+    Brain,
 } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
+import { useCart } from '@/contexts/CartContext';
+import { ThemeToggle } from './ThemeToggle';
 
 const menuItems = [
     {
@@ -70,6 +76,13 @@ const menuItems = [
         icon: Palette,
     },
     {
+        label: '穿搭指导',
+        labelEn: 'Styling',
+        href: '/demo/styling',
+        icon: Shirt,
+        highlight: true,
+    },
+    {
         label: '美妆教程',
         labelEn: 'Tutorials',
         href: '/demo/tutorials',
@@ -80,6 +93,26 @@ const menuItems = [
         labelEn: 'Commerce',
         href: '/demo/commerce',
         icon: ShoppingBag,
+    },
+    {
+        label: 'AI购买计划',
+        labelEn: 'Smart Buy',
+        href: '/demo/smart-buy',
+        icon: Brain,
+        highlight: true,
+    },
+    {
+        label: '购物车',
+        labelEn: 'Cart',
+        href: '/demo/cart',
+        icon: ShoppingCart,
+        showBadge: true,
+    },
+    {
+        label: '我的订单',
+        labelEn: 'Orders',
+        href: '/demo/orders',
+        icon: ClipboardList,
     },
     {
         label: '我的库存',
@@ -98,15 +131,16 @@ const menuItems = [
 export default function DemoSidebar() {
     const [collapsed, setCollapsed] = useState(false);
     const pathname = usePathname();
+    const { itemCount } = useCart();
 
     return (
         <motion.aside
             initial={false}
             animate={{ width: collapsed ? 72 : 240 }}
-            className="h-screen bg-white border-r border-gray-100 flex flex-col"
+            className="h-screen bg-white dark:bg-gray-900 border-r border-gray-100 dark:border-gray-800 flex flex-col transition-colors"
         >
             {/* Logo */}
-            <div className="h-16 flex items-center justify-between px-4 border-b border-gray-100">
+            <div className="h-16 flex items-center justify-between px-4 border-b border-gray-100 dark:border-gray-800">
                 <Link href="/" className="flex items-center gap-2">
                     <div className="w-10 h-10 rounded-xl bg-gradient-mirror flex items-center justify-center flex-shrink-0">
                         <Sparkles className="w-6 h-6 text-white" />
@@ -115,12 +149,13 @@ export default function DemoSidebar() {
                         <motion.span
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            className="text-lg font-bold text-gray-900 whitespace-nowrap"
+                            className="text-lg font-bold text-gray-900 dark:text-gray-100 whitespace-nowrap"
                         >
                             Mirror
                         </motion.span>
                     )}
                 </Link>
+                {!collapsed && <ThemeToggle />}
             </div>
 
             {/* Navigation */}
@@ -129,33 +164,41 @@ export default function DemoSidebar() {
                     {menuItems.map((item) => {
                         const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
                         const isHighlight = 'highlight' in item && item.highlight;
+                        const showBadge = 'showBadge' in item && item.showBadge && itemCount > 0;
                         return (
                             <li key={item.href}>
                                 <Link
                                     href={item.href}
                                     className={cn(
-                                        'flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200',
+                                        'relative flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200',
                                         isActive
-                                            ? 'bg-mirror-50 text-mirror-600'
+                                            ? 'bg-mirror-50 text-mirror-600 dark:bg-mirror-900/20 dark:text-mirror-400'
                                             : isHighlight
-                                            ? 'bg-gradient-to-r from-mirror-50 to-accent-50 text-mirror-600 border border-mirror-200'
-                                            : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                                            ? 'bg-gradient-to-r from-mirror-50 to-accent-50 text-mirror-600 border border-mirror-200 dark:from-mirror-900/20 dark:to-accent-900/20 dark:border-mirror-800'
+                                            : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-200'
                                     )}
                                 >
-                                    <item.icon className={cn(
-                                        'w-5 h-5 flex-shrink-0',
-                                        isActive ? 'text-mirror-500' : ''
-                                    )} />
+                                    <div className="relative">
+                                        <item.icon className={cn(
+                                            'w-5 h-5 flex-shrink-0',
+                                            isActive ? 'text-mirror-500' : ''
+                                        )} />
+                                        {showBadge && (
+                                            <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+                                                {itemCount > 9 ? '9+' : itemCount}
+                                            </span>
+                                        )}
+                                    </div>
                                     {!collapsed && (
                                         <motion.div
                                             initial={{ opacity: 0 }}
                                             animate={{ opacity: 1 }}
-                                            className="flex flex-col"
+                                            className="flex flex-col flex-1"
                                         >
                                             <span className="text-sm font-medium">
                                                 {item.label}
                                             </span>
-                                            <span className="text-xs text-gray-400">
+                                            <span className="text-xs text-gray-400 dark:text-gray-500">
                                                 {item.labelEn}
                                             </span>
                                         </motion.div>
@@ -174,11 +217,16 @@ export default function DemoSidebar() {
             </nav>
 
             {/* Footer */}
-            <div className="p-4 border-t border-gray-100">
+            <div className="p-4 border-t border-gray-100 dark:border-gray-800">
+                {collapsed && (
+                    <div className="flex justify-center mb-2">
+                        <ThemeToggle />
+                    </div>
+                )}
                 <Link
                     href="/"
                     className={cn(
-                        'flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors',
+                        'flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-200 transition-colors',
                         collapsed && 'justify-center'
                     )}
                 >
@@ -191,7 +239,7 @@ export default function DemoSidebar() {
                 <button
                     onClick={() => setCollapsed(!collapsed)}
                     className={cn(
-                        'w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-400 hover:bg-gray-50 hover:text-gray-600 transition-colors mt-2',
+                        'w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-400 hover:bg-gray-50 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300 transition-colors mt-2',
                         collapsed && 'justify-center'
                     )}
                 >

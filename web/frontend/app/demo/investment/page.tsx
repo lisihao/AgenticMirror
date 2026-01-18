@@ -148,11 +148,29 @@ const salesProjection = {
     },
 };
 
-// 产品定价策略 - 2个版本，高端定位
+// 产品定价策略 - 3个版本，最高不超过8000
 const pricingStrategy = [
     {
+        tier: 'Mirror Lite',
+        price: 2999,
+        target: '入门款 - 美妆新手/学生党',
+        tagline: '智能美妆入门之选',
+        hardwareFeatures: [
+            { name: '1080P高清镜面', desc: '清晰肤质检测' },
+            { name: '固定支架', desc: '稳定耐用' },
+            { name: 'LED环形补光', desc: '均匀柔和光线' },
+        ],
+        aiFeatures: [
+            'AI基础皮肤分析（肤质/肤色）',
+            '妆容教程推荐',
+            '每日护肤提醒',
+        ],
+        serviceIncluded: '首年基础会员（价值¥199）',
+        margin: 38,
+    },
+    {
         tier: 'Mirror Pro',
-        price: 5999,
+        price: 4999,
         target: '主力款 - 追求品质生活的都市女性',
         tagline: '专业级AI美妆顾问',
         hardwareFeatures: [
@@ -167,18 +185,18 @@ const pricingStrategy = [
             '个性化妆容推荐（匹配场合/心情）',
             'AI购物助手（智能比价/一键购买）',
         ],
-        serviceIncluded: '首年Pro会员（价值¥599）',
+        serviceIncluded: '首年Pro会员（价值¥399）',
         margin: 45,
+        isRecommended: true,
     },
     {
         tier: 'Mirror Ultra',
-        price: 9999,
+        price: 7999,
         target: '旗舰款 - 科技美学追求者/高端礼品',
         tagline: '全能AI美妆机器人',
         hardwareFeatures: [
-            { name: '8K超清+3D深度摄像头', desc: '亚毫米级皮肤分析' },
+            { name: '4K超清+3D深度摄像头', desc: '亚毫米级皮肤分析' },
             { name: '三轴云台+手势识别', desc: '解放双手，挥手操控' },
-            { name: '双机械臂系统', desc: '自动递送化妆品' },
             { name: '多光谱传感器', desc: '真皮层健康检测' },
             { name: '高保真音响', desc: '沉浸式语音陪伴' },
         ],
@@ -188,55 +206,49 @@ const pricingStrategy = [
             'AI 私人美妆顾问（7×24实时问答）',
             '皮肤健康趋势预测（30天预警）',
             'AR虚拟试妆（实时渲染）',
-            '直播美颜同步（抖音/小红书）',
+            '华为健康生态联动',
         ],
-        serviceIncluded: '终身Ultra会员（价值¥12,000+）',
-        margin: 52,
-        isRecommended: true,
+        serviceIncluded: '首年Ultra会员（价值¥699）',
+        margin: 50,
     },
 ];
 
-// 支撑高价的硬件差异化
+// 支撑定价的硬件差异化（三版本对比）
 const premiumHardwareJustification = [
     {
         category: '视觉系统',
-        standard: '普通720P摄像头',
-        ours: '8K+3D深度摄像头+多光谱',
-        value: '医美级检测精度，竞品无法复制',
-        costDelta: 800,
-        perceivedValue: 3000,
+        lite: '1080P摄像头',
+        pro: '4K高清摄像头',
+        ultra: '4K+3D深度摄像头+多光谱',
+        value: '从基础到医美级检测精度',
     },
     {
         category: '机械结构',
-        standard: '固定支架',
-        ours: '三轴云台+双机械臂',
-        value: '解放双手，差异化明显',
-        costDelta: 600,
-        perceivedValue: 2500,
+        lite: '固定支架',
+        pro: '双轴云台',
+        ultra: '三轴云台+手势识别',
+        value: '从稳定到解放双手',
+    },
+    {
+        category: '补光系统',
+        lite: 'LED环形灯',
+        pro: '专业三色温补光',
+        ultra: '专业补光+氛围灯',
+        value: '从基础到专业级光线',
     },
     {
         category: '传感器',
-        standard: '无',
-        ours: '多光谱皮肤传感器',
-        value: '真皮层检测，专业级数据',
-        costDelta: 400,
-        perceivedValue: 2000,
-    },
-    {
-        category: '交互系统',
-        standard: '触屏',
-        ours: '手势+语音+触控多模态',
-        value: '化妆时无需触碰，卫生便捷',
-        costDelta: 200,
-        perceivedValue: 1000,
+        lite: '基础',
+        pro: '肤质传感器',
+        ultra: '多光谱皮肤传感器',
+        value: '从表层到真皮层检测',
     },
     {
         category: '音频系统',
-        standard: '普通喇叭',
-        ours: '高保真立体声+降噪麦克风',
-        value: '沉浸式陪伴体验',
-        costDelta: 150,
-        perceivedValue: 800,
+        lite: '单声道喇叭',
+        pro: '立体声喇叭',
+        ultra: '高保真音响+降噪麦克风',
+        value: '从提示音到沉浸式陪伴',
     },
 ];
 
@@ -1452,46 +1464,49 @@ export default function InvestmentPage() {
                             </div>
                         </div>
 
-                        {/* Premium Hardware Justification */}
+                        {/* 三版本硬件对比 */}
                         <div className="bg-white rounded-2xl shadow-lg p-6">
-                            <h2 className="text-xl font-bold text-gray-900 mb-2">高价支撑点分析</h2>
-                            <p className="text-sm text-gray-500 mb-4">硬件差异化创造感知价值溢价</p>
+                            <h2 className="text-xl font-bold text-gray-900 mb-2">三版本硬件配置对比</h2>
+                            <p className="text-sm text-gray-500 mb-4">差异化配置支撑不同定价</p>
                             <div className="overflow-x-auto">
                                 <table className="w-full text-sm">
                                     <thead>
                                         <tr className="border-b border-gray-200">
                                             <th className="text-left py-2 px-3">模块</th>
-                                            <th className="text-left py-2 px-3">竞品方案</th>
-                                            <th className="text-left py-2 px-3">我们的方案</th>
-                                            <th className="text-right py-2 px-3">成本增量</th>
-                                            <th className="text-right py-2 px-3">感知价值</th>
+                                            <th className="text-center py-2 px-3 text-gray-500">Lite ¥2,999</th>
+                                            <th className="text-center py-2 px-3 text-purple-600">Pro ¥4,999</th>
+                                            <th className="text-center py-2 px-3 text-orange-600">Ultra ¥7,999</th>
+                                            <th className="text-left py-2 px-3">价值升级</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {premiumHardwareJustification.map((item, i) => (
                                             <tr key={i} className="border-b border-gray-100">
                                                 <td className="py-2 px-3 font-medium">{item.category}</td>
-                                                <td className="py-2 px-3 text-gray-500">{item.standard}</td>
-                                                <td className="py-2 px-3 text-purple-600 font-medium">{item.ours}</td>
-                                                <td className="py-2 px-3 text-right text-gray-500">+¥{item.costDelta}</td>
-                                                <td className="py-2 px-3 text-right text-green-600 font-bold">+¥{item.perceivedValue.toLocaleString()}</td>
+                                                <td className="py-2 px-3 text-center text-gray-500">{item.lite}</td>
+                                                <td className="py-2 px-3 text-center text-purple-600 font-medium">{item.pro}</td>
+                                                <td className="py-2 px-3 text-center text-orange-600 font-medium">{item.ultra}</td>
+                                                <td className="py-2 px-3 text-sm text-green-600">{item.value}</td>
                                             </tr>
                                         ))}
-                                        <tr className="bg-purple-50 font-bold">
-                                            <td className="py-2 px-3" colSpan={3}>合计</td>
-                                            <td className="py-2 px-3 text-right">+¥2,150</td>
-                                            <td className="py-2 px-3 text-right text-green-600">+¥9,300</td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div className="mt-4 bg-green-50 rounded-lg p-4">
-                                <div className="flex items-center gap-2">
-                                    <CheckCircle className="w-5 h-5 text-green-600" />
-                                    <span className="text-sm text-green-800">
-                                        <strong>结论：</strong>成本增加约¥2,150，但用户感知价值增加¥9,300，
-                                        支撑售价¥9,999完全合理，毛利率可达52%
-                                    </span>
+                            <div className="mt-4 grid grid-cols-3 gap-4">
+                                <div className="bg-gray-50 rounded-lg p-3 text-center">
+                                    <div className="text-lg font-bold text-gray-700">¥2,999</div>
+                                    <div className="text-xs text-gray-500">毛利率 38%</div>
+                                    <div className="text-xs text-gray-400">入门体验</div>
+                                </div>
+                                <div className="bg-purple-50 rounded-lg p-3 text-center border-2 border-purple-300">
+                                    <div className="text-lg font-bold text-purple-700">¥4,999</div>
+                                    <div className="text-xs text-purple-500">毛利率 45%</div>
+                                    <div className="text-xs text-purple-400">主力爆款</div>
+                                </div>
+                                <div className="bg-orange-50 rounded-lg p-3 text-center">
+                                    <div className="text-lg font-bold text-orange-700">¥7,999</div>
+                                    <div className="text-xs text-orange-500">毛利率 50%</div>
+                                    <div className="text-xs text-orange-400">高端礼品</div>
                                 </div>
                             </div>
                         </div>
