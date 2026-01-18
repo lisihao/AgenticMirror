@@ -485,6 +485,328 @@ const competitiveModat = [
     },
 ];
 
+// ========== 直播带货 + 微商 + 社交电商整合 ==========
+
+// 直播带货整合方案
+const liveStreamingIntegration = {
+    // 镜子作为直播工作站的优势
+    studioAdvantages: [
+        {
+            feature: '专业美颜直播',
+            icon: '📹',
+            description: '8K摄像头+环形补光，媲美专业直播间',
+            traditional: '需要单独购买补光灯、摄像头、支架',
+            ourSolution: '一体化设计，开机即播',
+            valueProposition: '省去¥3000+设备投入',
+        },
+        {
+            feature: 'AR实时试妆展示',
+            icon: '💄',
+            description: '直播中实时展示产品上脸效果',
+            traditional: '主播需要真实上妆，耗时费力',
+            ourSolution: '一键切换不同色号，实时渲染',
+            valueProposition: '单场直播可展示50+产品',
+        },
+        {
+            feature: '智能产品识别',
+            icon: '🏷️',
+            description: '举起产品自动识别并弹出购买链接',
+            traditional: '需要手动操作上架产品链接',
+            ourSolution: 'CV识别+自动关联商品库',
+            valueProposition: '解放双手，专注互动',
+        },
+        {
+            feature: '观众同屏试妆',
+            icon: '👥',
+            description: '观众用手机看直播也能虚拟试妆',
+            traditional: '只能看主播效果',
+            ourSolution: '观众点击即可在自己脸上试',
+            valueProposition: '转化率提升40%',
+        },
+        {
+            feature: '直播数据看板',
+            icon: '📊',
+            description: '实时显示观看人数、互动、转化',
+            traditional: '需要看手机或电脑',
+            ourSolution: '镜子边角实时显示关键数据',
+            valueProposition: '主播始终掌控直播状态',
+        },
+        {
+            feature: '多平台同步',
+            icon: '🌐',
+            description: '一键同步抖音、快手、小红书、淘宝',
+            traditional: '需要多设备多账号',
+            ourSolution: '统一推流，分发到各平台',
+            valueProposition: '覆盖全渠道观众',
+        },
+    ],
+    // 直播场景
+    liveScenarios: [
+        {
+            name: '日常化妆直播',
+            description: '边化妆边分享心得，种草带货',
+            duration: '30-60分钟',
+            avgViewers: '500-5000',
+            conversionRate: '3-8%',
+            avgGMV: '¥5000-50000/场',
+            mirrorRole: '化妆指导+产品展示+AR试妆',
+        },
+        {
+            name: '新品测评直播',
+            description: '开箱测评新品，真实上脸效果',
+            duration: '15-30分钟',
+            avgViewers: '1000-10000',
+            conversionRate: '5-12%',
+            avgGMV: '¥10000-100000/场',
+            mirrorRole: '对比测评+成分分析+效果追踪',
+        },
+        {
+            name: '护肤答疑直播',
+            description: '根据观众提问给出个性化建议',
+            duration: '60-120分钟',
+            avgViewers: '200-2000',
+            conversionRate: '8-15%',
+            avgGMV: '¥3000-30000/场',
+            mirrorRole: '皮肤分析+产品匹配+方案定制',
+        },
+        {
+            name: '品牌专场直播',
+            description: '与品牌合作的专场带货',
+            duration: '2-4小时',
+            avgViewers: '5000-50000',
+            conversionRate: '10-20%',
+            avgGMV: '¥50000-500000/场',
+            mirrorRole: '官方授权AR试妆+限时优惠',
+        },
+    ],
+};
+
+// 微商/社交电商整合
+const socialCommerceIntegration = {
+    // 内容创作工具
+    contentCreationTools: [
+        {
+            tool: '一键对比图生成',
+            icon: '📸',
+            description: '自动生成使用前后对比图',
+            output: '9宫格对比图/视频',
+            platforms: ['小红书', '朋友圈', '微博'],
+            monetization: '免费基础版 / ¥9.9高级模板',
+        },
+        {
+            tool: '短视频自动剪辑',
+            icon: '🎬',
+            description: '化妆过程自动剪辑成15-60秒短视频',
+            output: '竖版短视频+字幕+BGM',
+            platforms: ['抖音', '快手', '视频号'],
+            monetization: '¥19.9/月无水印',
+        },
+        {
+            tool: '种草笔记生成',
+            icon: '✍️',
+            description: 'AI生成产品测评文案',
+            output: '小红书风格图文笔记',
+            platforms: ['小红书', '微信公众号'],
+            monetization: '¥9.9/篇 或 会员免费',
+        },
+        {
+            tool: '产品成分解读',
+            icon: '🔬',
+            description: '扫描产品自动生成成分分析',
+            output: '专业成分解读卡片',
+            platforms: ['所有平台'],
+            monetization: '品牌付费合作',
+        },
+    ],
+    // 分销体系
+    distributionSystem: {
+        levels: [
+            {
+                level: '普通用户',
+                requirement: '购买镜子',
+                commission: '自购返现5%',
+                features: ['分享链接', '基础数据'],
+            },
+            {
+                level: '美妆达人',
+                requirement: '月销售额¥5000+',
+                commission: '10-15%',
+                features: ['专属优惠码', '选品建议', '数据分析'],
+            },
+            {
+                level: '金牌合伙人',
+                requirement: '月销售额¥50000+',
+                commission: '15-20%',
+                features: ['团队管理', '品牌直连', '培训支持'],
+            },
+            {
+                level: '城市服务商',
+                requirement: '区域独家授权',
+                commission: '20-25% + 团队分成',
+                features: ['线下体验店', '招商权限', '定制服务'],
+            },
+        ],
+        // 典型微商场景
+        scenarios: [
+            {
+                persona: '宝妈微商',
+                description: '在家带娃的同时做美妆分享',
+                dailyTime: '2-3小时',
+                monthlyIncome: '¥3000-15000',
+                mirrorRole: '内容生产工具+可信背书',
+            },
+            {
+                persona: '美妆学生',
+                description: '分享学习化妆的过程',
+                dailyTime: '1-2小时',
+                monthlyIncome: '¥1000-5000',
+                mirrorRole: 'AI教学+进步记录+分享素材',
+            },
+            {
+                persona: '兼职白领',
+                description: '下班后做美妆测评',
+                dailyTime: '1小时',
+                monthlyIncome: '¥2000-10000',
+                mirrorRole: '快速出内容+专业数据支撑',
+            },
+            {
+                persona: '专业KOC',
+                description: '全职美妆内容创作者',
+                dailyTime: '6-8小时',
+                monthlyIncome: '¥20000-100000+',
+                mirrorRole: '直播工作站+内容生产线',
+            },
+        ],
+    },
+};
+
+// 创作者经济模型
+const creatorEconomyModel = {
+    // 用户金字塔
+    userPyramid: [
+        {
+            tier: '普通消费者',
+            percentage: 70,
+            behavior: '使用镜子化妆，偶尔分享',
+            contribution: '硬件+基础订阅',
+            monthlyValue: 50,
+        },
+        {
+            tier: '内容贡献者',
+            percentage: 20,
+            behavior: '经常分享化妆心得，小规模带货',
+            contribution: '订阅+少量佣金',
+            monthlyValue: 200,
+        },
+        {
+            tier: 'KOC (关键意见消费者)',
+            percentage: 8,
+            behavior: '活跃创作者，有稳定粉丝',
+            contribution: '高级订阅+佣金+品牌合作',
+            monthlyValue: 1500,
+        },
+        {
+            tier: 'KOL (关键意见领袖)',
+            percentage: 2,
+            behavior: '专业美妆博主，万级粉丝',
+            contribution: '平台分成+品牌专场',
+            monthlyValue: 10000,
+        },
+    ],
+    // 平台抽成模式
+    platformFees: [
+        {
+            type: '直播带货',
+            ourTakeRate: '3-5%',
+            comparison: '抖音6%、快手5%、淘宝6%',
+            advantage: '更低抽成吸引主播入驻',
+        },
+        {
+            type: '短视频带货',
+            ourTakeRate: '5-8%',
+            comparison: '抖音10%、小红书10%',
+            advantage: '创作工具+低抽成',
+        },
+        {
+            type: '社群分销',
+            ourTakeRate: '2-3%',
+            comparison: '云集15%、有赞8%',
+            advantage: '硬件+软件+供应链一体化',
+        },
+        {
+            type: '品牌合作',
+            ourTakeRate: '10-15%',
+            comparison: '直接对接品牌',
+            advantage: '精准用户数据匹配',
+        },
+    ],
+    // 创作者收入预测
+    creatorRevenueProjection: {
+        years: ['2025', '2026', '2027', '2028', '2029'],
+        activeCreators: [5000, 25000, 80000, 180000, 350000],
+        avgMonthlyEarning: [800, 1200, 1800, 2500, 3500],
+        platformGMV: [0.48, 3.6, 17.28, 54, 147], // 亿
+        platformRevenue: [0.02, 0.18, 0.86, 2.7, 7.35], // 亿 (按5%抽成)
+    },
+};
+
+// MCN/品牌合作模式
+const b2bPartnershipModel = {
+    mcnPartnership: [
+        {
+            type: '设备入驻',
+            description: 'MCN旗下达人使用我们的镜子直播',
+            benefit: '专业设备提升内容质量',
+            pricing: '设备采购优惠30% + 佣金返点',
+            targetMCN: '美妆垂类MCN',
+        },
+        {
+            type: '数据合作',
+            description: '提供达人皮肤/妆容数据分析',
+            benefit: '精准匹配品牌合作',
+            pricing: '¥5万/年 数据服务费',
+            targetMCN: '头部美妆MCN',
+        },
+        {
+            type: '孵化计划',
+            description: '联合孵化美妆新人主播',
+            benefit: '共同培养，分享收益',
+            pricing: '收益分成模式',
+            targetMCN: '新锐MCN',
+        },
+    ],
+    brandPartnership: [
+        {
+            type: '官方AR试妆',
+            description: '品牌全线产品AR试妆授权',
+            benefit: '用户购前体验，降低退货',
+            pricing: '¥20-50万/年 + 销售分成',
+            targetBrand: '国际美妆品牌',
+        },
+        {
+            type: '新品首发',
+            description: '新品在我们平台首发+独家试用',
+            benefit: '精准触达目标用户',
+            pricing: '¥10-30万/次',
+            targetBrand: '新锐国货品牌',
+        },
+        {
+            type: '数据洞察',
+            description: '用户肤质/偏好/效果数据',
+            benefit: '产品研发参考',
+            pricing: '¥50-200万/年',
+            targetBrand: '头部美妆集团',
+        },
+        {
+            type: 'KOC种草',
+            description: '调动平台KOC进行产品种草',
+            benefit: '真实用户口碑传播',
+            pricing: 'CPS模式，按效果付费',
+            targetBrand: '所有美妆品牌',
+        },
+    ],
+};
+
 // Agentic AI 功能价值（保留原有但优化）
 const agenticAIFeatures = [
     {
@@ -951,7 +1273,7 @@ const huaweiStrategy = {
 };
 
 export default function InvestmentPage() {
-    const [activeTab, setActiveTab] = useState<'overview' | 'market' | 'audience' | 'projection' | 'agentic' | 'competition' | 'risk' | 'huawei'>('overview');
+    const [activeTab, setActiveTab] = useState<'overview' | 'market' | 'audience' | 'projection' | 'agentic' | 'creator' | 'competition' | 'risk' | 'huawei'>('overview');
 
     const tabs = [
         { id: 'overview', label: '投资概览', icon: BarChart3 },
@@ -959,6 +1281,7 @@ export default function InvestmentPage() {
         { id: 'audience', label: '目标用户', icon: Users },
         { id: 'projection', label: '收入预测', icon: TrendingUp },
         { id: 'agentic', label: 'Agentic商业', icon: Zap, highlight: true },
+        { id: 'creator', label: '创作者经济', icon: Heart, highlight: true },
         { id: 'competition', label: '竞争格局', icon: Target },
         { id: 'risk', label: '风险分析', icon: AlertTriangle },
         { id: 'huawei', label: '华为战略', icon: Layers, highlight: true },
@@ -1984,6 +2307,383 @@ export default function InvestmentPage() {
                                     </div>
                                     <div className="text-sm text-purple-200 mt-2">
                                         AgenticMirror = 物理世界的 Agentic Storefront + 知道你皮肤的 AI 购物代理
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+
+                {/* Creator Economy Tab - 直播带货 + 微商 + 社交电商 */}
+                {activeTab === 'creator' && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="space-y-6"
+                    >
+                        {/* Header */}
+                        <div className="bg-gradient-to-r from-pink-500 via-red-500 to-orange-500 rounded-2xl shadow-lg p-6 text-white">
+                            <div className="flex items-center gap-4 mb-4">
+                                <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center">
+                                    <Heart className="w-10 h-10" />
+                                </div>
+                                <div>
+                                    <h2 className="text-2xl font-bold">创作者经济 × AgenticMirror</h2>
+                                    <p className="text-pink-100">直播带货 + 微商分销 + 社交电商 = 新服务形态</p>
+                                </div>
+                            </div>
+                            <div className="bg-white/10 backdrop-blur rounded-xl p-4 mb-4">
+                                <p className="text-sm leading-relaxed">
+                                    <span className="text-yellow-300 font-medium">核心洞察：</span>
+                                    镜子不只是消费者工具，更是美妆创作者的"内容生产工作站"。
+                                    <br />
+                                    每个用户都可能成为 KOC，每个 KOC 都需要专业工具。
+                                </p>
+                            </div>
+                            <div className="grid md:grid-cols-4 gap-4">
+                                {[
+                                    { label: '2029年活跃创作者', value: '35万', sub: '持续创作内容' },
+                                    { label: '创作者带货GMV', value: '¥147亿', sub: '年交易额' },
+                                    { label: '平台佣金收入', value: '¥7.35亿', sub: '5%抽成' },
+                                    { label: '创作者月均收入', value: '¥3500', sub: '2029年预测' },
+                                ].map((stat, i) => (
+                                    <div key={i} className="bg-white/10 backdrop-blur rounded-xl p-4 text-center">
+                                        <div className="text-2xl font-bold">{stat.value}</div>
+                                        <div className="text-sm text-pink-200">{stat.label}</div>
+                                        <div className="text-xs text-pink-300 mt-1">{stat.sub}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Live Streaming Studio */}
+                        <div className="bg-white rounded-2xl shadow-lg p-6">
+                            <h2 className="text-xl font-bold text-gray-900 mb-2">🎬 镜子 = 直播工作站</h2>
+                            <p className="text-sm text-gray-500 mb-4">专业设备 + AI能力 + 一体化体验，重新定义美妆直播</p>
+                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {liveStreamingIntegration.studioAdvantages.map((adv, i) => (
+                                    <motion.div
+                                        key={i}
+                                        className="bg-gradient-to-br from-pink-50 to-orange-50 rounded-xl p-4 border border-pink-100"
+                                        whileHover={{ scale: 1.02 }}
+                                    >
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <span className="text-2xl">{adv.icon}</span>
+                                            <h3 className="font-bold text-gray-800">{adv.feature}</h3>
+                                        </div>
+                                        <p className="text-sm text-gray-600 mb-3">{adv.description}</p>
+                                        <div className="space-y-2 text-xs">
+                                            <div className="flex items-start gap-2">
+                                                <span className="text-red-400 font-medium shrink-0">传统:</span>
+                                                <span className="text-gray-500">{adv.traditional}</span>
+                                            </div>
+                                            <div className="flex items-start gap-2">
+                                                <span className="text-green-500 font-medium shrink-0">我们:</span>
+                                                <span className="text-gray-700">{adv.ourSolution}</span>
+                                            </div>
+                                        </div>
+                                        <div className="mt-3 inline-block bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full font-medium">
+                                            {adv.valueProposition}
+                                        </div>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Live Scenarios */}
+                        <div className="bg-white rounded-2xl shadow-lg p-6">
+                            <h2 className="text-xl font-bold text-gray-900 mb-2">📹 直播场景矩阵</h2>
+                            <p className="text-sm text-gray-500 mb-4">不同场景下镜子扮演的角色</p>
+                            <div className="grid md:grid-cols-2 gap-4">
+                                {liveStreamingIntegration.liveScenarios.map((scenario, i) => (
+                                    <div key={i} className="border border-gray-200 rounded-xl overflow-hidden">
+                                        <div className="bg-gradient-to-r from-red-50 to-orange-50 p-4">
+                                            <h3 className="font-bold text-gray-800">{scenario.name}</h3>
+                                            <p className="text-sm text-gray-600">{scenario.description}</p>
+                                        </div>
+                                        <div className="p-4">
+                                            <div className="grid grid-cols-2 gap-3 text-sm mb-3">
+                                                <div>
+                                                    <span className="text-gray-500">时长:</span>
+                                                    <span className="ml-1 text-gray-700">{scenario.duration}</span>
+                                                </div>
+                                                <div>
+                                                    <span className="text-gray-500">观众:</span>
+                                                    <span className="ml-1 text-gray-700">{scenario.avgViewers}</span>
+                                                </div>
+                                                <div>
+                                                    <span className="text-gray-500">转化率:</span>
+                                                    <span className="ml-1 text-green-600 font-medium">{scenario.conversionRate}</span>
+                                                </div>
+                                                <div>
+                                                    <span className="text-gray-500">场均GMV:</span>
+                                                    <span className="ml-1 text-orange-600 font-medium">{scenario.avgGMV}</span>
+                                                </div>
+                                            </div>
+                                            <div className="bg-purple-50 rounded-lg p-2">
+                                                <span className="text-xs text-purple-600 font-medium">镜子角色: </span>
+                                                <span className="text-xs text-purple-700">{scenario.mirrorRole}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Content Creation Tools */}
+                        <div className="bg-white rounded-2xl shadow-lg p-6">
+                            <h2 className="text-xl font-bold text-gray-900 mb-2">✍️ 内容创作工具集</h2>
+                            <p className="text-sm text-gray-500 mb-4">让每个人都能轻松产出专业内容</p>
+                            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                                {socialCommerceIntegration.contentCreationTools.map((tool, i) => (
+                                    <div key={i} className="bg-gray-50 rounded-xl p-4">
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <span className="text-2xl">{tool.icon}</span>
+                                            <h3 className="font-bold text-gray-800 text-sm">{tool.tool}</h3>
+                                        </div>
+                                        <p className="text-xs text-gray-600 mb-2">{tool.description}</p>
+                                        <div className="text-xs text-gray-500 mb-2">
+                                            输出: <span className="text-gray-700">{tool.output}</span>
+                                        </div>
+                                        <div className="flex flex-wrap gap-1 mb-2">
+                                            {tool.platforms.map((p, j) => (
+                                                <span key={j} className="bg-blue-100 text-blue-600 text-xs px-2 py-0.5 rounded-full">
+                                                    {p}
+                                                </span>
+                                            ))}
+                                        </div>
+                                        <div className="text-xs text-green-600 font-medium">{tool.monetization}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Distribution System */}
+                        <div className="bg-white rounded-2xl shadow-lg p-6">
+                            <h2 className="text-xl font-bold text-gray-900 mb-2">🤝 分销体系设计</h2>
+                            <p className="text-sm text-gray-500 mb-4">多层级分销，让用户成为推广者</p>
+
+                            <div className="grid md:grid-cols-4 gap-4 mb-6">
+                                {socialCommerceIntegration.distributionSystem.levels.map((level, i) => (
+                                    <div key={i} className={cn(
+                                        "rounded-xl p-4 border-2",
+                                        i === 3 ? "border-yellow-400 bg-gradient-to-br from-yellow-50 to-orange-50" : "border-gray-200"
+                                    )}>
+                                        <div className="text-center mb-3">
+                                            <div className={cn(
+                                                "text-lg font-bold",
+                                                i === 0 ? "text-gray-600" : i === 1 ? "text-blue-600" : i === 2 ? "text-purple-600" : "text-yellow-600"
+                                            )}>
+                                                {level.level}
+                                            </div>
+                                            <div className="text-xs text-gray-500">{level.requirement}</div>
+                                        </div>
+                                        <div className="text-center mb-3">
+                                            <div className="text-2xl font-bold text-green-600">{level.commission}</div>
+                                            <div className="text-xs text-gray-500">佣金比例</div>
+                                        </div>
+                                        <ul className="space-y-1">
+                                            {level.features.map((f, j) => (
+                                                <li key={j} className="text-xs text-gray-600 flex items-center gap-1">
+                                                    <CheckCircle className="w-3 h-3 text-green-500" />
+                                                    {f}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Micro-Business Personas */}
+                            <h3 className="font-bold text-gray-700 mb-3">典型微商画像</h3>
+                            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                                {socialCommerceIntegration.distributionSystem.scenarios.map((s, i) => (
+                                    <div key={i} className="bg-pink-50 rounded-xl p-4">
+                                        <div className="font-bold text-gray-800 mb-1">{s.persona}</div>
+                                        <p className="text-xs text-gray-600 mb-2">{s.description}</p>
+                                        <div className="text-xs space-y-1">
+                                            <div><span className="text-gray-500">日投入:</span> <span className="text-gray-700">{s.dailyTime}</span></div>
+                                            <div><span className="text-gray-500">月收入:</span> <span className="text-green-600 font-medium">{s.monthlyIncome}</span></div>
+                                        </div>
+                                        <div className="mt-2 text-xs text-purple-600 bg-purple-50 rounded-lg p-2">
+                                            镜子价值: {s.mirrorRole}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Creator Pyramid */}
+                        <div className="bg-white rounded-2xl shadow-lg p-6">
+                            <h2 className="text-xl font-bold text-gray-900 mb-4">👥 用户金字塔模型</h2>
+                            <div className="flex flex-col items-center">
+                                {creatorEconomyModel.userPyramid.map((tier, i) => (
+                                    <div
+                                        key={i}
+                                        className={cn(
+                                            "rounded-lg p-4 mb-2 text-center transition-all",
+                                            i === 0 ? "w-full bg-gray-100" :
+                                            i === 1 ? "w-4/5 bg-blue-100" :
+                                            i === 2 ? "w-3/5 bg-purple-100" :
+                                            "w-2/5 bg-gradient-to-r from-yellow-100 to-orange-100"
+                                        )}
+                                    >
+                                        <div className="flex items-center justify-between">
+                                            <div className="text-left">
+                                                <div className="font-bold text-gray-800">{tier.tier}</div>
+                                                <div className="text-xs text-gray-500">{tier.behavior}</div>
+                                            </div>
+                                            <div className="text-right">
+                                                <div className="text-lg font-bold text-purple-600">{tier.percentage}%</div>
+                                                <div className="text-xs text-gray-500">月价值 ¥{tier.monthlyValue}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Platform Fee Comparison */}
+                        <div className="bg-white rounded-2xl shadow-lg p-6">
+                            <h2 className="text-xl font-bold text-gray-900 mb-4">💰 平台抽成对比</h2>
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-sm">
+                                    <thead>
+                                        <tr className="border-b border-gray-200">
+                                            <th className="text-left py-3 px-4 font-bold text-gray-700">业务类型</th>
+                                            <th className="text-left py-3 px-4 font-bold text-gray-700">我们的抽成</th>
+                                            <th className="text-left py-3 px-4 font-bold text-gray-700">行业对比</th>
+                                            <th className="text-left py-3 px-4 font-bold text-gray-700">竞争优势</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {creatorEconomyModel.platformFees.map((fee, i) => (
+                                            <tr key={i} className="border-b border-gray-100">
+                                                <td className="py-3 px-4 font-medium text-gray-800">{fee.type}</td>
+                                                <td className="py-3 px-4 text-green-600 font-bold">{fee.ourTakeRate}</td>
+                                                <td className="py-3 px-4 text-gray-500">{fee.comparison}</td>
+                                                <td className="py-3 px-4 text-purple-600">{fee.advantage}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        {/* B2B Partnerships */}
+                        <div className="bg-white rounded-2xl shadow-lg p-6">
+                            <h2 className="text-xl font-bold text-gray-900 mb-4">🏢 MCN & 品牌合作</h2>
+
+                            <div className="grid md:grid-cols-2 gap-6">
+                                {/* MCN */}
+                                <div>
+                                    <h3 className="font-bold text-gray-700 mb-3">MCN 合作模式</h3>
+                                    <div className="space-y-3">
+                                        {b2bPartnershipModel.mcnPartnership.map((item, i) => (
+                                            <div key={i} className="bg-blue-50 rounded-xl p-4">
+                                                <div className="font-bold text-gray-800 mb-1">{item.type}</div>
+                                                <p className="text-sm text-gray-600 mb-2">{item.description}</p>
+                                                <div className="text-xs space-y-1">
+                                                    <div><span className="text-gray-500">价值:</span> <span className="text-green-600">{item.benefit}</span></div>
+                                                    <div><span className="text-gray-500">定价:</span> <span className="text-purple-600">{item.pricing}</span></div>
+                                                    <div><span className="text-gray-500">目标:</span> <span className="text-gray-700">{item.targetMCN}</span></div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Brand */}
+                                <div>
+                                    <h3 className="font-bold text-gray-700 mb-3">品牌合作模式</h3>
+                                    <div className="space-y-3">
+                                        {b2bPartnershipModel.brandPartnership.map((item, i) => (
+                                            <div key={i} className="bg-pink-50 rounded-xl p-4">
+                                                <div className="font-bold text-gray-800 mb-1">{item.type}</div>
+                                                <p className="text-sm text-gray-600 mb-2">{item.description}</p>
+                                                <div className="text-xs space-y-1">
+                                                    <div><span className="text-gray-500">价值:</span> <span className="text-green-600">{item.benefit}</span></div>
+                                                    <div><span className="text-gray-500">定价:</span> <span className="text-purple-600">{item.pricing}</span></div>
+                                                    <div><span className="text-gray-500">目标:</span> <span className="text-gray-700">{item.targetBrand}</span></div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Revenue Projection */}
+                        <div className="bg-white rounded-2xl shadow-lg p-6">
+                            <h2 className="text-xl font-bold text-gray-900 mb-4">📈 创作者经济收入预测</h2>
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-sm">
+                                    <thead>
+                                        <tr className="border-b border-gray-200">
+                                            <th className="text-left py-3 px-4 font-bold text-gray-700">指标</th>
+                                            {creatorEconomyModel.creatorRevenueProjection.years.map((year, i) => (
+                                                <th key={i} className="text-right py-3 px-4 font-bold text-gray-700">{year}</th>
+                                            ))}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr className="border-b border-gray-100">
+                                            <td className="py-3 px-4 text-gray-600">活跃创作者</td>
+                                            {creatorEconomyModel.creatorRevenueProjection.activeCreators.map((v, i) => (
+                                                <td key={i} className="text-right py-3 px-4 font-medium">{v.toLocaleString()}</td>
+                                            ))}
+                                        </tr>
+                                        <tr className="border-b border-gray-100">
+                                            <td className="py-3 px-4 text-gray-600">月均收入 (¥)</td>
+                                            {creatorEconomyModel.creatorRevenueProjection.avgMonthlyEarning.map((v, i) => (
+                                                <td key={i} className="text-right py-3 px-4 font-medium text-green-600">¥{v.toLocaleString()}</td>
+                                            ))}
+                                        </tr>
+                                        <tr className="border-b border-gray-100">
+                                            <td className="py-3 px-4 text-gray-600">平台GMV (亿)</td>
+                                            {creatorEconomyModel.creatorRevenueProjection.platformGMV.map((v, i) => (
+                                                <td key={i} className="text-right py-3 px-4 font-medium text-orange-600">¥{v}亿</td>
+                                            ))}
+                                        </tr>
+                                        <tr className="bg-purple-50">
+                                            <td className="py-3 px-4 font-bold text-purple-700">平台佣金收入 (亿)</td>
+                                            {creatorEconomyModel.creatorRevenueProjection.platformRevenue.map((v, i) => (
+                                                <td key={i} className="text-right py-3 px-4 font-bold text-purple-700">¥{v}亿</td>
+                                            ))}
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        {/* Summary */}
+                        <div className="bg-gradient-to-r from-pink-500 via-red-500 to-orange-500 rounded-2xl shadow-lg p-6 text-white">
+                            <h2 className="text-xl font-bold mb-4">创作者经济价值总结</h2>
+                            <div className="grid md:grid-cols-3 gap-6 mb-6">
+                                <div className="bg-white/10 backdrop-blur rounded-xl p-4">
+                                    <div className="text-3xl font-bold mb-2">¥147亿</div>
+                                    <div className="text-pink-200">2029年创作者GMV</div>
+                                    <div className="text-xs text-pink-300 mt-1">直播+短视频+社群分销</div>
+                                </div>
+                                <div className="bg-white/10 backdrop-blur rounded-xl p-4">
+                                    <div className="text-3xl font-bold mb-2">35万</div>
+                                    <div className="text-pink-200">活跃创作者</div>
+                                    <div className="text-xs text-pink-300 mt-1">持续产出内容的用户</div>
+                                </div>
+                                <div className="bg-white/10 backdrop-blur rounded-xl p-4">
+                                    <div className="text-3xl font-bold mb-2">¥7.35亿</div>
+                                    <div className="text-pink-200">平台佣金收入</div>
+                                    <div className="text-xs text-pink-300 mt-1">低抽成高增长</div>
+                                </div>
+                            </div>
+                            <div className="bg-white/10 backdrop-blur rounded-xl p-4">
+                                <div className="text-center">
+                                    <div className="text-lg font-medium mb-2">新服务形态定义</div>
+                                    <div className="text-2xl font-bold text-yellow-300">
+                                        "AgenticMirror = 美妆创作者的内容生产工作站"
+                                    </div>
+                                    <div className="text-sm text-pink-200 mt-2">
+                                        硬件+AI+内容工具+分销体系+品牌资源 = 一站式美妆创业平台
                                     </div>
                                 </div>
                             </div>
