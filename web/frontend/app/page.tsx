@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
     Sparkles,
     Camera,
@@ -12,7 +13,10 @@ import {
     Star,
     Zap,
     Shield,
-    TrendingUp
+    TrendingUp,
+    Heart,
+    Eye,
+    Wand2
 } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -375,6 +379,199 @@ export default function LandingPage() {
                             </motion.div>
                         ))}
                     </div>
+                </div>
+            </section>
+
+            {/* Real Transformation Showcase - 真实蜕变案例 */}
+            <section className="py-24 bg-gradient-to-b from-pink-50 via-white to-purple-50 overflow-hidden">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-center mb-12"
+                    >
+                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-pink-500 to-rose-500 rounded-full text-white text-sm font-bold mb-4 shadow-lg">
+                            <span>🔥</span>
+                            小红书 154 万点赞 · 真实案例
+                        </div>
+                        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                            素颜 10 分 → 精致 40 分
+                        </h2>
+                        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                            不是整容，是<span className="text-pink-500 font-bold">化妆的力量</span>！<br/>
+                            AgenticMirror 让每个人都能掌握变美的秘密
+                        </p>
+                    </motion.div>
+
+                    {/* Main Transformation Display */}
+                    <div className="grid lg:grid-cols-2 gap-8 items-center mb-12">
+                        {/* Before/After Compare Image */}
+                        <motion.div
+                            initial={{ opacity: 0, x: -30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="relative"
+                        >
+                            <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
+                                <Image
+                                    src="/demo/transformation/compare.png"
+                                    alt="化妆前后对比"
+                                    width={600}
+                                    height={800}
+                                    className="w-full h-auto"
+                                />
+                                {/* Overlay badges */}
+                                <div className="absolute top-4 left-4 bg-black/60 backdrop-blur text-white px-4 py-2 rounded-full text-sm font-bold">
+                                    化妆前 vs 化妆后
+                                </div>
+                                <div className="absolute bottom-4 right-4 bg-gradient-to-r from-pink-500 to-rose-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                                    ❤️ 154万+ 点赞
+                                </div>
+                            </div>
+                            {/* Floating stats */}
+                            <motion.div
+                                animate={{ y: [0, -8, 0] }}
+                                transition={{ duration: 3, repeat: Infinity }}
+                                className="absolute -top-4 -right-4 bg-white rounded-2xl shadow-xl p-4 z-10"
+                            >
+                                <div className="text-3xl font-bold text-pink-500">+30分</div>
+                                <div className="text-sm text-gray-500">颜值飙升</div>
+                            </motion.div>
+                        </motion.div>
+
+                        {/* Transformation Steps */}
+                        <motion.div
+                            initial={{ opacity: 0, x: 30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="space-y-6"
+                        >
+                            <h3 className="text-2xl font-bold text-gray-900 mb-6">
+                                AI 指导的完整蜕变过程
+                            </h3>
+
+                            {/* Step 1: Before */}
+                            <div className="flex gap-4 items-start">
+                                <div className="relative w-24 h-24 rounded-xl overflow-hidden flex-shrink-0 border-2 border-gray-200">
+                                    <Image
+                                        src="/demo/transformation/before.png"
+                                        alt="素颜状态"
+                                        fill
+                                        className="object-cover"
+                                    />
+                                </div>
+                                <div className="flex-1">
+                                    <div className="flex items-center gap-2 mb-1">
+                                        <div className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold text-gray-600">1</div>
+                                        <span className="font-bold text-gray-900">素颜状态</span>
+                                        <span className="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">10分</span>
+                                    </div>
+                                    <p className="text-sm text-gray-600">AI 扫描分析：肤色偏黄、眼睛较小、脸型圆润</p>
+                                    <p className="text-xs text-pink-500 mt-1">→ 推荐：提亮底妆 + 放大双眼 + 修容瘦脸</p>
+                                </div>
+                            </div>
+
+                            {/* Step 2: Process */}
+                            <div className="flex gap-4 items-start">
+                                <div className="relative w-24 h-24 rounded-xl overflow-hidden flex-shrink-0 border-2 border-pink-200">
+                                    <Image
+                                        src="/demo/transformation/process.png"
+                                        alt="化妆过程"
+                                        fill
+                                        className="object-cover"
+                                    />
+                                </div>
+                                <div className="flex-1">
+                                    <div className="flex items-center gap-2 mb-1">
+                                        <div className="w-6 h-6 rounded-full bg-pink-100 flex items-center justify-center text-xs font-bold text-pink-600">2</div>
+                                        <span className="font-bold text-gray-900">AI 实时指导</span>
+                                        <span className="text-xs bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full">进行中</span>
+                                    </div>
+                                    <p className="text-sm text-gray-600">跟着镜子一步步画，语音提示手法技巧</p>
+                                    <div className="flex gap-2 mt-2">
+                                        <span className="text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded-full">底妆 ✓</span>
+                                        <span className="text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded-full">眉毛 ✓</span>
+                                        <span className="text-xs bg-pink-100 text-pink-600 px-2 py-1 rounded-full">眼妆...</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Step 3: After */}
+                            <div className="flex gap-4 items-start">
+                                <div className="relative w-24 h-24 rounded-xl overflow-hidden flex-shrink-0 border-2 border-green-300 shadow-lg">
+                                    <Image
+                                        src="/demo/transformation/after.png"
+                                        alt="完成妆容"
+                                        fill
+                                        className="object-cover"
+                                    />
+                                </div>
+                                <div className="flex-1">
+                                    <div className="flex items-center gap-2 mb-1">
+                                        <div className="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center text-xs font-bold text-white">✓</div>
+                                        <span className="font-bold text-gray-900">蜕变完成</span>
+                                        <span className="text-xs bg-green-100 text-green-600 px-2 py-0.5 rounded-full">40分 🎉</span>
+                                    </div>
+                                    <p className="text-sm text-gray-600">精致大眼妆 + 立体小脸 + 元气少女感</p>
+                                    <p className="text-xs text-green-600 mt-1 font-medium">完美！这就是化妆的魔法 ✨</p>
+                                </div>
+                            </div>
+
+                            {/* CTA */}
+                            <div className="bg-gradient-to-r from-pink-50 to-purple-50 rounded-2xl p-6 mt-6">
+                                <div className="flex items-center gap-4">
+                                    <div className="text-4xl">🪄</div>
+                                    <div className="flex-1">
+                                        <p className="font-bold text-gray-900">你也可以做到！</p>
+                                        <p className="text-sm text-gray-600">AgenticMirror 的 AI 会根据你的脸型定制方案</p>
+                                    </div>
+                                    <Link href="/demo/workflow" className="btn-primary text-sm">
+                                        体验流程
+                                        <ChevronRight className="w-4 h-4 ml-1" />
+                                    </Link>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </div>
+
+                    {/* Social Proof Bar */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="bg-white rounded-2xl shadow-xl p-6"
+                    >
+                        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+                            <div className="flex items-center gap-4">
+                                <div className="flex -space-x-3">
+                                    {['🙋‍♀️', '👩', '💁‍♀️', '👧', '🧑‍🦰'].map((emoji, i) => (
+                                        <div key={i} className="w-10 h-10 rounded-full bg-gradient-to-br from-pink-100 to-purple-100 flex items-center justify-center text-lg border-2 border-white">
+                                            {emoji}
+                                        </div>
+                                    ))}
+                                </div>
+                                <div>
+                                    <p className="font-bold text-gray-900">50,000+ 女生已蜕变</p>
+                                    <p className="text-sm text-gray-500">加入她们，开启你的变美之旅</p>
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-6">
+                                <div className="text-center">
+                                    <div className="text-2xl font-bold text-pink-500">92%</div>
+                                    <div className="text-xs text-gray-500">推荐给闺蜜</div>
+                                </div>
+                                <div className="text-center">
+                                    <div className="text-2xl font-bold text-purple-500">4.9</div>
+                                    <div className="text-xs text-gray-500">用户评分</div>
+                                </div>
+                                <div className="text-center">
+                                    <div className="text-2xl font-bold text-orange-500">154万</div>
+                                    <div className="text-xs text-gray-500">小红书点赞</div>
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
                 </div>
             </section>
 

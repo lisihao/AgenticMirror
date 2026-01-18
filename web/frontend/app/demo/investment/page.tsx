@@ -2656,6 +2656,105 @@ export default function InvestmentPage() {
                             </div>
                         </div>
 
+                        {/* Real Viral Case Study */}
+                        <div className="bg-white rounded-2xl shadow-lg p-6">
+                            <h2 className="text-xl font-bold text-gray-900 mb-2">🔥 真实病毒传播案例</h2>
+                            <p className="text-sm text-gray-500 mb-4">这类内容为什么能获得 154 万点赞？因为 AgenticMirror 让普通人也能创造奇迹</p>
+
+                            <div className="grid md:grid-cols-2 gap-6">
+                                {/* Transformation Images */}
+                                <div className="space-y-4">
+                                    <div className="relative rounded-xl overflow-hidden border-2 border-pink-200">
+                                        <img
+                                            src="/demo/transformation/compare.png"
+                                            alt="化妆前后对比"
+                                            className="w-full h-auto"
+                                        />
+                                        <div className="absolute top-2 left-2 bg-black/60 text-white px-3 py-1 rounded-full text-xs font-bold">
+                                            化妆前 vs 化妆后
+                                        </div>
+                                        <div className="absolute bottom-2 right-2 bg-gradient-to-r from-pink-500 to-red-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+                                            ❤️ 154万点赞
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-3 gap-2">
+                                        <div className="relative rounded-lg overflow-hidden border border-gray-200">
+                                            <img src="/demo/transformation/before.png" alt="素颜" className="w-full h-24 object-cover" />
+                                            <div className="absolute bottom-0 inset-x-0 bg-black/60 text-white text-xs text-center py-1">素颜 10分</div>
+                                        </div>
+                                        <div className="relative rounded-lg overflow-hidden border border-pink-200">
+                                            <img src="/demo/transformation/process.png" alt="过程" className="w-full h-24 object-cover" />
+                                            <div className="absolute bottom-0 inset-x-0 bg-pink-500/80 text-white text-xs text-center py-1">AI指导中</div>
+                                        </div>
+                                        <div className="relative rounded-lg overflow-hidden border border-green-300">
+                                            <img src="/demo/transformation/after.png" alt="完成" className="w-full h-24 object-cover" />
+                                            <div className="absolute bottom-0 inset-x-0 bg-green-500/80 text-white text-xs text-center py-1">完成 40分</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Analysis */}
+                                <div className="space-y-4">
+                                    <div className="bg-gradient-to-r from-pink-50 to-orange-50 rounded-xl p-4">
+                                        <h3 className="font-bold text-gray-800 mb-3">为什么这类内容能火？</h3>
+                                        <ul className="space-y-2 text-sm">
+                                            <li className="flex items-start gap-2">
+                                                <span className="text-green-500">✓</span>
+                                                <span><span className="font-medium">强烈反差</span> - 素颜到精致的巨大变化引发惊叹</span>
+                                            </li>
+                                            <li className="flex items-start gap-2">
+                                                <span className="text-green-500">✓</span>
+                                                <span><span className="font-medium">真实可信</span> - 不是滤镜，是真实化妆技术</span>
+                                            </li>
+                                            <li className="flex items-start gap-2">
+                                                <span className="text-green-500">✓</span>
+                                                <span><span className="font-medium">可复制性</span> - 观众相信自己也能做到</span>
+                                            </li>
+                                            <li className="flex items-start gap-2">
+                                                <span className="text-green-500">✓</span>
+                                                <span><span className="font-medium">情绪共鸣</span> - "变美"是女性永恒话题</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div className="bg-purple-50 rounded-xl p-4">
+                                        <h3 className="font-bold text-gray-800 mb-3">AgenticMirror 如何放大这个效果？</h3>
+                                        <ul className="space-y-2 text-sm">
+                                            <li className="flex items-start gap-2">
+                                                <span className="text-purple-500">🪄</span>
+                                                <span>AI 自动生成 <span className="font-medium">对比图 + 短视频</span></span>
+                                            </li>
+                                            <li className="flex items-start gap-2">
+                                                <span className="text-purple-500">📊</span>
+                                                <span>量化皮肤改善数据，<span className="font-medium">增加可信度</span></span>
+                                            </li>
+                                            <li className="flex items-start gap-2">
+                                                <span className="text-purple-500">🔗</span>
+                                                <span>一键带货链接，<span className="font-medium">内容即转化</span></span>
+                                            </li>
+                                            <li className="flex items-start gap-2">
+                                                <span className="text-purple-500">💰</span>
+                                                <span>创作者分佣，<span className="font-medium">激励生产更多内容</span></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div className="bg-gradient-to-r from-green-100 to-emerald-100 rounded-xl p-4">
+                                        <div className="flex items-center justify-between">
+                                            <div>
+                                                <div className="text-sm text-gray-600">这条内容预估带货价值</div>
+                                                <div className="text-2xl font-bold text-green-600">¥500万+</div>
+                                            </div>
+                                            <div className="text-right">
+                                                <div className="text-sm text-gray-600">如果配合镜子推广</div>
+                                                <div className="text-lg font-bold text-purple-600">+3000台销量</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         {/* Summary */}
                         <div className="bg-gradient-to-r from-pink-500 via-red-500 to-orange-500 rounded-2xl shadow-lg p-6 text-white">
                             <h2 className="text-xl font-bold mb-4">创作者经济价值总结</h2>
