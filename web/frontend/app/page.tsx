@@ -316,12 +316,45 @@ export default function LandingPage() {
                                     </motion.div>
                                 </div>
 
+                                {/* 核心卖点总结 */}
+                                <motion.div
+                                    className="mt-4 pt-4 border-t border-white/10"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ delay: 1.2 }}
+                                >
+                                    <div className="grid grid-cols-2 gap-2">
+                                        {[
+                                            { icon: '🎯', title: 'AI 精准识别', desc: '468点面部特征' },
+                                            { icon: '🗣️', title: '语音实时指导', desc: '手把手教化妆' },
+                                            { icon: '🧠', title: '越用越聪明', desc: '学习你的喜好' },
+                                            { icon: '💰', title: '省钱不踩雷', desc: '智能比价推荐' },
+                                        ].map((item, i) => (
+                                            <motion.div
+                                                key={item.title}
+                                                initial={{ opacity: 0, scale: 0.9 }}
+                                                animate={{ opacity: 1, scale: 1 }}
+                                                transition={{ delay: 1.3 + i * 0.1 }}
+                                                className="bg-gradient-to-br from-white/10 to-white/5 rounded-lg p-2.5 border border-white/10"
+                                            >
+                                                <div className="flex items-center gap-2">
+                                                    <span className="text-lg">{item.icon}</span>
+                                                    <div>
+                                                        <div className="text-white text-xs font-bold">{item.title}</div>
+                                                        <div className="text-gray-400 text-xs">{item.desc}</div>
+                                                    </div>
+                                                </div>
+                                            </motion.div>
+                                        ))}
+                                    </div>
+                                </motion.div>
+
                                 {/* 对比图展示 */}
                                 <motion.div
                                     className="mt-4 pt-4 border-t border-white/10"
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
-                                    transition={{ delay: 1.3 }}
+                                    transition={{ delay: 1.5 }}
                                 >
                                     <div className="relative rounded-xl overflow-hidden aspect-video">
                                         <Image
