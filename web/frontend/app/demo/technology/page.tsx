@@ -112,28 +112,80 @@ const technologies = [
   },
 ];
 
+// 面部区域信息
+const faceZones = {
+  tzone: {
+    name: 'T区',
+    fullName: 'T型区（额头+鼻子）',
+    tips: ['容易出油，建议用控油底妆', '定妆散粉重点照顾', '高光打在鼻梁提亮'],
+  },
+  forehead: {
+    name: '额头',
+    fullName: '额头区域',
+    tips: ['遮盖抬头纹用遮瑕膏', '发际线处要晕染自然', '可以用高光提亮眉骨'],
+  },
+  eyebrow: {
+    name: '眉毛',
+    fullName: '眉毛区域',
+    tips: ['根据脸型选择眉形', '眉头淡眉尾深更自然', '用眉刷晕染避免生硬'],
+  },
+  eyeshadow: {
+    name: '眼部',
+    fullName: '眼周区域',
+    tips: ['先打底防止眼影飞粉', '浅色提亮深色加深', '眼尾上扬显精神'],
+  },
+  nose: {
+    name: '鼻子',
+    fullName: '鼻部区域',
+    tips: ['山根阴影让鼻子更挺', '鼻头两侧轻扫修容', '鼻梁高光不要太宽'],
+  },
+  blush: {
+    name: '脸颊',
+    fullName: '苹果肌区域',
+    tips: ['微笑找到苹果肌位置', '斜向上扫显脸小', '腮红颜色要配口红'],
+  },
+  uzone: {
+    name: 'U区',
+    fullName: 'U型区（两颊+下巴）',
+    tips: ['容易干燥要做好保湿', '修容打在颧骨下方', '下颌线修容显脸小'],
+  },
+  lips: {
+    name: '嘴唇',
+    fullName: '唇部区域',
+    tips: ['先用润唇膏打底', '唇线笔勾勒更精致', '咬唇妆显得更少女'],
+  },
+  chin: {
+    name: '下巴',
+    fullName: '下巴区域',
+    tips: ['下巴高光显脸立体', 'V脸修容在下颌角', '注意和脖子衔接自然'],
+  },
+};
+
 // 面部触控演示组件 - 点哪化哪
 function FaceTouchDemo() {
   const [makeup, setMakeup] = useState({
-    foundation: false,  // 底妆
-    eyeshadow: false,   // 眼影
-    blush: false,       // 腮红
-    lips: false,        // 唇妆
-    eyebrow: false,     // 眉毛
+    foundation: false,
+    eyeshadow: false,
+    blush: false,
+    lips: false,
+    eyebrow: false,
   });
   const [activeZone, setActiveZone] = useState<string | null>(null);
-  const [fingerPos, setFingerPos] = useState({ x: 180, y: 100 });
+  const [selectedZone, setSelectedZone] = useState<string | null>(null);
 
   // 肤色
   const skin = { light: '#ffe4d6', medium: '#fdd5c0', dark: '#f5c4a8' };
 
-  // 点击区域切换妆容
-  const toggleMakeup = (zone: string) => {
-    setMakeup(prev => ({ ...prev, [zone]: !prev[zone] }));
+  // 点击区域 - 显示信息并切换妆容
+  const handleZoneClick = (zone: string, makeupKey?: string) => {
+    setSelectedZone(zone);
+    if (makeupKey) {
+      setMakeup(prev => ({ ...prev, [makeupKey]: !prev[makeupKey] }));
+    }
   };
 
-  // 重置妆容
-  const resetMakeup = () => {
+  // 重置
+  const resetAll = () => {
     setMakeup({
       foundation: false,
       eyeshadow: false,
@@ -141,257 +193,215 @@ function FaceTouchDemo() {
       lips: false,
       eyebrow: false,
     });
+    setSelectedZone(null);
   };
 
+  const currentZone = selectedZone ? faceZones[selectedZone as keyof typeof faceZones] : null;
+
   return (
-    <div className="relative" style={{ height: '360px' }}>
-      <svg viewBox="0 0 200 260" className="w-full h-full">
-        <defs>
-          {/* 面部渐变 */}
-          <radialGradient id="touchSkinGradient" cx="40%" cy="35%" r="70%">
-            <stop offset="0%" stopColor={makeup.foundation ? '#fff0e8' : skin.light} />
-            <stop offset="50%" stopColor={makeup.foundation ? '#ffe4d8' : skin.medium} />
-            <stop offset="100%" stopColor={makeup.foundation ? '#fdd5c4' : skin.dark} />
-          </radialGradient>
-          {/* 眼影渐变 */}
-          <radialGradient id="touchEyeshadow" cx="50%" cy="70%" r="80%">
-            <stop offset="0%" stopColor="rgba(168, 85, 247, 0.7)" />
-            <stop offset="40%" stopColor="rgba(236, 72, 153, 0.5)" />
-            <stop offset="100%" stopColor="transparent" />
-          </radialGradient>
-          {/* 腮红渐变 */}
-          <radialGradient id="touchBlush" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="rgba(244, 114, 182, 0.6)" />
-            <stop offset="100%" stopColor="transparent" />
-          </radialGradient>
-          {/* 唇部渐变 */}
-          <linearGradient id="touchLipGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor={makeup.lips ? '#e11d48' : '#d4a5a5'} />
-            <stop offset="50%" stopColor={makeup.lips ? '#be123c' : '#c99090'} />
-            <stop offset="100%" stopColor={makeup.lips ? '#9f1239' : '#b88080'} />
-          </linearGradient>
-          <filter id="touchBlur">
-            <feGaussianBlur stdDeviation="3" />
-          </filter>
-        </defs>
+    <div className="relative flex gap-3" style={{ height: '380px' }}>
+      {/* 左侧：人脸 */}
+      <div className="relative flex-1">
+        <svg viewBox="0 0 200 260" className="w-full h-full">
+          <defs>
+            <radialGradient id="touchSkinGradient" cx="40%" cy="35%" r="70%">
+              <stop offset="0%" stopColor={makeup.foundation ? '#fff0e8' : skin.light} />
+              <stop offset="50%" stopColor={makeup.foundation ? '#ffe4d8' : skin.medium} />
+              <stop offset="100%" stopColor={makeup.foundation ? '#fdd5c4' : skin.dark} />
+            </radialGradient>
+            <radialGradient id="touchEyeshadow" cx="50%" cy="70%" r="80%">
+              <stop offset="0%" stopColor="rgba(168, 85, 247, 0.7)" />
+              <stop offset="40%" stopColor="rgba(236, 72, 153, 0.5)" />
+              <stop offset="100%" stopColor="transparent" />
+            </radialGradient>
+            <radialGradient id="touchBlush" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="rgba(244, 114, 182, 0.6)" />
+              <stop offset="100%" stopColor="transparent" />
+            </radialGradient>
+            <linearGradient id="touchLipGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor={makeup.lips ? '#e11d48' : '#d4a5a5'} />
+              <stop offset="50%" stopColor={makeup.lips ? '#be123c' : '#c99090'} />
+              <stop offset="100%" stopColor={makeup.lips ? '#9f1239' : '#b88080'} />
+            </linearGradient>
+            <filter id="touchBlur"><feGaussianBlur stdDeviation="3" /></filter>
+            {/* 选中区域高亮 */}
+            <filter id="selectedGlow">
+              <feGaussianBlur stdDeviation="2" result="blur" />
+              <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+            </filter>
+          </defs>
 
-        {/* 长发 */}
-        <g>
-          <path
-            d="M 15 90 C 5 120, 0 180, 10 240 C 15 260, 25 270, 35 260 L 40 200
-               C 35 150, 35 100, 50 60 C 70 25, 130 25, 150 60
-               C 165 100, 165 150, 160 200 L 165 260
-               C 175 270, 185 260, 190 240 C 200 180, 195 120, 185 90
-               C 175 50, 140 15, 100 15 C 60 15, 25 50, 15 90"
-            fill="#1a1209"
-          />
-          <path
-            d="M 20 95 C 12 125, 8 175, 15 230 L 42 190
-               C 38 145, 40 100, 55 65 C 72 32, 128 32, 145 65
-               C 160 100, 162 145, 158 190 L 185 230
-               C 192 175, 188 125, 180 95 C 170 55, 138 25, 100 25 C 62 25, 30 55, 20 95"
-            fill="#2d1f14"
-          />
-          {/* 刘海 */}
-          <path d="M 45 75 C 50 55, 75 40, 100 40 C 125 40, 150 55, 155 75 C 150 70, 130 60, 100 60 C 70 60, 50 70, 45 75" fill="#2d1f14" />
-        </g>
+          {/* 长发 */}
+          <g>
+            <path d="M 15 90 C 5 120, 0 180, 10 240 C 15 260, 25 270, 35 260 L 40 200 C 35 150, 35 100, 50 60 C 70 25, 130 25, 150 60 C 165 100, 165 150, 160 200 L 165 260 C 175 270, 185 260, 190 240 C 200 180, 195 120, 185 90 C 175 50, 140 15, 100 15 C 60 15, 25 50, 15 90" fill="#1a1209" />
+            <path d="M 20 95 C 12 125, 8 175, 15 230 L 42 190 C 38 145, 40 100, 55 65 C 72 32, 128 32, 145 65 C 160 100, 162 145, 158 190 L 185 230 C 192 175, 188 125, 180 95 C 170 55, 138 25, 100 25 C 62 25, 30 55, 20 95" fill="#2d1f14" />
+            <path d="M 45 75 C 50 55, 75 40, 100 40 C 125 40, 150 55, 155 75 C 150 70, 130 60, 100 60 C 70 60, 50 70, 45 75" fill="#2d1f14" />
+          </g>
 
-        {/* 耳朵 */}
-        <path d="M 35 110 C 25 100, 20 115, 22 130 C 24 145, 30 152, 35 147 C 32 142, 30 132, 32 120 C 33 115, 35 112, 35 110" fill={skin.medium} />
-        <path d="M 165 110 C 175 100, 180 115, 178 130 C 176 145, 170 152, 165 147 C 168 142, 170 132, 168 120 C 167 115, 165 112, 165 110" fill={skin.medium} />
+          {/* 耳朵 */}
+          <path d="M 35 110 C 25 100, 20 115, 22 130 C 24 145, 30 152, 35 147 C 32 142, 30 132, 32 120 C 33 115, 35 112, 35 110" fill={skin.medium} />
+          <path d="M 165 110 C 175 100, 180 115, 178 130 C 176 145, 170 152, 165 147 C 168 142, 170 132, 168 120 C 167 115, 165 112, 165 110" fill={skin.medium} />
 
-        {/* 面部主体 - 可点击底妆区域 */}
-        <path
-          d="M 100 30 C 145 30, 165 70, 165 110 C 165 150, 155 180, 140 200
-             Q 120 225, 100 230 Q 80 225, 60 200 C 45 180, 35 150, 35 110 C 35 70, 55 30, 100 30"
-          fill="url(#touchSkinGradient)"
-          className="cursor-pointer"
-          onClick={() => toggleMakeup('foundation')}
-          onMouseEnter={() => setActiveZone('foundation')}
-          onMouseLeave={() => setActiveZone(null)}
-        />
+          {/* 面部主体 */}
+          <path d="M 100 30 C 145 30, 165 70, 165 110 C 165 150, 155 180, 140 200 Q 120 225, 100 230 Q 80 225, 60 200 C 45 180, 35 150, 35 110 C 35 70, 55 30, 100 30" fill="url(#touchSkinGradient)" />
 
-        {/* 底妆光泽 */}
-        {makeup.foundation && (
-          <motion.ellipse
-            cx="85" cy="90" rx="45" ry="55"
-            fill="rgba(255,255,255,0.2)"
-            filter="url(#touchBlur)"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          />
-        )}
+          {/* 底妆光泽 */}
+          {makeup.foundation && <motion.ellipse cx="85" cy="90" rx="45" ry="55" fill="rgba(255,255,255,0.2)" filter="url(#touchBlur)" initial={{ opacity: 0 }} animate={{ opacity: 1 }} />}
 
-        {/* 眉毛 - 可点击 */}
-        <g
-          className="cursor-pointer"
-          onClick={() => toggleMakeup('eyebrow')}
-          onMouseEnter={() => setActiveZone('eyebrow')}
-          onMouseLeave={() => setActiveZone(null)}
-        >
-          <path d="M 52 95 Q 65 88, 82 92" fill="none" stroke={makeup.eyebrow ? '#2d1f14' : '#4a3728'} strokeWidth={makeup.eyebrow ? '4.5' : '3.5'} strokeLinecap="round" />
-          <path d="M 118 92 Q 135 88, 148 95" fill="none" stroke={makeup.eyebrow ? '#2d1f14' : '#4a3728'} strokeWidth={makeup.eyebrow ? '4.5' : '3.5'} strokeLinecap="round" />
-          {/* 点击区域扩大 */}
-          <rect x="45" y="82" width="45" height="20" fill="transparent" />
-          <rect x="110" y="82" width="45" height="20" fill="transparent" />
-        </g>
+          {/* T区 - 可点击 */}
+          <g className="cursor-pointer" onClick={() => handleZoneClick('tzone', 'foundation')} onMouseEnter={() => setActiveZone('tzone')} onMouseLeave={() => setActiveZone(null)}>
+            <path d="M 85 50 L 115 50 L 108 90 L 104 160 L 96 160 L 92 90 Z" fill={selectedZone === 'tzone' ? 'rgba(236,72,153,0.2)' : 'transparent'} stroke={selectedZone === 'tzone' ? '#ec4899' : 'transparent'} strokeWidth="1" strokeDasharray="3,3" />
+            {activeZone === 'tzone' && <text x="100" y="70" textAnchor="middle" fill="#ec4899" fontSize="8" fontWeight="bold">T区</text>}
+          </g>
 
-        {/* 眼影 - 可点击 */}
-        <g
-          className="cursor-pointer"
-          onClick={() => toggleMakeup('eyeshadow')}
-          onMouseEnter={() => setActiveZone('eyeshadow')}
-          onMouseLeave={() => setActiveZone(null)}
-        >
-          {makeup.eyeshadow && (
-            <>
-              <motion.ellipse cx="67" cy="112" rx="22" ry="14" fill="url(#touchEyeshadow)" initial={{ opacity: 0 }} animate={{ opacity: 1 }} />
-              <motion.ellipse cx="133" cy="112" rx="22" ry="14" fill="url(#touchEyeshadow)" initial={{ opacity: 0 }} animate={{ opacity: 1 }} />
-            </>
-          )}
-          {/* 眼睛 */}
-          <ellipse cx="67" cy="115" rx="16" ry="10" fill="white" />
-          <circle cx="67" cy="115" r="7" fill="#4a3728" />
-          <circle cx="67" cy="115" r="4" fill="#1a1a1a" />
-          <circle cx="64" cy="112" r="2.5" fill="white" opacity="0.9" />
-          <path d="M 51 115 Q 60 105, 67 105 Q 74 105, 83 115" fill="none" stroke="#2d1f1a" strokeWidth={makeup.eyeshadow ? '2.5' : '1.5'} strokeLinecap="round" />
+          {/* 额头 - 可点击 */}
+          <g className="cursor-pointer" onClick={() => handleZoneClick('forehead', 'foundation')} onMouseEnter={() => setActiveZone('forehead')} onMouseLeave={() => setActiveZone(null)}>
+            <ellipse cx="100" cy="55" rx="35" ry="20" fill={selectedZone === 'forehead' ? 'rgba(236,72,153,0.15)' : 'transparent'} stroke={selectedZone === 'forehead' ? '#ec4899' : 'transparent'} strokeWidth="1" strokeDasharray="3,3" />
+            {activeZone === 'forehead' && <text x="100" y="58" textAnchor="middle" fill="#ec4899" fontSize="8" fontWeight="bold">额头</text>}
+          </g>
 
-          <ellipse cx="133" cy="115" rx="16" ry="10" fill="white" />
-          <circle cx="133" cy="115" r="7" fill="#4a3728" />
-          <circle cx="133" cy="115" r="4" fill="#1a1a1a" />
-          <circle cx="130" cy="112" r="2.5" fill="white" opacity="0.9" />
-          <path d="M 117 115 Q 126 105, 133 105 Q 140 105, 149 115" fill="none" stroke="#2d1f1a" strokeWidth={makeup.eyeshadow ? '2.5' : '1.5'} strokeLinecap="round" />
+          {/* 眉毛 */}
+          <g className="cursor-pointer" onClick={() => handleZoneClick('eyebrow', 'eyebrow')} onMouseEnter={() => setActiveZone('eyebrow')} onMouseLeave={() => setActiveZone(null)}>
+            <path d="M 52 95 Q 65 88, 82 92" fill="none" stroke={makeup.eyebrow ? '#2d1f14' : '#4a3728'} strokeWidth={makeup.eyebrow ? '4.5' : '3.5'} strokeLinecap="round" filter={selectedZone === 'eyebrow' ? 'url(#selectedGlow)' : undefined} />
+            <path d="M 118 92 Q 135 88, 148 95" fill="none" stroke={makeup.eyebrow ? '#2d1f14' : '#4a3728'} strokeWidth={makeup.eyebrow ? '4.5' : '3.5'} strokeLinecap="round" filter={selectedZone === 'eyebrow' ? 'url(#selectedGlow)' : undefined} />
+            <rect x="45" y="82" width="110" height="18" fill="transparent" />
+            {activeZone === 'eyebrow' && <text x="100" y="88" textAnchor="middle" fill="#ec4899" fontSize="7" fontWeight="bold">眉毛</text>}
+          </g>
 
-          {/* 睫毛 */}
-          {makeup.eyeshadow && (
-            <g stroke="#1a1a1a" strokeWidth="1.2" strokeLinecap="round">
-              <line x1="54" y1="109" x2="51" y2="103" />
-              <line x1="60" y1="106" x2="58" y2="100" />
-              <line x1="67" y1="105" x2="67" y2="99" />
-              <line x1="74" y1="106" x2="76" y2="100" />
-              <line x1="80" y1="109" x2="83" y2="103" />
-              <line x1="120" y1="109" x2="117" y2="103" />
-              <line x1="126" y1="106" x2="124" y2="100" />
-              <line x1="133" y1="105" x2="133" y2="99" />
-              <line x1="140" y1="106" x2="142" y2="100" />
-              <line x1="146" y1="109" x2="149" y2="103" />
-            </g>
-          )}
-          {/* 点击区域 */}
-          <rect x="45" y="100" width="50" height="30" fill="transparent" />
-          <rect x="105" y="100" width="50" height="30" fill="transparent" />
-        </g>
+          {/* 眼部 */}
+          <g className="cursor-pointer" onClick={() => handleZoneClick('eyeshadow', 'eyeshadow')} onMouseEnter={() => setActiveZone('eyeshadow')} onMouseLeave={() => setActiveZone(null)}>
+            {makeup.eyeshadow && (
+              <>
+                <motion.ellipse cx="67" cy="112" rx="22" ry="14" fill="url(#touchEyeshadow)" initial={{ opacity: 0 }} animate={{ opacity: 1 }} />
+                <motion.ellipse cx="133" cy="112" rx="22" ry="14" fill="url(#touchEyeshadow)" initial={{ opacity: 0 }} animate={{ opacity: 1 }} />
+              </>
+            )}
+            <ellipse cx="67" cy="115" rx="16" ry="10" fill="white" stroke={selectedZone === 'eyeshadow' ? '#ec4899' : 'transparent'} />
+            <circle cx="67" cy="115" r="7" fill="#4a3728" /><circle cx="67" cy="115" r="4" fill="#1a1a1a" /><circle cx="64" cy="112" r="2.5" fill="white" opacity="0.9" />
+            <path d="M 51 115 Q 60 105, 67 105 Q 74 105, 83 115" fill="none" stroke="#2d1f1a" strokeWidth={makeup.eyeshadow ? '2.5' : '1.5'} strokeLinecap="round" />
+            <ellipse cx="133" cy="115" rx="16" ry="10" fill="white" stroke={selectedZone === 'eyeshadow' ? '#ec4899' : 'transparent'} />
+            <circle cx="133" cy="115" r="7" fill="#4a3728" /><circle cx="133" cy="115" r="4" fill="#1a1a1a" /><circle cx="130" cy="112" r="2.5" fill="white" opacity="0.9" />
+            <path d="M 117 115 Q 126 105, 133 105 Q 140 105, 149 115" fill="none" stroke="#2d1f1a" strokeWidth={makeup.eyeshadow ? '2.5' : '1.5'} strokeLinecap="round" />
+            {makeup.eyeshadow && (
+              <g stroke="#1a1a1a" strokeWidth="1.2" strokeLinecap="round">
+                <line x1="54" y1="109" x2="51" y2="103" /><line x1="60" y1="106" x2="58" y2="100" /><line x1="67" y1="105" x2="67" y2="99" /><line x1="74" y1="106" x2="76" y2="100" /><line x1="80" y1="109" x2="83" y2="103" />
+                <line x1="120" y1="109" x2="117" y2="103" /><line x1="126" y1="106" x2="124" y2="100" /><line x1="133" y1="105" x2="133" y2="99" /><line x1="140" y1="106" x2="142" y2="100" /><line x1="146" y1="109" x2="149" y2="103" />
+              </g>
+            )}
+            <rect x="45" y="100" width="110" height="30" fill="transparent" />
+            {activeZone === 'eyeshadow' && <text x="100" y="130" textAnchor="middle" fill="#ec4899" fontSize="7" fontWeight="bold">眼部</text>}
+          </g>
 
-        {/* 鼻子 */}
-        <g>
-          <path d="M 100 118 C 98 125, 97 135, 96 155 L 104 155 C 103 135, 102 125, 100 118" fill={skin.light} />
-          <path d="M 100 120 L 100 150" stroke="rgba(255,255,255,0.5)" strokeWidth="4" strokeLinecap="round" />
-          <ellipse cx="100" cy="158" rx="10" ry="7" fill={skin.medium} />
-          <ellipse cx="90" cy="160" rx="6" ry="5" fill={skin.medium} />
-          <ellipse cx="110" cy="160" rx="6" ry="5" fill={skin.medium} />
-        </g>
+          {/* 鼻子 - 可点击 */}
+          <g className="cursor-pointer" onClick={() => handleZoneClick('nose')} onMouseEnter={() => setActiveZone('nose')} onMouseLeave={() => setActiveZone(null)}>
+            <path d="M 100 118 C 98 125, 97 135, 96 155 L 104 155 C 103 135, 102 125, 100 118" fill={selectedZone === 'nose' ? 'rgba(236,72,153,0.2)' : skin.light} />
+            <path d="M 100 120 L 100 150" stroke="rgba(255,255,255,0.5)" strokeWidth="4" strokeLinecap="round" />
+            <ellipse cx="100" cy="158" rx="10" ry="7" fill={skin.medium} stroke={selectedZone === 'nose' ? '#ec4899' : 'transparent'} />
+            <ellipse cx="90" cy="160" rx="6" ry="5" fill={skin.medium} /><ellipse cx="110" cy="160" rx="6" ry="5" fill={skin.medium} />
+            {activeZone === 'nose' && <text x="100" y="145" textAnchor="middle" fill="#ec4899" fontSize="7" fontWeight="bold">鼻子</text>}
+          </g>
 
-        {/* 腮红 - 可点击 */}
-        <g
-          className="cursor-pointer"
-          onClick={() => toggleMakeup('blush')}
-          onMouseEnter={() => setActiveZone('blush')}
-          onMouseLeave={() => setActiveZone(null)}
-        >
-          {makeup.blush && (
-            <>
-              <motion.ellipse cx="48" cy="145" rx="22" ry="18" fill="url(#touchBlush)" filter="url(#touchBlur)" initial={{ opacity: 0 }} animate={{ opacity: 1 }} />
-              <motion.ellipse cx="152" cy="145" rx="22" ry="18" fill="url(#touchBlush)" filter="url(#touchBlur)" initial={{ opacity: 0 }} animate={{ opacity: 1 }} />
-            </>
-          )}
-          {/* 点击区域 */}
-          <circle cx="48" cy="145" r="25" fill="transparent" />
-          <circle cx="152" cy="145" r="25" fill="transparent" />
-        </g>
+          {/* 脸颊/腮红 - U区 */}
+          <g className="cursor-pointer" onClick={() => handleZoneClick('blush', 'blush')} onMouseEnter={() => setActiveZone('blush')} onMouseLeave={() => setActiveZone(null)}>
+            {makeup.blush && (
+              <>
+                <motion.ellipse cx="48" cy="145" rx="22" ry="18" fill="url(#touchBlush)" filter="url(#touchBlur)" initial={{ opacity: 0 }} animate={{ opacity: 1 }} />
+                <motion.ellipse cx="152" cy="145" rx="22" ry="18" fill="url(#touchBlush)" filter="url(#touchBlur)" initial={{ opacity: 0 }} animate={{ opacity: 1 }} />
+              </>
+            )}
+            <circle cx="48" cy="145" r="22" fill={selectedZone === 'blush' ? 'rgba(236,72,153,0.1)' : 'transparent'} stroke={selectedZone === 'blush' ? '#ec4899' : 'transparent'} strokeDasharray="3,3" />
+            <circle cx="152" cy="145" r="22" fill={selectedZone === 'blush' ? 'rgba(236,72,153,0.1)' : 'transparent'} stroke={selectedZone === 'blush' ? '#ec4899' : 'transparent'} strokeDasharray="3,3" />
+            {activeZone === 'blush' && <><text x="48" y="148" textAnchor="middle" fill="#ec4899" fontSize="6" fontWeight="bold">脸颊</text><text x="152" y="148" textAnchor="middle" fill="#ec4899" fontSize="6" fontWeight="bold">脸颊</text></>}
+          </g>
 
-        {/* 嘴唇 - 可点击 */}
-        <g
-          className="cursor-pointer"
-          onClick={() => toggleMakeup('lips')}
-          onMouseEnter={() => setActiveZone('lips')}
-          onMouseLeave={() => setActiveZone(null)}
-        >
-          <path d="M 80 182 Q 90 176, 100 178 Q 110 176, 120 182 Q 110 180, 100 182 Q 90 180, 80 182" fill="url(#touchLipGradient)" />
-          <path d="M 80 182 Q 85 195, 100 198 Q 115 195, 120 182 Q 110 185, 100 186 Q 90 185, 80 182" fill="url(#touchLipGradient)" />
-          {makeup.lips && (
-            <motion.ellipse cx="100" cy="188" rx="12" ry="5" fill="rgba(255,255,255,0.3)" initial={{ opacity: 0 }} animate={{ opacity: [0.2, 0.4, 0.2] }} transition={{ duration: 2, repeat: Infinity }} />
-          )}
-          {/* 点击区域 */}
-          <rect x="75" y="172" width="50" height="30" fill="transparent" />
-        </g>
+          {/* U区点击 */}
+          <g className="cursor-pointer" onClick={() => handleZoneClick('uzone')} onMouseEnter={() => setActiveZone('uzone')} onMouseLeave={() => setActiveZone(null)}>
+            <path d="M 45 130 Q 35 170, 60 210 Q 100 235, 140 210 Q 165 170, 155 130" fill="transparent" stroke={selectedZone === 'uzone' ? '#ec4899' : 'transparent'} strokeWidth="1" strokeDasharray="4,4" />
+            {activeZone === 'uzone' && <text x="100" y="175" textAnchor="middle" fill="#ec4899" fontSize="8" fontWeight="bold">U区</text>}
+          </g>
 
-        {/* 手指指示动画 */}
-        <motion.g
-          animate={{
-            x: [0, -30, -60, -30, 0, 30, 0],
-            y: [0, 20, 40, 60, 40, 20, 0],
-          }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <circle cx="180" cy="100" r="8" fill="rgba(236, 72, 153, 0.8)" />
-          <circle cx="180" cy="100" r="4" fill="#ec4899" />
-          <motion.circle
-            cx="180" cy="100" r="12"
-            fill="none"
-            stroke="#ec4899"
-            strokeWidth="2"
-            animate={{ scale: [1, 1.5, 1], opacity: [0.8, 0, 0.8] }}
-            transition={{ duration: 1, repeat: Infinity }}
-          />
-        </motion.g>
+          {/* 嘴唇 */}
+          <g className="cursor-pointer" onClick={() => handleZoneClick('lips', 'lips')} onMouseEnter={() => setActiveZone('lips')} onMouseLeave={() => setActiveZone(null)}>
+            <path d="M 80 182 Q 90 176, 100 178 Q 110 176, 120 182 Q 110 180, 100 182 Q 90 180, 80 182" fill="url(#touchLipGradient)" stroke={selectedZone === 'lips' ? '#ec4899' : 'transparent'} />
+            <path d="M 80 182 Q 85 195, 100 198 Q 115 195, 120 182 Q 110 185, 100 186 Q 90 185, 80 182" fill="url(#touchLipGradient)" stroke={selectedZone === 'lips' ? '#ec4899' : 'transparent'} />
+            {makeup.lips && <motion.ellipse cx="100" cy="188" rx="12" ry="5" fill="rgba(255,255,255,0.3)" initial={{ opacity: 0 }} animate={{ opacity: [0.2, 0.4, 0.2] }} transition={{ duration: 2, repeat: Infinity }} />}
+            <rect x="75" y="172" width="50" height="30" fill="transparent" />
+            {activeZone === 'lips' && <text x="100" y="210" textAnchor="middle" fill="#ec4899" fontSize="7" fontWeight="bold">唇部</text>}
+          </g>
 
-        {/* 当前选中区域提示 */}
-        {activeZone && (
-          <motion.text
-            x="100"
-            y="245"
-            textAnchor="middle"
-            fill="#ec4899"
-            fontSize="12"
-            fontWeight="bold"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
-            点击{activeZone === 'foundation' ? '面部' : activeZone === 'eyeshadow' ? '眼部' : activeZone === 'blush' ? '脸颊' : activeZone === 'lips' ? '唇部' : activeZone === 'eyebrow' ? '眉毛' : ''}
-            {makeup[activeZone as keyof typeof makeup] ? '卸妆' : '上妆'}
-          </motion.text>
-        )}
-      </svg>
+          {/* 下巴 */}
+          <g className="cursor-pointer" onClick={() => handleZoneClick('chin')} onMouseEnter={() => setActiveZone('chin')} onMouseLeave={() => setActiveZone(null)}>
+            <ellipse cx="100" cy="218" rx="20" ry="12" fill={selectedZone === 'chin' ? 'rgba(236,72,153,0.15)' : 'transparent'} stroke={selectedZone === 'chin' ? '#ec4899' : 'transparent'} strokeDasharray="3,3" />
+            {activeZone === 'chin' && <text x="100" y="222" textAnchor="middle" fill="#ec4899" fontSize="7" fontWeight="bold">下巴</text>}
+          </g>
+        </svg>
 
-      {/* 妆容状态指示 */}
-      <div className="absolute top-2 left-2 right-2 flex flex-wrap gap-1.5">
-        {[
-          { key: 'foundation', label: '底妆' },
-          { key: 'eyebrow', label: '眉毛' },
-          { key: 'eyeshadow', label: '眼妆' },
-          { key: 'blush', label: '腮红' },
-          { key: 'lips', label: '唇妆' },
-        ].map(item => (
-          <span
-            key={item.key}
-            className={`px-2 py-0.5 text-xs rounded-full transition-all ${
-              makeup[item.key as keyof typeof makeup]
-                ? 'bg-pink-500 text-white'
-                : 'bg-white/10 text-gray-500'
-            }`}
-          >
-            {item.label}
-          </span>
-        ))}
+        {/* 提示 */}
+        <div className="absolute bottom-1 left-0 right-0 text-center text-xs text-gray-500">
+          点击脸部任意区域查看化妆建议
+        </div>
       </div>
 
-      {/* 重置按钮 */}
-      <button
-        onClick={resetMakeup}
-        className="absolute bottom-2 right-2 px-3 py-1 text-xs bg-white/10 hover:bg-white/20 text-gray-300 rounded-full transition-colors"
-      >
-        卸妆重置
-      </button>
+      {/* 右侧：区域信息面板 */}
+      <div className="w-36 flex flex-col">
+        <AnimatePresence mode="wait">
+          {currentZone ? (
+            <motion.div
+              key={selectedZone}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              className="flex-1 bg-gradient-to-b from-pink-500/20 to-purple-500/20 rounded-xl p-3 border border-pink-500/30"
+            >
+              {/* 区域名称 */}
+              <div className="text-center mb-3">
+                <div className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">
+                  {currentZone.name}
+                </div>
+                <div className="text-xs text-gray-400 mt-0.5">{currentZone.fullName}</div>
+              </div>
+
+              {/* 化妆建议 */}
+              <div className="space-y-2">
+                <div className="text-xs text-pink-300 font-medium">化妆建议：</div>
+                {currentZone.tips.map((tip, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    className="flex gap-1.5 text-xs text-gray-300"
+                  >
+                    <span className="text-pink-400 flex-shrink-0">•</span>
+                    <span>{tip}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="flex-1 flex items-center justify-center bg-white/5 rounded-xl border border-white/10"
+            >
+              <div className="text-center text-gray-500 text-xs p-3">
+                <div className="text-2xl mb-2">👆</div>
+                <div>点击脸部区域</div>
+                <div>查看区域名称</div>
+                <div>和化妆建议</div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* 重置按钮 */}
+        <button
+          onClick={resetAll}
+          className="mt-2 py-1.5 text-xs bg-white/10 hover:bg-white/20 text-gray-300 rounded-lg transition-colors"
+        >
+          重置
+        </button>
+      </div>
     </div>
   );
 }
