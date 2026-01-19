@@ -1,6 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -21,6 +22,12 @@ import {
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SketchFace from '@/components/workflow/SketchFace';
+import {
+    AnimatedCounter,
+    ParticleBackground,
+    TiltCard,
+    ParallaxY,
+} from '@/components/landing';
 
 const features = [
     {
@@ -32,6 +39,7 @@ const features = [
         boost: '+35',
         boostLabel: '护肤效率',
         gradient: 'from-blue-500 to-cyan-500',
+        glowColor: 'rgba(6, 182, 212, 0.3)',
         emoji: '🔍',
     },
     {
@@ -43,6 +51,7 @@ const features = [
         boost: '+40',
         boostLabel: '妆容完成度',
         gradient: 'from-mirror-500 to-pink-500',
+        glowColor: 'rgba(236, 72, 153, 0.3)',
         emoji: '✨',
     },
     {
@@ -54,6 +63,7 @@ const features = [
         boost: '+30',
         boostLabel: '产品匹配度',
         gradient: 'from-accent-500 to-purple-500',
+        glowColor: 'rgba(168, 85, 247, 0.3)',
         emoji: '💄',
     },
     {
@@ -65,15 +75,16 @@ const features = [
         boost: '-30%',
         boostLabel: '美妆开支',
         gradient: 'from-gold-500 to-orange-500',
+        glowColor: 'rgba(245, 158, 11, 0.3)',
         emoji: '💰',
     },
 ];
 
 const steps = [
-    { number: '01', title: '面部扫描', description: '智能追踪捕捉' },
-    { number: '02', title: 'AI 分析', description: '深度皮肤检测' },
-    { number: '03', title: '个性推荐', description: '妆容风格匹配' },
-    { number: '04', title: '教程指导', description: 'AR 步骤引导' },
+    { number: '01', title: '面部扫描', description: '智能追踪捕捉', icon: Camera },
+    { number: '02', title: 'AI 分析', description: '深度皮肤检测', icon: Eye },
+    { number: '03', title: '个性推荐', description: '妆容风格匹配', icon: Sparkles },
+    { number: '04', title: '教程指导', description: 'AR 步骤引导', icon: Wand2 },
 ];
 
 const specs = [
@@ -113,17 +124,58 @@ const testimonials = [
 ];
 
 export default function LandingPage() {
+    const { scrollY } = useScroll();
+    const heroY = useTransform(scrollY, [0, 500], [0, 150]);
+    const heroOpacity = useTransform(scrollY, [0, 300], [1, 0.3]);
+
+    // SketchFace 动画状态
+    const [makeupStep, setMakeupStep] = useState(0);
+    const [showScanLine, setShowScanLine] = useState(true);
+    const [showMetrics, setShowMetrics] = useState(false);
+
+    // 自动循环动画
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setMakeupStep((prev) => {
+                if (prev >= 5) {
+                    // 重置循环
+                    setShowScanLine(true);
+                    setShowMetrics(false);
+                    return 0;
+                }
+                if (prev === 0) {
+                    // 扫描完成，显示指标
+                    setShowScanLine(false);
+                    setShowMetrics(true);
+                }
+                return prev + 1;
+            });
+        }, 1500);
+
+        return () => clearInterval(interval);
+    }, []);
+
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-50 overflow-x-hidden">
             <Header />
 
             {/* HERO - 震撼开场：真实蜕变案例 */}
-            <section className="relative pt-16 pb-20 overflow-hidden bg-gradient-to-b from-black via-gray-900 to-gray-800">
-                {/* 动态背景粒子效果 */}
-                <div className="absolute inset-0 opacity-30">
-                    <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-pink-500 rounded-full blur-[128px] animate-pulse" />
-                    <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500 rounded-full blur-[128px] animate-pulse" style={{ animationDelay: '1s' }} />
-                </div>
+            <section className="relative pt-16 pb-20 overflow-hidden bg-gradient-to-b from-black via-gray-900 to-gray-800 min-h-[90vh]">
+                {/* 粒子背景 */}
+                <ParticleBackground
+                    particleCount={40}
+                    colors={['#ec4899', '#a855f7', '#6366f1', '#06b6d4']}
+                    interactive={true}
+                />
+
+                {/* 视差背景层 */}
+                <motion.div
+                    className="absolute inset-0 opacity-30"
+                    style={{ y: heroY, opacity: heroOpacity }}
+                >
+                    <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-pink-500 rounded-full blur-[128px]" />
+                    <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500 rounded-full blur-[128px]" />
+                </motion.div>
 
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     {/* 核心营销口号 */}
@@ -132,64 +184,97 @@ export default function LandingPage() {
                         animate={{ opacity: 1, y: 0 }}
                         className="text-center mb-8"
                     >
-                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-pink-500/20 to-purple-500/20 border border-pink-500/30 rounded-full text-pink-300 text-sm font-bold mb-6 backdrop-blur">
-                            <span className="animate-pulse">🔥</span>
-                            小红书 154 万点赞 · 抖音 2000 万播放
-                        </div>
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{ delay: 0.2 }}
+                            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-pink-500/20 to-purple-500/20 border border-pink-500/30 rounded-full text-pink-300 text-sm font-bold mb-6 backdrop-blur"
+                        >
+                            <motion.span
+                                animate={{ scale: [1, 1.2, 1] }}
+                                transition={{ duration: 1, repeat: Infinity }}
+                            >
+                                🔥
+                            </motion.span>
+                            小红书 <AnimatedCounter end={154} suffix="万" className="font-bold" /> 点赞 · 抖音 <AnimatedCounter end={2000} suffix="万" className="font-bold" /> 播放
+                        </motion.div>
 
                         <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-tight mb-4">
-                            <span className="block">10 分变 40 分</span>
-                            <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400">
+                            <motion.span
+                                className="block"
+                                initial={{ opacity: 0, x: -50 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.3 }}
+                            >
+                                <AnimatedCounter end={10} className="text-red-400" /> 分变 <AnimatedCounter end={40} className="text-green-400" /> 分
+                            </motion.span>
+                            <motion.span
+                                className="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400"
+                                initial={{ opacity: 0, x: 50 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.5 }}
+                            >
                                 这不是整容，是 AI
-                            </span>
+                            </motion.span>
                         </h1>
 
-                        <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
+                        <motion.p
+                            className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.7 }}
+                        >
                             化妆界的 ChatGPT，让每张脸都被 AI 重新点亮
-                        </p>
+                        </motion.p>
                     </motion.div>
 
-                    {/* 真实蜕变展示 */}
+                    {/* 真实蜕变展示 - 改为 SketchFace + 图片 */}
                     <div className="grid lg:grid-cols-2 gap-8 items-center">
-                        {/* 左侧：对比图 */}
+                        {/* 左侧：SketchFace 智能镜演示 */}
                         <motion.div
                             initial={{ opacity: 0, x: -50 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.8, delay: 0.3 }}
                             className="relative"
                         >
-                            <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-pink-500/20 border border-white/10">
-                                <Image
-                                    src="/demo/transformation/compare.png"
-                                    alt="AI化妆蜕变对比"
-                                    width={600}
-                                    height={800}
-                                    className="w-full h-auto"
-                                    priority
-                                />
-                                {/* 悬浮数据标签 */}
+                            <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 p-4 border border-white/10 shadow-2xl shadow-pink-500/20">
+                                {/* SketchFace 组件 */}
+                                <div className="max-w-[320px] mx-auto">
+                                    <SketchFace
+                                        makeupStep={makeupStep}
+                                        showScanLine={showScanLine}
+                                        showMetrics={showMetrics}
+                                        showRoboticArms={true}
+                                        armAction="idle"
+                                        beautyScore={10 + makeupStep * 6}
+                                    />
+                                </div>
+
+                                {/* 状态指示器 */}
+                                <div className="absolute top-6 left-6 flex items-center gap-2">
+                                    <motion.div
+                                        className="w-3 h-3 rounded-full bg-green-400"
+                                        animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
+                                        transition={{ duration: 1.5, repeat: Infinity }}
+                                    />
+                                    <span className="text-xs text-green-400 font-medium">
+                                        {showScanLine ? 'AI 扫描中...' : `化妆步骤 ${makeupStep}/5`}
+                                    </span>
+                                </div>
+
+                                {/* 评分显示 */}
                                 <motion.div
+                                    className="absolute bottom-6 right-6 bg-gradient-to-r from-pink-500 to-purple-500 text-white px-4 py-2 rounded-xl shadow-lg"
                                     animate={{ scale: [1, 1.05, 1] }}
                                     transition={{ duration: 2, repeat: Infinity }}
-                                    className="absolute top-4 left-4 bg-black/70 backdrop-blur-md text-white px-4 py-2 rounded-xl"
                                 >
-                                    <div className="text-xs text-gray-400">化妆前</div>
-                                    <div className="text-2xl font-black text-red-400">10 分</div>
+                                    <div className="text-xs text-pink-100">美颜指数</div>
+                                    <div className="text-2xl font-black">
+                                        <AnimatedCounter end={10 + makeupStep * 6} duration={0.5} /> 分
+                                    </div>
                                 </motion.div>
-                                <motion.div
-                                    animate={{ scale: [1, 1.05, 1] }}
-                                    transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-                                    className="absolute bottom-4 right-4 bg-gradient-to-r from-pink-500 to-purple-500 text-white px-4 py-2 rounded-xl shadow-lg"
-                                >
-                                    <div className="text-xs text-pink-100">化妆后</div>
-                                    <div className="text-2xl font-black">40 分</div>
-                                </motion.div>
-                                {/* 点赞数 */}
-                                <div className="absolute bottom-4 left-4 flex items-center gap-2 bg-white/10 backdrop-blur-md text-white px-3 py-1.5 rounded-full">
-                                    <Heart className="w-4 h-4 fill-red-500 text-red-500" />
-                                    <span className="text-sm font-bold">154 万</span>
-                                </div>
                             </div>
+
                             {/* 光晕效果 */}
                             <div className="absolute -inset-4 bg-gradient-to-r from-pink-500/20 to-purple-500/20 blur-2xl -z-10 rounded-3xl" />
                         </motion.div>
@@ -209,9 +294,14 @@ export default function LandingPage() {
                                 </h3>
                                 <div className="space-y-4">
                                     {/* Step 1 */}
-                                    <div className="flex gap-4 items-center">
-                                        <div className="relative w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 border-2 border-gray-600">
-                                            <Image src="/demo/transformation/before.png" alt="素颜" fill className="object-cover" />
+                                    <motion.div
+                                        className="flex gap-4 items-center"
+                                        initial={{ opacity: 0, x: 20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: 0.7 }}
+                                    >
+                                        <div className="relative w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 border-2 border-gray-600 bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
+                                            <Camera className="w-8 h-8 text-gray-400" />
                                         </div>
                                         <div className="flex-1">
                                             <div className="flex items-center gap-2 mb-1">
@@ -221,25 +311,41 @@ export default function LandingPage() {
                                             </div>
                                             <p className="text-sm text-gray-400">3秒识别肤质、脸型、五官比例</p>
                                         </div>
-                                    </div>
+                                    </motion.div>
                                     {/* Step 2 */}
-                                    <div className="flex gap-4 items-center">
-                                        <div className="relative w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 border-2 border-pink-500/50">
-                                            <Image src="/demo/transformation/process.png" alt="过程" fill className="object-cover" />
+                                    <motion.div
+                                        className="flex gap-4 items-center"
+                                        initial={{ opacity: 0, x: 20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: 0.9 }}
+                                    >
+                                        <div className="relative w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 border-2 border-pink-500/50 bg-gradient-to-br from-pink-900/50 to-purple-900/50 flex items-center justify-center">
+                                            <Sparkles className="w-8 h-8 text-pink-400" />
                                         </div>
                                         <div className="flex-1">
                                             <div className="flex items-center gap-2 mb-1">
                                                 <span className="w-6 h-6 rounded-full bg-pink-500 flex items-center justify-center text-xs text-white font-bold">2</span>
                                                 <span className="text-white font-medium">实时视频指导</span>
-                                                <span className="text-xs bg-pink-500/20 text-pink-400 px-2 py-0.5 rounded-full">进行中</span>
+                                                <motion.span
+                                                    className="text-xs bg-pink-500/20 text-pink-400 px-2 py-0.5 rounded-full"
+                                                    animate={{ opacity: [1, 0.5, 1] }}
+                                                    transition={{ duration: 1.5, repeat: Infinity }}
+                                                >
+                                                    进行中
+                                                </motion.span>
                                             </div>
                                             <p className="text-sm text-gray-400">语音+AR叠加，手把手教你画</p>
                                         </div>
-                                    </div>
+                                    </motion.div>
                                     {/* Step 3 */}
-                                    <div className="flex gap-4 items-center">
-                                        <div className="relative w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 border-2 border-green-400 shadow-lg shadow-green-400/20">
-                                            <Image src="/demo/transformation/after.png" alt="完成" fill className="object-cover" />
+                                    <motion.div
+                                        className="flex gap-4 items-center"
+                                        initial={{ opacity: 0, x: 20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: 1.1 }}
+                                    >
+                                        <div className="relative w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 border-2 border-green-400 shadow-lg shadow-green-400/20 bg-gradient-to-br from-green-900/50 to-emerald-900/50 flex items-center justify-center">
+                                            <Heart className="w-8 h-8 text-green-400 fill-green-400" />
                                         </div>
                                         <div className="flex-1">
                                             <div className="flex items-center gap-2 mb-1">
@@ -249,64 +355,119 @@ export default function LandingPage() {
                                             </div>
                                             <p className="text-sm text-gray-400">精致妆容，自信出门！</p>
                                         </div>
-                                    </div>
+                                    </motion.div>
                                 </div>
                             </div>
 
                             {/* CTA 按钮 */}
-                            <div className="flex flex-col sm:flex-row gap-4">
+                            <motion.div
+                                className="flex flex-col sm:flex-row gap-4"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 1.3 }}
+                            >
                                 <Link
                                     href="/demo/workflow"
-                                    className="flex-1 inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-gradient-to-r from-pink-500 to-purple-500 rounded-xl hover:from-pink-600 hover:to-purple-600 transition-all shadow-lg shadow-pink-500/30"
+                                    className="flex-1 inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-gradient-to-r from-pink-500 to-purple-500 rounded-xl hover:from-pink-600 hover:to-purple-600 transition-all shadow-lg shadow-pink-500/30 group"
                                 >
                                     立即体验 AI 蜕变
-                                    <ChevronRight className="w-5 h-5 ml-2" />
+                                    <motion.span
+                                        className="ml-2"
+                                        animate={{ x: [0, 4, 0] }}
+                                        transition={{ duration: 1, repeat: Infinity }}
+                                    >
+                                        <ChevronRight className="w-5 h-5" />
+                                    </motion.span>
                                 </Link>
                                 <button className="flex-1 inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white border-2 border-white/30 rounded-xl hover:bg-white/10 transition-all">
                                     <Play className="w-5 h-5 mr-2" />
                                     观看完整视频
                                 </button>
-                            </div>
+                            </motion.div>
 
                             {/* 社交证明 */}
-                            <div className="flex items-center justify-between bg-white/5 backdrop-blur rounded-xl p-4 border border-white/10">
+                            <motion.div
+                                className="flex items-center justify-between bg-white/5 backdrop-blur rounded-xl p-4 border border-white/10"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 1.5 }}
+                            >
                                 <div className="flex items-center gap-3">
                                     <div className="flex -space-x-2">
                                         {['🙋‍♀️', '👩', '💁‍♀️', '👧'].map((emoji, i) => (
-                                            <div key={i} className="w-8 h-8 rounded-full bg-gradient-to-br from-pink-400 to-purple-400 flex items-center justify-center text-sm border-2 border-gray-800">
+                                            <motion.div
+                                                key={i}
+                                                className="w-8 h-8 rounded-full bg-gradient-to-br from-pink-400 to-purple-400 flex items-center justify-center text-sm border-2 border-gray-800"
+                                                initial={{ scale: 0 }}
+                                                animate={{ scale: 1 }}
+                                                transition={{ delay: 1.6 + i * 0.1 }}
+                                            >
                                                 {emoji}
-                                            </div>
+                                            </motion.div>
                                         ))}
                                     </div>
-                                    <span className="text-white text-sm"><span className="font-bold">50,000+</span> 女生已蜕变</span>
+                                    <span className="text-white text-sm">
+                                        <AnimatedCounter end={50000} suffix="+" className="font-bold" /> 女生已蜕变
+                                    </span>
                                 </div>
                                 <div className="flex items-center gap-1">
                                     {[1,2,3,4,5].map(i => (
-                                        <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                                        <motion.div
+                                            key={i}
+                                            initial={{ scale: 0, rotate: -180 }}
+                                            animate={{ scale: 1, rotate: 0 }}
+                                            transition={{ delay: 1.8 + i * 0.05 }}
+                                        >
+                                            <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                                        </motion.div>
                                     ))}
-                                    <span className="text-white text-sm ml-1 font-bold">4.9</span>
+                                    <span className="text-white text-sm ml-1 font-bold">
+                                        <AnimatedCounter end={4.9} decimals={1} />
+                                    </span>
                                 </div>
-                            </div>
+                            </motion.div>
                         </motion.div>
                     </div>
                 </div>
+
+                {/* 向下滚动提示 */}
+                <motion.div
+                    className="absolute bottom-8 left-1/2 -translate-x-1/2"
+                    animate={{ y: [0, 10, 0] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                >
+                    <div className="w-6 h-10 rounded-full border-2 border-white/30 flex justify-center pt-2">
+                        <motion.div
+                            className="w-1.5 h-1.5 rounded-full bg-white"
+                            animate={{ y: [0, 12, 0], opacity: [1, 0.3, 1] }}
+                            transition={{ duration: 2, repeat: Infinity }}
+                        />
+                    </div>
+                </motion.div>
             </section>
 
             {/* Features Section - 变美逆袭 */}
-            <section className="py-24 bg-white">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <section className="py-24 bg-white relative overflow-hidden">
+                {/* 装饰背景 */}
+                <ParallaxY speed={30} className="absolute top-20 -left-20 w-64 h-64 bg-pink-100 rounded-full blur-3xl opacity-50" />
+                <ParallaxY speed={-20} className="absolute bottom-20 -right-20 w-64 h-64 bg-purple-100 rounded-full blur-3xl opacity-50" />
+
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         className="text-center mb-16"
                     >
-                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-pink-100 to-purple-100 rounded-full text-pink-600 text-sm font-bold mb-4">
+                        <motion.div
+                            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-pink-100 to-purple-100 rounded-full text-pink-600 text-sm font-bold mb-4"
+                            whileHover={{ scale: 1.05 }}
+                        >
                             <span>🔥</span>
                             小红书 10w+ 收藏的变美神器
-                        </div>
+                        </motion.div>
                         <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                            素颜 40 分 → 精致 80 分
+                            素颜 <span className="text-red-400">40</span> 分 → 精致 <span className="text-green-500">80</span> 分
                         </h2>
                         <p className="text-xl text-gray-600 max-w-2xl mx-auto">
                             不是你不够美，是没找对方法！<br/>
@@ -322,51 +483,61 @@ export default function LandingPage() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.1 }}
-                                className="card-hover p-6 group relative overflow-hidden"
                             >
-                                {/* 提升标签 */}
-                                <div className="absolute top-4 right-4 bg-gradient-to-r from-green-400 to-emerald-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                                    {feature.boost} {feature.boostLabel}
-                                </div>
+                                <TiltCard
+                                    className="h-full"
+                                    glowColor={feature.glowColor}
+                                    maxTilt={8}
+                                >
+                                    <div className="card-hover p-6 h-full relative overflow-hidden bg-white rounded-2xl border border-gray-100">
+                                        {/* 提升标签 */}
+                                        <div className="absolute top-4 right-4 bg-gradient-to-r from-green-400 to-emerald-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                                            {feature.boost} {feature.boostLabel}
+                                        </div>
 
-                                {/* Emoji + 图标 */}
-                                <div className="flex items-center gap-3 mb-4">
-                                    <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${feature.gradient}
-                                        flex items-center justify-center group-hover:scale-110 transition-transform`}>
-                                        <feature.icon className="w-6 h-6 text-white" />
-                                    </div>
-                                    <span className="text-2xl">{feature.emoji}</span>
-                                </div>
+                                        {/* Emoji + 图标 */}
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <motion.div
+                                                className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center`}
+                                                whileHover={{ scale: 1.1, rotate: 5 }}
+                                                transition={{ type: 'spring', stiffness: 300 }}
+                                            >
+                                                <feature.icon className="w-6 h-6 text-white" />
+                                            </motion.div>
+                                            <span className="text-2xl">{feature.emoji}</span>
+                                        </div>
 
-                                {/* 标题 */}
-                                <h3 className="text-xl font-bold text-gray-900 mb-1">
-                                    {feature.title}
-                                </h3>
-                                <p className="text-sm text-mirror-500 font-medium mb-4">
-                                    {feature.subtitle}
-                                </p>
+                                        {/* 标题 */}
+                                        <h3 className="text-xl font-bold text-gray-900 mb-1">
+                                            {feature.title}
+                                        </h3>
+                                        <p className="text-sm text-mirror-500 font-medium mb-4">
+                                            {feature.subtitle}
+                                        </p>
 
-                                {/* Before / After */}
-                                <div className="space-y-3">
-                                    <div className="flex items-start gap-2">
-                                        <span className="text-red-400 text-lg">😩</span>
-                                        <div>
-                                            <div className="text-xs text-gray-400 mb-0.5">以前</div>
-                                            <p className="text-sm text-gray-500 line-through decoration-red-300">
-                                                {feature.before}
-                                            </p>
+                                        {/* Before / After */}
+                                        <div className="space-y-3">
+                                            <div className="flex items-start gap-2">
+                                                <span className="text-red-400 text-lg">😩</span>
+                                                <div>
+                                                    <div className="text-xs text-gray-400 mb-0.5">以前</div>
+                                                    <p className="text-sm text-gray-500 line-through decoration-red-300">
+                                                        {feature.before}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div className="flex items-start gap-2">
+                                                <span className="text-green-500 text-lg">🥳</span>
+                                                <div>
+                                                    <div className="text-xs text-gray-400 mb-0.5">现在</div>
+                                                    <p className="text-sm text-gray-700 font-medium">
+                                                        {feature.after}
+                                                    </p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="flex items-start gap-2">
-                                        <span className="text-green-500 text-lg">🥳</span>
-                                        <div>
-                                            <div className="text-xs text-gray-400 mb-0.5">现在</div>
-                                            <p className="text-sm text-gray-700 font-medium">
-                                                {feature.after}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
+                                </TiltCard>
                             </motion.div>
                         ))}
                     </div>
@@ -383,18 +554,24 @@ export default function LandingPage() {
                             { text: '"手残党终于画出了完整的眼妆！"', author: '@化妆小白' },
                             { text: '"省下的钱够买两支口红了"', author: '@精打细算的Lisa' },
                         ].map((quote, i) => (
-                            <div key={i} className="bg-gradient-to-r from-pink-50 to-purple-50 px-4 py-2 rounded-full">
+                            <motion.div
+                                key={i}
+                                className="bg-gradient-to-r from-pink-50 to-purple-50 px-4 py-2 rounded-full"
+                                whileHover={{ scale: 1.05, y: -2 }}
+                            >
                                 <span className="text-sm text-gray-600">{quote.text}</span>
                                 <span className="text-xs text-mirror-500 ml-2">{quote.author}</span>
-                            </div>
+                            </motion.div>
                         ))}
                     </motion.div>
                 </div>
             </section>
 
             {/* How It Works Section */}
-            <section className="py-24 bg-gradient-to-br from-gray-50 to-mirror-50/30">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <section className="py-24 bg-gradient-to-br from-gray-50 to-mirror-50/30 relative overflow-hidden">
+                <ParallaxY speed={-40} className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-pink-200/30 to-purple-200/30 rounded-full blur-3xl" />
+
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -417,14 +594,24 @@ export default function LandingPage() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.15 }}
-                                className="relative text-center"
+                                className="relative text-center group"
                             >
                                 {index < steps.length - 1 && (
-                                    <div className="hidden md:block absolute top-8 left-1/2 w-full h-0.5 bg-gradient-to-r from-mirror-300 to-mirror-100" />
+                                    <motion.div
+                                        className="hidden md:block absolute top-8 left-1/2 w-full h-0.5 bg-gradient-to-r from-mirror-300 to-mirror-100"
+                                        initial={{ scaleX: 0 }}
+                                        whileInView={{ scaleX: 1 }}
+                                        viewport={{ once: true }}
+                                        transition={{ delay: index * 0.15 + 0.3, duration: 0.5 }}
+                                    />
                                 )}
-                                <div className="relative inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-mirror text-white text-xl font-bold mb-4 shadow-lg shadow-mirror-500/30">
-                                    {step.number}
-                                </div>
+                                <motion.div
+                                    className="relative inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-mirror text-white text-xl font-bold mb-4 shadow-lg shadow-mirror-500/30"
+                                    whileHover={{ scale: 1.1, rotate: 360 }}
+                                    transition={{ type: 'spring', stiffness: 200 }}
+                                >
+                                    <step.icon className="w-7 h-7" />
+                                </motion.div>
                                 <h3 className="text-lg font-bold text-gray-900 mb-2">
                                     {step.title}
                                 </h3>
@@ -438,8 +625,11 @@ export default function LandingPage() {
             </section>
 
             {/* Tech Specs Section */}
-            <section className="py-24 bg-gray-900 text-white">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <section className="py-24 bg-gray-900 text-white relative overflow-hidden">
+                <ParallaxY speed={50} className="absolute -top-20 -left-20 w-80 h-80 bg-mirror-500/10 rounded-full blur-3xl" />
+                <ParallaxY speed={-30} className="absolute -bottom-20 -right-20 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl" />
+
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -456,65 +646,65 @@ export default function LandingPage() {
 
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
                         {specs.map((spec, index) => (
-                            <motion.div
+                            <TiltCard
                                 key={spec.label}
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: index * 0.05 }}
-                                className="bg-gray-800 rounded-2xl p-6 text-center hover:bg-gray-700 transition-colors"
+                                maxTilt={15}
+                                glowColor="rgba(236, 72, 153, 0.2)"
                             >
-                                <div className="text-2xl font-bold text-gradient mb-2">
-                                    {spec.value}
-                                </div>
-                                <div className="text-sm text-gray-400">
-                                    {spec.label}
-                                </div>
-                            </motion.div>
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    whileInView={{ opacity: 1, scale: 1 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: index * 0.05 }}
+                                    className="bg-gray-800 rounded-2xl p-6 text-center hover:bg-gray-700 transition-colors border border-gray-700"
+                                >
+                                    <div className="text-2xl font-bold text-gradient mb-2">
+                                        {spec.value}
+                                    </div>
+                                    <div className="text-sm text-gray-400">
+                                        {spec.label}
+                                    </div>
+                                </motion.div>
+                            </TiltCard>
                         ))}
                     </div>
 
                     <div className="mt-16 grid md:grid-cols-3 gap-8">
-                        <div className="flex items-start gap-4">
-                            <div className="w-12 h-12 rounded-xl bg-mirror-500/20 flex items-center justify-center flex-shrink-0">
-                                <Zap className="w-6 h-6 text-mirror-400" />
-                            </div>
-                            <div>
-                                <h3 className="font-bold mb-2">RK3588 旗舰芯片</h3>
-                                <p className="text-gray-400 text-sm">
-                                    6 TOPS NPU 算力，支持边缘端实时 AI 推理
-                                </p>
-                            </div>
-                        </div>
-                        <div className="flex items-start gap-4">
-                            <div className="w-12 h-12 rounded-xl bg-accent-500/20 flex items-center justify-center flex-shrink-0">
-                                <Shield className="w-6 h-6 text-accent-400" />
-                            </div>
-                            <div>
-                                <h3 className="font-bold mb-2">隐私安全</h3>
-                                <p className="text-gray-400 text-sm">
-                                    端侧处理，数据不上云，符合 GDPR 标准
-                                </p>
-                            </div>
-                        </div>
-                        <div className="flex items-start gap-4">
-                            <div className="w-12 h-12 rounded-xl bg-gold-500/20 flex items-center justify-center flex-shrink-0">
-                                <TrendingUp className="w-6 h-6 text-gold-400" />
-                            </div>
-                            <div>
-                                <h3 className="font-bold mb-2">OTA 升级</h3>
-                                <p className="text-gray-400 text-sm">
-                                    持续更新 AI 模型和功能，产品越用越智能
-                                </p>
-                            </div>
-                        </div>
+                        {[
+                            { icon: Zap, color: 'mirror', title: 'RK3588 旗舰芯片', desc: '6 TOPS NPU 算力，支持边缘端实时 AI 推理' },
+                            { icon: Shield, color: 'accent', title: '隐私安全', desc: '端侧处理，数据不上云，符合 GDPR 标准' },
+                            { icon: TrendingUp, color: 'gold', title: 'OTA 升级', desc: '持续更新 AI 模型和功能，产品越用越智能' },
+                        ].map((item, i) => (
+                            <motion.div
+                                key={item.title}
+                                className="flex items-start gap-4"
+                                initial={{ opacity: 0, x: -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: i * 0.1 }}
+                            >
+                                <motion.div
+                                    className={`w-12 h-12 rounded-xl bg-${item.color}-500/20 flex items-center justify-center flex-shrink-0`}
+                                    whileHover={{ scale: 1.1, rotate: 10 }}
+                                >
+                                    <item.icon className={`w-6 h-6 text-${item.color}-400`} />
+                                </motion.div>
+                                <div>
+                                    <h3 className="font-bold mb-2">{item.title}</h3>
+                                    <p className="text-gray-400 text-sm">{item.desc}</p>
+                                </div>
+                            </motion.div>
+                        ))}
                     </div>
                 </div>
             </section>
 
             {/* Testimonials Section */}
-            <section className="py-24 bg-gradient-to-b from-white to-pink-50/30">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <section className="py-24 bg-gradient-to-b from-white to-pink-50/30 relative overflow-hidden">
+                <ParallaxY speed={20} className="absolute top-10 left-10 w-32 h-32 bg-pink-200/50 rounded-full blur-2xl" />
+                <ParallaxY speed={-20} className="absolute bottom-10 right-10 w-32 h-32 bg-purple-200/50 rounded-full blur-2xl" />
+
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -541,30 +731,47 @@ export default function LandingPage() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.1 }}
-                                className="card p-6 relative"
                             >
-                                {/* 标签 */}
-                                <div className="absolute top-4 right-4 bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-                                    {testimonial.tag}
-                                </div>
+                                <TiltCard
+                                    maxTilt={6}
+                                    glowColor="rgba(236, 72, 153, 0.15)"
+                                >
+                                    <div className="card p-6 relative bg-white rounded-2xl border border-gray-100 shadow-sm">
+                                        {/* 标签 */}
+                                        <div className="absolute top-4 right-4 bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+                                            {testimonial.tag}
+                                        </div>
 
-                                <div className="flex items-center gap-1 mb-4">
-                                    {Array.from({ length: testimonial.rating }).map((_, i) => (
-                                        <Star key={i} className="w-5 h-5 fill-gold-500 text-gold-500" />
-                                    ))}
-                                </div>
-                                <p className="text-gray-700 mb-6 text-lg leading-relaxed">
-                                    "{testimonial.content}"
-                                </p>
-                                <div className="flex items-center gap-3">
-                                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-pink-100 to-purple-100 flex items-center justify-center text-2xl">
-                                        {testimonial.avatar}
+                                        <div className="flex items-center gap-1 mb-4">
+                                            {Array.from({ length: testimonial.rating }).map((_, i) => (
+                                                <motion.div
+                                                    key={i}
+                                                    initial={{ scale: 0, rotate: -180 }}
+                                                    whileInView={{ scale: 1, rotate: 0 }}
+                                                    viewport={{ once: true }}
+                                                    transition={{ delay: index * 0.1 + i * 0.05 }}
+                                                >
+                                                    <Star className="w-5 h-5 fill-gold-500 text-gold-500" />
+                                                </motion.div>
+                                            ))}
+                                        </div>
+                                        <p className="text-gray-700 mb-6 text-lg leading-relaxed">
+                                            "{testimonial.content}"
+                                        </p>
+                                        <div className="flex items-center gap-3">
+                                            <motion.div
+                                                className="w-12 h-12 rounded-full bg-gradient-to-br from-pink-100 to-purple-100 flex items-center justify-center text-2xl"
+                                                whileHover={{ scale: 1.1, rotate: 10 }}
+                                            >
+                                                {testimonial.avatar}
+                                            </motion.div>
+                                            <div>
+                                                <div className="font-bold text-gray-900">{testimonial.name}</div>
+                                                <div className="text-sm text-mirror-500">{testimonial.role}</div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <div className="font-bold text-gray-900">{testimonial.name}</div>
-                                        <div className="text-sm text-mirror-500">{testimonial.role}</div>
-                                    </div>
-                                </div>
+                                </TiltCard>
                             </motion.div>
                         ))}
                     </div>
@@ -574,8 +781,18 @@ export default function LandingPage() {
             {/* CTA Section */}
             <section className="py-24 bg-gradient-mirror relative overflow-hidden">
                 <div className="absolute inset-0 bg-black/10" />
-                <div className="absolute top-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
-                <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
+
+                {/* 动态背景 */}
+                <motion.div
+                    className="absolute top-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"
+                    animate={{ x: [0, 50, 0], y: [0, 30, 0] }}
+                    transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+                />
+                <motion.div
+                    className="absolute bottom-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"
+                    animate={{ x: [0, -50, 0], y: [0, -30, 0] }}
+                    transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+                />
 
                 <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <motion.div
@@ -583,7 +800,13 @@ export default function LandingPage() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                     >
-                        <div className="text-6xl mb-6">✨</div>
+                        <motion.div
+                            className="text-6xl mb-6"
+                            animate={{ rotate: [0, 10, -10, 0], scale: [1, 1.1, 1] }}
+                            transition={{ duration: 3, repeat: Infinity }}
+                        >
+                            ✨
+                        </motion.div>
                         <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
                             今天开始，做更美的自己
                         </h2>
@@ -594,16 +817,22 @@ export default function LandingPage() {
                             立即体验，3分钟获取你的专属变美方案 💖
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <Link
-                                href="/demo/mirror"
-                                className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-mirror-600 bg-white rounded-full hover:bg-gray-100 transition-colors shadow-lg"
+                            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                                <Link
+                                    href="/demo/mirror"
+                                    className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-mirror-600 bg-white rounded-full hover:bg-gray-100 transition-colors shadow-lg"
+                                >
+                                    立即体验
+                                    <ChevronRight className="w-5 h-5 ml-2" />
+                                </Link>
+                            </motion.div>
+                            <motion.button
+                                className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white border-2 border-white/50 rounded-full hover:bg-white/10 transition-colors"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
                             >
-                                立即体验
-                                <ChevronRight className="w-5 h-5 ml-2" />
-                            </Link>
-                            <button className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white border-2 border-white/50 rounded-full hover:bg-white/10 transition-colors">
                                 预约演示
-                            </button>
+                            </motion.button>
                         </div>
                     </motion.div>
                 </div>
