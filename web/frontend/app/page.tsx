@@ -1,6 +1,5 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -21,12 +20,12 @@ import {
 } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import SketchFace from '@/components/workflow/SketchFace';
 import {
     AnimatedCounter,
     ParticleBackground,
     TiltCard,
     ParallaxY,
+    TransformationShowcase,
 } from '@/components/landing';
 
 const features = [
@@ -128,33 +127,6 @@ export default function LandingPage() {
     const heroY = useTransform(scrollY, [0, 500], [0, 150]);
     const heroOpacity = useTransform(scrollY, [0, 300], [1, 0.3]);
 
-    // SketchFace 动画状态
-    const [makeupStep, setMakeupStep] = useState(0);
-    const [showScanLine, setShowScanLine] = useState(true);
-    const [showMetrics, setShowMetrics] = useState(false);
-
-    // 自动循环动画
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setMakeupStep((prev) => {
-                if (prev >= 5) {
-                    // 重置循环
-                    setShowScanLine(true);
-                    setShowMetrics(false);
-                    return 0;
-                }
-                if (prev === 0) {
-                    // 扫描完成，显示指标
-                    setShowScanLine(false);
-                    setShowMetrics(true);
-                }
-                return prev + 1;
-            });
-        }, 1500);
-
-        return () => clearInterval(interval);
-    }, []);
-
     return (
         <div className="min-h-screen bg-gray-50 overflow-x-hidden">
             <Header />
@@ -228,52 +200,16 @@ export default function LandingPage() {
                         </motion.p>
                     </motion.div>
 
-                    {/* 真实蜕变展示 - 改为 SketchFace + 图片 */}
+                    {/* 真实蜕变展示 - 真实用户案例 */}
                     <div className="grid lg:grid-cols-2 gap-8 items-center">
-                        {/* 左侧：SketchFace 智能镜演示 */}
+                        {/* 左侧：真实蜕变展示 */}
                         <motion.div
                             initial={{ opacity: 0, x: -50 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.8, delay: 0.3 }}
                             className="relative"
                         >
-                            <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 p-4 border border-white/10 shadow-2xl shadow-pink-500/20">
-                                {/* SketchFace 组件 */}
-                                <div className="max-w-[320px] mx-auto">
-                                    <SketchFace
-                                        makeupStep={makeupStep}
-                                        showScanLine={showScanLine}
-                                        showMetrics={showMetrics}
-                                        showRoboticArms={true}
-                                        armAction="idle"
-                                        beautyScore={10 + makeupStep * 6}
-                                    />
-                                </div>
-
-                                {/* 状态指示器 */}
-                                <div className="absolute top-6 left-6 flex items-center gap-2">
-                                    <motion.div
-                                        className="w-3 h-3 rounded-full bg-green-400"
-                                        animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
-                                        transition={{ duration: 1.5, repeat: Infinity }}
-                                    />
-                                    <span className="text-xs text-green-400 font-medium">
-                                        {showScanLine ? 'AI 扫描中...' : `化妆步骤 ${makeupStep}/5`}
-                                    </span>
-                                </div>
-
-                                {/* 评分显示 */}
-                                <motion.div
-                                    className="absolute bottom-6 right-6 bg-gradient-to-r from-pink-500 to-purple-500 text-white px-4 py-2 rounded-xl shadow-lg"
-                                    animate={{ scale: [1, 1.05, 1] }}
-                                    transition={{ duration: 2, repeat: Infinity }}
-                                >
-                                    <div className="text-xs text-pink-100">美颜指数</div>
-                                    <div className="text-2xl font-black">
-                                        <AnimatedCounter end={10 + makeupStep * 6} duration={0.5} /> 分
-                                    </div>
-                                </motion.div>
-                            </div>
+                            <TransformationShowcase autoPlay={true} interval={3500} />
 
                             {/* 光晕效果 */}
                             <div className="absolute -inset-4 bg-gradient-to-r from-pink-500/20 to-purple-500/20 blur-2xl -z-10 rounded-3xl" />
@@ -286,11 +222,11 @@ export default function LandingPage() {
                             transition={{ duration: 0.8, delay: 0.5 }}
                             className="space-y-6"
                         >
-                            {/* 蜕变三步骤 */}
+                            {/* 蜕变三步骤 - 真实图片展示 */}
                             <div className="bg-white/5 backdrop-blur-lg rounded-2xl p-6 border border-white/10">
                                 <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
                                     <Wand2 className="w-5 h-5 text-pink-400" />
-                                    AI 指导的蜕变过程
+                                    真实蜕变过程
                                 </h3>
                                 <div className="space-y-4">
                                     {/* Step 1 */}
@@ -300,16 +236,21 @@ export default function LandingPage() {
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: 0.7 }}
                                     >
-                                        <div className="relative w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 border-2 border-gray-600 bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
-                                            <Camera className="w-8 h-8 text-gray-400" />
+                                        <div className="relative w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 border-2 border-gray-600">
+                                            <Image
+                                                src="/demo/transformation/IMG_2239.PNG"
+                                                alt="素颜"
+                                                fill
+                                                className="object-cover"
+                                            />
                                         </div>
                                         <div className="flex-1">
                                             <div className="flex items-center gap-2 mb-1">
                                                 <span className="w-6 h-6 rounded-full bg-gray-700 flex items-center justify-center text-xs text-white font-bold">1</span>
-                                                <span className="text-white font-medium">AI 扫描分析</span>
+                                                <span className="text-white font-medium">素颜起点</span>
                                                 <span className="text-xs bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full">10分</span>
                                             </div>
-                                            <p className="text-sm text-gray-400">3秒识别肤质、脸型、五官比例</p>
+                                            <p className="text-sm text-gray-400">AI 扫描分析肤质与五官</p>
                                         </div>
                                     </motion.div>
                                     {/* Step 2 */}
@@ -319,13 +260,23 @@ export default function LandingPage() {
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: 0.9 }}
                                     >
-                                        <div className="relative w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 border-2 border-pink-500/50 bg-gradient-to-br from-pink-900/50 to-purple-900/50 flex items-center justify-center">
-                                            <Sparkles className="w-8 h-8 text-pink-400" />
+                                        <div className="relative w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 border-2 border-pink-500/50">
+                                            <Image
+                                                src="/demo/transformation/IMG_2240.PNG"
+                                                alt="化妆中"
+                                                fill
+                                                className="object-cover"
+                                            />
+                                            <motion.div
+                                                className="absolute inset-0 bg-pink-500/20"
+                                                animate={{ opacity: [0.2, 0.5, 0.2] }}
+                                                transition={{ duration: 1.5, repeat: Infinity }}
+                                            />
                                         </div>
                                         <div className="flex-1">
                                             <div className="flex items-center gap-2 mb-1">
                                                 <span className="w-6 h-6 rounded-full bg-pink-500 flex items-center justify-center text-xs text-white font-bold">2</span>
-                                                <span className="text-white font-medium">实时视频指导</span>
+                                                <span className="text-white font-medium">AI 实时指导</span>
                                                 <motion.span
                                                     className="text-xs bg-pink-500/20 text-pink-400 px-2 py-0.5 rounded-full"
                                                     animate={{ opacity: [1, 0.5, 1] }}
@@ -334,7 +285,7 @@ export default function LandingPage() {
                                                     进行中
                                                 </motion.span>
                                             </div>
-                                            <p className="text-sm text-gray-400">语音+AR叠加，手把手教你画</p>
+                                            <p className="text-sm text-gray-400">语音+AR 手把手教化妆</p>
                                         </div>
                                     </motion.div>
                                     {/* Step 3 */}
@@ -344,8 +295,13 @@ export default function LandingPage() {
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: 1.1 }}
                                     >
-                                        <div className="relative w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 border-2 border-green-400 shadow-lg shadow-green-400/20 bg-gradient-to-br from-green-900/50 to-emerald-900/50 flex items-center justify-center">
-                                            <Heart className="w-8 h-8 text-green-400 fill-green-400" />
+                                        <div className="relative w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 border-2 border-green-400 shadow-lg shadow-green-400/20">
+                                            <Image
+                                                src="/demo/transformation/IMG_2241.PNG"
+                                                alt="完成蜕变"
+                                                fill
+                                                className="object-cover"
+                                            />
                                         </div>
                                         <div className="flex-1">
                                             <div className="flex items-center gap-2 mb-1">
@@ -353,10 +309,36 @@ export default function LandingPage() {
                                                 <span className="text-white font-medium">惊艳蜕变</span>
                                                 <span className="text-xs bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full">40分 🎉</span>
                                             </div>
-                                            <p className="text-sm text-gray-400">精致妆容，自信出门！</p>
+                                            <p className="text-sm text-gray-400">完美妆容，自信出门！</p>
                                         </div>
                                     </motion.div>
                                 </div>
+
+                                {/* 对比图展示 */}
+                                <motion.div
+                                    className="mt-4 pt-4 border-t border-white/10"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ delay: 1.3 }}
+                                >
+                                    <div className="relative rounded-xl overflow-hidden aspect-video">
+                                        <Image
+                                            src="/demo/transformation/IMG_2238.PNG"
+                                            alt="蜕变对比"
+                                            fill
+                                            className="object-cover"
+                                        />
+                                        <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                                            <motion.div
+                                                className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-4 py-2 rounded-full font-bold text-sm"
+                                                animate={{ scale: [1, 1.05, 1] }}
+                                                transition={{ duration: 2, repeat: Infinity }}
+                                            >
+                                                ✨ 真实用户蜕变
+                                            </motion.div>
+                                        </div>
+                                    </div>
+                                </motion.div>
                             </div>
 
                             {/* CTA 按钮 */}
