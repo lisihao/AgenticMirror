@@ -90,8 +90,8 @@ const specs = [
     { label: '双目追踪', value: '48MP', desc: '比闺蜜更懂你的脸' },
     { label: '3D深感', value: '双目+ToF', desc: '连毛孔都看得清' },
     { label: '面部特征', value: '468点', desc: '比你更了解自己' },
-    { label: '端侧大模型', value: '6 TOPS', desc: '离线也能变美' },
-    { label: '云端AI', value: 'GPT-4级', desc: '千亿参数懂你心' },
+    { label: '麒麟NPU', value: '6 TOPS', desc: '离线也能变美' },
+    { label: '盘古大模型', value: '千亿参数', desc: '华为云懂你心' },
     { label: '智能云台', value: '<1°', desc: '怎么动都跟着你' },
     { label: '女神光', value: '2700-6500K', desc: '自带美颜补光' },
 ];
@@ -657,9 +657,9 @@ export default function LandingPage() {
 
                     <div className="mt-16 grid md:grid-cols-3 gap-8">
                         {[
-                            { icon: Zap, color: 'mirror', title: 'RK3588 旗舰芯片', desc: '6 TOPS NPU 算力，支持边缘端实时 AI 推理' },
-                            { icon: Shield, color: 'accent', title: '隐私安全', desc: '端侧处理，数据不上云，符合 GDPR 标准' },
-                            { icon: TrendingUp, color: 'gold', title: 'OTA 升级', desc: '持续更新 AI 模型和功能，产品越用越智能' },
+                            { icon: Zap, color: 'mirror', title: '麒麟旗舰芯片', desc: '华为自研NPU，端侧AI秒级响应' },
+                            { icon: Shield, color: 'accent', title: 'HarmonyOS 原生', desc: '鸿蒙生态无缝连接，万物互联' },
+                            { icon: TrendingUp, color: 'gold', title: '盘古大模型', desc: '华为云端智能加持，越用越懂你' },
                         ].map((item, i) => (
                             <motion.div
                                 key={item.title}
