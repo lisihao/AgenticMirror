@@ -87,12 +87,12 @@ const steps = [
 ];
 
 const specs = [
-    { label: '4K RGB摄像头', value: '48MP' },
-    { label: '红外深度感知', value: '双目+ToF' },
-    { label: '面部特征点', value: '468点' },
-    { label: 'AI 算力', value: '6 TOPS' },
-    { label: '云台精度', value: '<1°' },
-    { label: 'LED 色温', value: '2700-6500K' },
+    { label: '高清双目摄像头', value: '48MP', desc: '精准识别您的美貌' },
+    { label: '红外深度感知', value: '双目+ToF', desc: '立体捕捉面部轮廓' },
+    { label: '面部特征点', value: '468点', desc: '毫米级精准定位' },
+    { label: 'AI 算力', value: '6 TOPS', desc: '实时智能分析' },
+    { label: '高精度云台', value: '<1°', desc: '随时跟踪您的装扮' },
+    { label: '专业补光', value: '2700-6500K', desc: '还原真实肤色' },
 ];
 
 const testimonials = [
@@ -638,13 +638,16 @@ export default function LandingPage() {
                                     whileInView={{ opacity: 1, scale: 1 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: index * 0.05 }}
-                                    className="bg-gray-800 rounded-2xl p-6 text-center hover:bg-gray-700 transition-colors border border-gray-700"
+                                    className="bg-gray-800 rounded-2xl p-6 text-center hover:bg-gray-700 transition-colors border border-gray-700 h-full"
                                 >
-                                    <div className="text-2xl font-bold text-gradient mb-2">
+                                    <div className="text-2xl font-bold text-gradient mb-1">
                                         {spec.value}
                                     </div>
-                                    <div className="text-sm text-gray-400">
+                                    <div className="text-sm text-white font-medium mb-1">
                                         {spec.label}
+                                    </div>
+                                    <div className="text-xs text-gray-500">
+                                        {spec.desc}
                                     </div>
                                 </motion.div>
                             </TiltCard>
