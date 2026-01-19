@@ -92,6 +92,7 @@ const specs = [
     { label: '面部特征', value: '468点', desc: '比你更了解自己' },
     { label: '麒麟NPU', value: '6 TOPS', desc: '离线也能变美' },
     { label: '盘古大模型', value: '千亿参数', desc: '华为云懂你心' },
+    { label: '越用越懂你', value: 'AI学习', desc: '记住你的美丽偏好' },
     { label: '智能云台', value: '<1°', desc: '怎么动都跟着你' },
     { label: '女神光', value: '2700-6500K', desc: '自带美颜补光' },
 ];
@@ -627,7 +628,7 @@ export default function LandingPage() {
                         </p>
                     </motion.div>
 
-                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
                         {specs.map((spec, index) => (
                             <TiltCard
                                 key={spec.label}
@@ -655,11 +656,12 @@ export default function LandingPage() {
                         ))}
                     </div>
 
-                    <div className="mt-16 grid md:grid-cols-3 gap-8">
+                    <div className="mt-16 grid md:grid-cols-4 gap-6">
                         {[
                             { icon: Zap, color: 'mirror', title: '麒麟旗舰芯片', desc: '华为自研NPU，端侧AI秒级响应' },
                             { icon: Shield, color: 'accent', title: 'HarmonyOS 原生', desc: '鸿蒙生态无缝连接，万物互联' },
-                            { icon: TrendingUp, color: 'gold', title: '盘古大模型', desc: '华为云端智能加持，越用越懂你' },
+                            { icon: TrendingUp, color: 'gold', title: '越用越懂你', desc: '学习你的喜好习惯，AI持续进化' },
+                            { icon: Heart, color: 'mirror', title: '越用越美', desc: '记录变美轨迹，定制专属方案' },
                         ].map((item, i) => (
                             <motion.div
                                 key={item.title}
