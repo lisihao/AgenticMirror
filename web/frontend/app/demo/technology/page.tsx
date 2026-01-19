@@ -204,72 +204,257 @@ function FaceTouchDemo() {
   );
 }
 
-// 3DGS 渲染演示
+// 3DGS 渲染演示 - 高斯泼溅效果
 function GaussianSplattingDemo() {
   const [layer, setLayer] = useState(0);
-  const layers = ['原始', '底妆', '眼妆', '唇妆', '完整'];
+  const [isAnimating, setIsAnimating] = useState(true);
+  const layers = ['素颜', '底妆', '眼妆', '唇妆', '完整妆容'];
+
+  // 生成面部区域的高斯点
+  const generateGaussianPoints = () => {
+    const points: Array<{
+      x: number;
+      y: number;
+      size: number;
+      color: string;
+      layer: number;
+      delay: number;
+    }> = [];
+
+    // 面部轮廓点 (layer 0 - 素颜基础)
+    for (let i = 0; i < 60; i++) {
+      const angle = (i / 60) * Math.PI * 2;
+      const rx = 38 + Math.random() * 5;
+      const ry = 45 + Math.random() * 5;
+      points.push({
+        x: 50 + Math.cos(angle) * rx,
+        y: 50 + Math.sin(angle) * ry * 0.95,
+        size: 3 + Math.random() * 4,
+        color: `rgba(255, 220, 200, ${0.3 + Math.random() * 0.3})`,
+        layer: 0,
+        delay: i * 0.02,
+      });
+    }
+
+    // 底妆区域 (layer 1) - 全脸覆盖
+    for (let i = 0; i < 80; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const r = Math.random() * 35;
+      points.push({
+        x: 50 + Math.cos(angle) * r,
+        y: 52 + Math.sin(angle) * r * 1.1,
+        size: 8 + Math.random() * 12,
+        color: `rgba(255, 200, 180, ${0.2 + Math.random() * 0.3})`,
+        layer: 1,
+        delay: i * 0.015,
+      });
+    }
+
+    // 眼妆区域 (layer 2)
+    const eyePositions = [
+      { cx: 35, cy: 42 }, // 左眼
+      { cx: 65, cy: 42 }, // 右眼
+    ];
+    eyePositions.forEach((eye, ei) => {
+      for (let i = 0; i < 25; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const r = Math.random() * 10;
+        points.push({
+          x: eye.cx + Math.cos(angle) * r,
+          y: eye.cy + Math.sin(angle) * r * 0.6,
+          size: 4 + Math.random() * 8,
+          color: `rgba(${150 + Math.random() * 50}, ${80 + Math.random() * 40}, ${120 + Math.random() * 80}, ${0.4 + Math.random() * 0.4})`,
+          layer: 2,
+          delay: ei * 0.2 + i * 0.02,
+        });
+      }
+    });
+
+    // 腮红区域
+    const cheekPositions = [
+      { cx: 28, cy: 58 },
+      { cx: 72, cy: 58 },
+    ];
+    cheekPositions.forEach((cheek, ci) => {
+      for (let i = 0; i < 15; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const r = Math.random() * 12;
+        points.push({
+          x: cheek.cx + Math.cos(angle) * r,
+          y: cheek.cy + Math.sin(angle) * r * 0.7,
+          size: 10 + Math.random() * 15,
+          color: `rgba(255, ${100 + Math.random() * 50}, ${130 + Math.random() * 40}, ${0.2 + Math.random() * 0.25})`,
+          layer: 2,
+          delay: 0.5 + ci * 0.15 + i * 0.02,
+        });
+      }
+    });
+
+    // 唇妆区域 (layer 3)
+    for (let i = 0; i < 30; i++) {
+      const t = (i / 30) * Math.PI * 2;
+      const lipWidth = 12;
+      const lipHeight = 5;
+      points.push({
+        x: 50 + Math.cos(t) * lipWidth * (1 + 0.3 * Math.sin(t * 2)),
+        y: 72 + Math.sin(t) * lipHeight,
+        size: 5 + Math.random() * 6,
+        color: `rgba(220, ${50 + Math.random() * 30}, ${80 + Math.random() * 40}, ${0.5 + Math.random() * 0.4})`,
+        layer: 3,
+        delay: i * 0.025,
+      });
+    }
+
+    return points;
+  };
+
+  const points = generateGaussianPoints();
 
   return (
-    <div className="relative aspect-square max-w-[300px] mx-auto">
-      {/* 3D 高斯点云模拟 */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <motion.div
-          className="relative w-48 h-48"
-          animate={{ rotateY: [0, 360] }}
-          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-          style={{ transformStyle: 'preserve-3d' }}
-        >
-          {/* 模拟高斯点 */}
-          {Array.from({ length: 100 }).map((_, i) => {
-            const angle = (i / 100) * Math.PI * 2;
-            const radius = 60 + Math.sin(i * 0.5) * 20;
-            const x = Math.cos(angle) * radius;
-            const y = Math.sin(angle) * radius + Math.cos(i * 0.3) * 20;
-            const z = Math.sin(i * 0.7) * 30;
-            const colors = ['#ec4899', '#a855f7', '#6366f1', '#f472b6'];
-            const color = colors[i % colors.length];
-            const showLayer = layer === 4 || (layer === 1 && i < 25) || (layer === 2 && i >= 25 && i < 50) || (layer === 3 && i >= 50 && i < 75);
+    <div className="relative aspect-square max-w-[320px] mx-auto">
+      {/* 背景光效 */}
+      <div className="absolute inset-0 bg-gradient-radial from-pink-500/10 via-transparent to-transparent rounded-full" />
 
-            return (
-              <motion.div
-                key={i}
-                className="absolute w-2 h-2 rounded-full"
-                style={{
-                  left: '50%',
-                  top: '50%',
-                  transform: `translate3d(${x}px, ${y}px, ${z}px)`,
-                  background: `radial-gradient(circle, ${color}, transparent)`,
-                  opacity: layer === 0 ? 0.3 : showLayer ? 0.8 : 0.1,
-                }}
-                animate={{
-                  scale: [1, 1.2, 1],
-                }}
-                transition={{
-                  duration: 2,
-                  delay: i * 0.02,
+      {/* 3DGS 渲染区域 */}
+      <svg viewBox="0 0 100 100" className="w-full h-full">
+        {/* 面部轮廓参考线 */}
+        <ellipse
+          cx="50"
+          cy="50"
+          rx="38"
+          ry="45"
+          fill="none"
+          stroke="rgba(255,255,255,0.1)"
+          strokeWidth="0.3"
+          strokeDasharray="2,2"
+        />
+
+        {/* 高斯泼溅点 */}
+        {points.map((point, i) => {
+          const isVisible = layer === 4 || point.layer <= layer;
+          const isCurrentLayer = point.layer === layer;
+
+          return (
+            <motion.circle
+              key={i}
+              cx={point.x}
+              cy={point.y}
+              r={point.size / 2}
+              fill={point.color}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{
+                opacity: isVisible ? (isCurrentLayer ? 1 : 0.7) : 0,
+                scale: isVisible ? [1, 1.1, 1] : 0,
+              }}
+              transition={{
+                opacity: { duration: 0.5, delay: isVisible ? point.delay : 0 },
+                scale: {
+                  duration: 2 + Math.random(),
+                  delay: point.delay,
                   repeat: Infinity,
-                }}
+                  ease: 'easeInOut',
+                },
+              }}
+              style={{
+                filter: `blur(${point.size / 4}px)`,
+              }}
+            />
+          );
+        })}
+
+        {/* 面部特征线条 */}
+        <g opacity={layer >= 0 ? 0.3 : 0}>
+          {/* 眉毛 */}
+          <path d="M 28 38 Q 35 35 42 38" fill="none" stroke="rgba(139,90,60,0.5)" strokeWidth="1.5" strokeLinecap="round" />
+          <path d="M 58 38 Q 65 35 72 38" fill="none" stroke="rgba(139,90,60,0.5)" strokeWidth="1.5" strokeLinecap="round" />
+          {/* 眼睛 */}
+          <ellipse cx="35" cy="43" rx="7" ry="4" fill="none" stroke="rgba(80,60,50,0.4)" strokeWidth="0.5" />
+          <ellipse cx="65" cy="43" rx="7" ry="4" fill="none" stroke="rgba(80,60,50,0.4)" strokeWidth="0.5" />
+          {/* 鼻子 */}
+          <path d="M 50 45 L 50 58 M 46 60 Q 50 62 54 60" fill="none" stroke="rgba(200,180,160,0.3)" strokeWidth="0.5" />
+          {/* 嘴唇轮廓 */}
+          <path d="M 42 72 Q 50 68 58 72 Q 50 78 42 72" fill="none" stroke="rgba(200,100,100,0.3)" strokeWidth="0.5" />
+        </g>
+
+        {/* 当前图层高亮效果 */}
+        {layer > 0 && layer < 4 && (
+          <motion.g
+            initial={{ opacity: 0 }}
+            animate={{ opacity: [0.3, 0.6, 0.3] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+          >
+            {layer === 1 && (
+              <ellipse cx="50" cy="52" rx="32" ry="38" fill="none" stroke="#ec4899" strokeWidth="0.5" strokeDasharray="3,3" />
+            )}
+            {layer === 2 && (
+              <>
+                <circle cx="35" cy="42" r="12" fill="none" stroke="#a855f7" strokeWidth="0.5" strokeDasharray="2,2" />
+                <circle cx="65" cy="42" r="12" fill="none" stroke="#a855f7" strokeWidth="0.5" strokeDasharray="2,2" />
+                <ellipse cx="28" cy="58" rx="10" ry="7" fill="none" stroke="#f472b6" strokeWidth="0.5" strokeDasharray="2,2" />
+                <ellipse cx="72" cy="58" rx="10" ry="7" fill="none" stroke="#f472b6" strokeWidth="0.5" strokeDasharray="2,2" />
+              </>
+            )}
+            {layer === 3 && (
+              <ellipse cx="50" cy="72" rx="12" ry="6" fill="none" stroke="#dc2626" strokeWidth="0.5" strokeDasharray="2,2" />
+            )}
+          </motion.g>
+        )}
+
+        {/* 渲染进度指示 */}
+        <motion.text
+          x="50"
+          y="95"
+          textAnchor="middle"
+          fill="white"
+          fontSize="4"
+          animate={{ opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          {layer === 0 ? '素颜扫描中...' : layer === 4 ? '✨ 完美妆容' : `渲染 ${layers[layer]}...`}
+        </motion.text>
+      </svg>
+
+      {/* 图层选择器 */}
+      <div className="absolute -bottom-2 left-0 right-0">
+        <div className="flex justify-center gap-1.5 mb-2">
+          {layers.map((l, i) => (
+            <motion.button
+              key={l}
+              onClick={() => setLayer(i)}
+              className={`px-2.5 py-1 text-xs rounded-full transition-all ${
+                layer === i
+                  ? 'bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-lg shadow-pink-500/30'
+                  : 'bg-white/10 text-gray-400 hover:bg-white/20 border border-white/10'
+              }`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {l}
+            </motion.button>
+          ))}
+        </div>
+
+        {/* 进度条 */}
+        <div className="flex gap-1 px-4">
+          {[0, 1, 2, 3, 4].map((i) => (
+            <motion.div
+              key={i}
+              className="h-1 flex-1 rounded-full overflow-hidden bg-white/10"
+            >
+              <motion.div
+                className="h-full bg-gradient-to-r from-pink-500 to-purple-500"
+                initial={{ width: '0%' }}
+                animate={{ width: i <= layer ? '100%' : '0%' }}
+                transition={{ duration: 0.3, delay: i * 0.1 }}
               />
-            );
-          })}
-        </motion.div>
+            </motion.div>
+          ))}
+        </div>
       </div>
 
-      {/* 图层切换 */}
-      <div className="absolute bottom-0 left-0 right-0 flex justify-center gap-2">
-        {layers.map((l, i) => (
-          <button
-            key={l}
-            onClick={() => setLayer(i)}
-            className={`px-3 py-1 text-xs rounded-full transition-all ${
-              layer === i
-                ? 'bg-pink-500 text-white'
-                : 'bg-white/10 text-gray-400 hover:bg-white/20'
-            }`}
-          >
-            {l}
-          </button>
-        ))}
+      {/* FPS 指示器 */}
+      <div className="absolute top-2 right-2 bg-black/50 px-2 py-1 rounded text-xs text-green-400 font-mono">
+        60 FPS
       </div>
     </div>
   );
