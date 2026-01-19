@@ -214,9 +214,91 @@ export default function Face3D({ makeupLayer = 0, className = '', showControls =
             </filter>
           </defs>
 
-          {/* 头发背景 */}
-          <ellipse cx="100" cy="70" rx="75" ry="60" fill="#2d1f1a" />
-          <ellipse cx="100" cy="65" rx="70" ry="55" fill="#3d2a22" />
+          {/* 长发 - 后层 */}
+          <g>
+            {/* 头发主体 - 深色底层 */}
+            <path
+              d="M 15 90
+                 C 5 120, 0 180, 10 240
+                 C 15 260, 25 270, 35 260
+                 L 40 200
+                 C 35 150, 35 100, 50 60
+                 C 70 25, 130 25, 150 60
+                 C 165 100, 165 150, 160 200
+                 L 165 260
+                 C 175 270, 185 260, 190 240
+                 C 200 180, 195 120, 185 90
+                 C 175 50, 140 15, 100 15
+                 C 60 15, 25 50, 15 90"
+              fill="#1a1209"
+            />
+            {/* 头发中层 - 棕色 */}
+            <path
+              d="M 20 95
+                 C 12 125, 8 175, 15 230
+                 C 18 245, 28 250, 38 245
+                 L 42 190
+                 C 38 145, 40 100, 55 65
+                 C 72 32, 128 32, 145 65
+                 C 160 100, 162 145, 158 190
+                 L 162 245
+                 C 172 250, 182 245, 185 230
+                 C 192 175, 188 125, 180 95
+                 C 170 55, 138 25, 100 25
+                 C 62 25, 30 55, 20 95"
+              fill="#2d1f14"
+            />
+            {/* 头发高光层 */}
+            <path
+              d="M 30 100
+                 C 25 130, 22 170, 28 210
+                 L 35 180
+                 C 32 140, 38 100, 55 70
+                 C 70 45, 100 38, 100 38
+                 C 100 38, 130 45, 145 70
+                 C 162 100, 168 140, 165 180
+                 L 172 210
+                 C 178 170, 175 130, 170 100
+                 C 160 60, 135 35, 100 35
+                 C 65 35, 40 60, 30 100"
+              fill="#3d2a1c"
+            />
+            {/* 刘海 */}
+            <path
+              d="M 45 75
+                 C 50 55, 75 40, 100 40
+                 C 125 40, 150 55, 155 75
+                 C 150 70, 130 60, 100 60
+                 C 70 60, 50 70, 45 75"
+              fill="#2d1f14"
+            />
+            {/* 刘海细节 */}
+            <path
+              d="M 55 72 Q 70 58, 85 65"
+              fill="none"
+              stroke="#1a1209"
+              strokeWidth="2"
+            />
+            <path
+              d="M 115 65 Q 130 58, 145 72"
+              fill="none"
+              stroke="#1a1209"
+              strokeWidth="2"
+            />
+            {/* 头发丝光泽 */}
+            <path
+              d="M 35 120 Q 40 160, 35 200"
+              fill="none"
+              stroke="rgba(255,255,255,0.1)"
+              strokeWidth="3"
+            />
+            <path
+              d="M 165 120 Q 160 160, 165 200"
+              fill="none"
+              stroke="rgba(255,255,255,0.1)"
+              strokeWidth="3"
+            />
+          </g>
 
           {/* 耳朵 - 左 */}
           <g>
@@ -338,17 +420,60 @@ export default function Face3D({ makeupLayer = 0, className = '', showControls =
             )}
           </g>
 
-          {/* 鼻子 */}
+          {/* 鼻子 - 更清晰的立体感 */}
           <g>
+            {/* 鼻梁 */}
             <path
-              d={`M 100 120 L 100 ${120 + 35 * params.noseLength}`}
-              stroke="url(#noseHighlight)"
-              strokeWidth="8"
+              d={`M 100 118
+                  C 98 125, 97 135, 96 ${118 + 35 * params.noseLength}
+                  L 104 ${118 + 35 * params.noseLength}
+                  C 103 135, 102 125, 100 118`}
+              fill={skin.light}
+            />
+            {/* 鼻梁高光 */}
+            <path
+              d={`M 100 120 L 100 ${115 + 30 * params.noseLength}`}
+              stroke="rgba(255,255,255,0.5)"
+              strokeWidth="4"
               strokeLinecap="round"
             />
-            <ellipse cx="100" cy={123 + 35 * params.noseLength} rx="8" ry="5" fill={skin.medium} />
-            <path d={`M 92 ${125 + 35 * params.noseLength} Q 88 ${127 + 35 * params.noseLength}, 88 ${123 + 35 * params.noseLength}`} fill="none" stroke="rgba(0,0,0,0.08)" strokeWidth="2" />
-            <path d={`M 108 ${125 + 35 * params.noseLength} Q 112 ${127 + 35 * params.noseLength}, 112 ${123 + 35 * params.noseLength}`} fill="none" stroke="rgba(0,0,0,0.08)" strokeWidth="2" />
+            {/* 鼻梁侧影 - 左 */}
+            <path
+              d={`M 96 125 C 94 135, 93 145, 92 ${118 + 35 * params.noseLength}`}
+              fill="none"
+              stroke="rgba(0,0,0,0.1)"
+              strokeWidth="2"
+            />
+            {/* 鼻梁侧影 - 右 */}
+            <path
+              d={`M 104 125 C 106 135, 107 145, 108 ${118 + 35 * params.noseLength}`}
+              fill="none"
+              stroke="rgba(0,0,0,0.1)"
+              strokeWidth="2"
+            />
+            {/* 鼻头 */}
+            <ellipse cx="100" cy={120 + 38 * params.noseLength} rx="10" ry="7" fill={skin.medium} />
+            {/* 鼻头高光 */}
+            <ellipse cx="98" cy={118 + 38 * params.noseLength} rx="4" ry="3" fill="rgba(255,255,255,0.3)" />
+            {/* 鼻翼 - 左 */}
+            <ellipse cx="90" cy={122 + 38 * params.noseLength} rx="6" ry="5" fill={skin.medium} />
+            <path
+              d={`M 88 ${120 + 38 * params.noseLength} Q 85 ${124 + 38 * params.noseLength}, 88 ${126 + 38 * params.noseLength}`}
+              fill="none"
+              stroke="rgba(0,0,0,0.15)"
+              strokeWidth="1.5"
+            />
+            {/* 鼻翼 - 右 */}
+            <ellipse cx="110" cy={122 + 38 * params.noseLength} rx="6" ry="5" fill={skin.medium} />
+            <path
+              d={`M 112 ${120 + 38 * params.noseLength} Q 115 ${124 + 38 * params.noseLength}, 112 ${126 + 38 * params.noseLength}`}
+              fill="none"
+              stroke="rgba(0,0,0,0.15)"
+              strokeWidth="1.5"
+            />
+            {/* 鼻孔暗示 */}
+            <ellipse cx="95" cy={123 + 38 * params.noseLength} rx="2.5" ry="1.5" fill="rgba(0,0,0,0.15)" />
+            <ellipse cx="105" cy={123 + 38 * params.noseLength} rx="2.5" ry="1.5" fill="rgba(0,0,0,0.15)" />
           </g>
 
           {/* 腮红 */}
