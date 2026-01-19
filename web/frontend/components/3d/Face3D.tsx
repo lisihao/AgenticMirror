@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
 interface Face3DProps {
@@ -14,17 +14,7 @@ export default function Face3D({ makeupLayer = 0, className = '' }: Face3DProps)
   const containerRef = useRef<HTMLDivElement>(null);
   const lastPos = useRef({ x: 0, y: 0 });
 
-  // 自动旋转
-  useEffect(() => {
-    if (isDragging) return;
-    const interval = setInterval(() => {
-      setRotation((prev) => ({
-        x: prev.x,
-        y: prev.y + 0.3,
-      }));
-    }, 50);
-    return () => clearInterval(interval);
-  }, [isDragging]);
+  // 不自动旋转，保持静止
 
   // 拖动处理
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -176,6 +166,42 @@ export default function Face3D({ makeupLayer = 0, className = '' }: Face3DProps)
             ry="55"
             fill="#3d2a22"
           />
+
+          {/* 耳朵 */}
+          {/* 左耳 */}
+          <g>
+            <path
+              d="M 35 110
+                 C 25 100, 20 115, 22 130
+                 C 24 145, 30 150, 35 145
+                 C 32 140, 30 130, 32 120
+                 C 33 115, 35 112, 35 110"
+              fill={skin.medium}
+            />
+            <path
+              d="M 32 120 C 28 125, 28 135, 32 140"
+              fill="none"
+              stroke="rgba(0,0,0,0.1)"
+              strokeWidth="1.5"
+            />
+          </g>
+          {/* 右耳 */}
+          <g>
+            <path
+              d="M 165 110
+                 C 175 100, 180 115, 178 130
+                 C 176 145, 170 150, 165 145
+                 C 168 140, 170 130, 168 120
+                 C 167 115, 165 112, 165 110"
+              fill={skin.medium}
+            />
+            <path
+              d="M 168 120 C 172 125, 172 135, 168 140"
+              fill="none"
+              stroke="rgba(0,0,0,0.1)"
+              strokeWidth="1.5"
+            />
+          </g>
 
           {/* 面部主体 - 更精致的轮廓 */}
           <path
