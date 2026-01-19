@@ -90,7 +90,8 @@ const specs = [
     { label: '双目追踪', value: '48MP', desc: '比闺蜜更懂你的脸' },
     { label: '3D深感', value: '双目+ToF', desc: '连毛孔都看得清' },
     { label: '面部特征', value: '468点', desc: '比你更了解自己' },
-    { label: 'AI 大脑', value: '6 TOPS', desc: '秒懂你要的美' },
+    { label: '端侧大模型', value: '6 TOPS', desc: '离线也能变美' },
+    { label: '云端AI', value: 'GPT-4级', desc: '千亿参数懂你心' },
     { label: '智能云台', value: '<1°', desc: '怎么动都跟着你' },
     { label: '女神光', value: '2700-6500K', desc: '自带美颜补光' },
 ];
@@ -626,7 +627,7 @@ export default function LandingPage() {
                         </p>
                     </motion.div>
 
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
                         {specs.map((spec, index) => (
                             <TiltCard
                                 key={spec.label}
