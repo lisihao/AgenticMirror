@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
+import dynamic from 'next/dynamic';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -20,6 +21,16 @@ import {
   Play,
   MousePointer2,
 } from 'lucide-react';
+
+// 动态导入 3D 组件（避免 SSR 问题）
+const Face3D = dynamic(() => import('@/components/3d/Face3D'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full flex items-center justify-center">
+      <div className="text-pink-400 animate-pulse">加载 3D 模型...</div>
+    </div>
+  ),
+});
 
 // 核心技术列表
 const technologies = [
@@ -204,8 +215,58 @@ function FaceTouchDemo() {
   );
 }
 
-// 3DGS 渲染演示 - 高斯泼溅效果
+// 3DGS 渲染演示 - 真正的 3D 人脸渲染
 function GaussianSplattingDemo() {
+  const [layer, setLayer] = useState(0);
+  const layers = ['素颜', '底妆', '眼妆', '唇妆', '完整妆容'];
+
+  return (
+    <div className="relative w-full" style={{ height: '320px' }}>
+      {/* 3D 渲染区域 */}
+      <div className="absolute inset-0 rounded-2xl overflow-hidden bg-gradient-to-b from-gray-800 to-gray-900">
+        <Face3D makeupLayer={layer} />
+      </div>
+
+      {/* 图层选择器 */}
+      <div className="absolute bottom-3 left-0 right-0 z-10">
+        <div className="flex justify-center gap-1.5 mb-2">
+          {layers.map((l, i) => (
+            <motion.button
+              key={l}
+              onClick={() => setLayer(i)}
+              className={`px-2.5 py-1 text-xs rounded-full transition-all ${
+                layer === i
+                  ? 'bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-lg'
+                  : 'bg-black/50 text-gray-300 hover:bg-black/70 border border-white/20'
+              }`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {l}
+            </motion.button>
+          ))}
+        </div>
+      </div>
+
+      {/* 顶部信息 */}
+      <div className="absolute top-3 left-3 right-3 z-10 flex justify-between">
+        <div className="bg-black/50 px-2 py-1 rounded text-xs text-white flex items-center gap-1.5">
+          <motion.div className="w-1.5 h-1.5 rounded-full bg-green-400" animate={{ scale: [1, 1.3, 1] }} transition={{ duration: 1, repeat: Infinity }} />
+          3D 实时渲染
+        </div>
+        <div className="bg-black/50 px-2 py-1 rounded text-xs text-green-400 font-mono">60 FPS</div>
+      </div>
+
+      {/* 拖动提示 */}
+      <motion.div className="absolute bottom-12 left-1/2 -translate-x-1/2 text-xs text-gray-500" animate={{ opacity: [0.3, 0.6, 0.3] }} transition={{ duration: 2, repeat: Infinity }}>
+        拖动旋转模型
+      </motion.div>
+    </div>
+  );
+}
+
+// 旧版 SVG 备用（已弃用）
+function GaussianSplattingDemoOld() {
   const [layer, setLayer] = useState(0);
   const [isAnimating, setIsAnimating] = useState(true);
   const layers = ['素颜', '底妆', '眼妆', '唇妆', '完整妆容'];
