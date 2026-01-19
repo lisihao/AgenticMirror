@@ -414,6 +414,67 @@ export default function LandingPage() {
                     </div>
                 </div>
 
+                {/* 硬核技术规格 - 紧跟蜕变展示 */}
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.5 }}
+                    className="mt-16"
+                >
+                    <div className="text-center mb-8">
+                        <h3 className="text-2xl font-bold text-white mb-2">硬核黑科技加持</h3>
+                        <p className="text-gray-400">华为生态 · 麒麟芯片 · 盘古大模型</p>
+                    </div>
+
+                    <div className="grid grid-cols-4 md:grid-cols-8 gap-3">
+                        {specs.map((spec, index) => (
+                            <motion.div
+                                key={spec.label}
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ delay: 1.6 + index * 0.05 }}
+                                className="bg-white/5 backdrop-blur-sm rounded-xl p-3 text-center border border-white/10 hover:bg-white/10 transition-colors"
+                            >
+                                <div className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">
+                                    {spec.value}
+                                </div>
+                                <div className="text-xs text-white font-medium mt-1">
+                                    {spec.label}
+                                </div>
+                                <div className="text-xs text-gray-500 mt-0.5 hidden md:block">
+                                    {spec.desc}
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+
+                    {/* 技术亮点 */}
+                    <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+                        {[
+                            { icon: Zap, title: '麒麟旗舰芯片', desc: '端侧AI秒级响应' },
+                            { icon: Shield, title: 'HarmonyOS', desc: '鸿蒙生态互联' },
+                            { icon: TrendingUp, title: '越用越懂你', desc: 'AI持续进化' },
+                            { icon: Heart, title: '越用越美', desc: '专属变美方案' },
+                        ].map((item, i) => (
+                            <motion.div
+                                key={item.title}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 1.8 + i * 0.1 }}
+                                className="flex items-center gap-3 bg-white/5 backdrop-blur-sm rounded-xl p-3 border border-white/10"
+                            >
+                                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-pink-500/20 to-purple-500/20 flex items-center justify-center flex-shrink-0">
+                                    <item.icon className="w-5 h-5 text-pink-400" />
+                                </div>
+                                <div>
+                                    <div className="text-white font-medium text-sm">{item.title}</div>
+                                    <div className="text-gray-500 text-xs">{item.desc}</div>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </motion.div>
+
                 {/* 向下滚动提示 */}
                 <motion.div
                     className="absolute bottom-8 left-1/2 -translate-x-1/2"
@@ -602,85 +663,6 @@ export default function LandingPage() {
                                 <p className="text-gray-600">
                                     {step.description}
                                 </p>
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* Tech Specs Section */}
-            <section className="py-24 bg-gray-900 text-white relative overflow-hidden">
-                <ParallaxY speed={50} className="absolute -top-20 -left-20 w-80 h-80 bg-mirror-500/10 rounded-full blur-3xl" />
-                <ParallaxY speed={-30} className="absolute -bottom-20 -right-20 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl" />
-
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="text-center mb-16"
-                    >
-                        <h2 className="text-4xl font-bold mb-4">
-                            硬核技术规格
-                        </h2>
-                        <p className="text-xl text-gray-400">
-                            专业级硬件配置，为您提供卓越体验
-                        </p>
-                    </motion.div>
-
-                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
-                        {specs.map((spec, index) => (
-                            <TiltCard
-                                key={spec.label}
-                                maxTilt={15}
-                                glowColor="rgba(236, 72, 153, 0.2)"
-                            >
-                                <motion.div
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    whileInView={{ opacity: 1, scale: 1 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: index * 0.05 }}
-                                    className="bg-gray-800 rounded-2xl p-6 text-center hover:bg-gray-700 transition-colors border border-gray-700 h-full"
-                                >
-                                    <div className="text-2xl font-bold text-gradient mb-1">
-                                        {spec.value}
-                                    </div>
-                                    <div className="text-sm text-white font-medium mb-1">
-                                        {spec.label}
-                                    </div>
-                                    <div className="text-xs text-gray-500">
-                                        {spec.desc}
-                                    </div>
-                                </motion.div>
-                            </TiltCard>
-                        ))}
-                    </div>
-
-                    <div className="mt-16 grid md:grid-cols-4 gap-6">
-                        {[
-                            { icon: Zap, color: 'mirror', title: '麒麟旗舰芯片', desc: '华为自研NPU，端侧AI秒级响应' },
-                            { icon: Shield, color: 'accent', title: 'HarmonyOS 原生', desc: '鸿蒙生态无缝连接，万物互联' },
-                            { icon: TrendingUp, color: 'gold', title: '越用越懂你', desc: '学习你的喜好习惯，AI持续进化' },
-                            { icon: Heart, color: 'mirror', title: '越用越美', desc: '记录变美轨迹，定制专属方案' },
-                        ].map((item, i) => (
-                            <motion.div
-                                key={item.title}
-                                className="flex items-start gap-4"
-                                initial={{ opacity: 0, x: -20 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: i * 0.1 }}
-                            >
-                                <motion.div
-                                    className={`w-12 h-12 rounded-xl bg-${item.color}-500/20 flex items-center justify-center flex-shrink-0`}
-                                    whileHover={{ scale: 1.1, rotate: 10 }}
-                                >
-                                    <item.icon className={`w-6 h-6 text-${item.color}-400`} />
-                                </motion.div>
-                                <div>
-                                    <h3 className="font-bold mb-2">{item.title}</h3>
-                                    <p className="text-gray-400 text-sm">{item.desc}</p>
-                                </div>
                             </motion.div>
                         ))}
                     </div>
