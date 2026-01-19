@@ -31,48 +31,48 @@ import {
 const features = [
     {
         icon: Camera,
-        title: '一键诊断',
-        subtitle: '告别盲目护肤',
-        before: '每天照镜子不知道自己啥肤质',
-        after: '3秒精准定位问题，对症下药',
-        boost: '+35',
-        boostLabel: '护肤效率',
+        title: '3秒看透你',
+        subtitle: '比皮肤科还准',
+        before: '花几百块去医院测肤质',
+        after: '在家3秒出报告，省钱又省心',
+        boost: '+35%',
+        boostLabel: '护肤精准度',
         gradient: 'from-blue-500 to-cyan-500',
         glowColor: 'rgba(6, 182, 212, 0.3)',
-        emoji: '🔍',
+        emoji: '🔬',
     },
     {
         icon: Sparkles,
-        title: '手残党救星',
-        subtitle: 'AI手把手教学',
-        before: '看了100个教程还是画不好',
-        after: '跟着指引画，新手也能出门见人',
-        boost: '+40',
-        boostLabel: '妆容完成度',
+        title: '手残变大神',
+        subtitle: '从10分到40分',
+        before: '眼线画成毛毛虫，眉毛像蜡笔小新',
+        after: 'AI手把手带你飞，闺蜜都来问秘诀',
+        boost: '+300%',
+        boostLabel: '化妆技术',
         gradient: 'from-mirror-500 to-pink-500',
         glowColor: 'rgba(236, 72, 153, 0.3)',
-        emoji: '✨',
+        emoji: '💅',
     },
     {
         icon: Palette,
-        title: '专属变美方案',
-        subtitle: '千人千面定制',
-        before: '跟风买了一堆不适合自己的',
-        after: '每款推荐都是为你量身定制',
-        boost: '+30',
-        boostLabel: '产品匹配度',
+        title: '只买对的',
+        subtitle: '拒绝踩雷交学费',
+        before: '跟风买了一抽屉吃灰的口红',
+        after: 'AI帮你试色，买一支对一支',
+        boost: '0',
+        boostLabel: '踩雷次数',
         gradient: 'from-accent-500 to-purple-500',
         glowColor: 'rgba(168, 85, 247, 0.3)',
-        emoji: '💄',
+        emoji: '🎯',
     },
     {
         icon: ShoppingBag,
-        title: '省钱小助手',
-        subtitle: '智能比价补货',
-        before: '口红用完才发现忘了买',
-        after: '自动提醒+全网比价，省心省钱',
-        boost: '-30%',
-        boostLabel: '美妆开支',
+        title: '帮你省钱',
+        subtitle: '全网最低价追踪',
+        before: '原价买完第二天就打折',
+        after: '智能比价+降价提醒，月省500+',
+        boost: '¥500+',
+        boostLabel: '每月省下',
         gradient: 'from-gold-500 to-orange-500',
         glowColor: 'rgba(245, 158, 11, 0.3)',
         emoji: '💰',
@@ -87,38 +87,38 @@ const steps = [
 ];
 
 const specs = [
-    { label: '高清双目摄像头', value: '48MP', desc: '精准识别您的美貌' },
-    { label: '红外深度感知', value: '双目+ToF', desc: '立体捕捉面部轮廓' },
-    { label: '面部特征点', value: '468点', desc: '毫米级精准定位' },
-    { label: 'AI 算力', value: '6 TOPS', desc: '实时智能分析' },
-    { label: '高精度云台', value: '<1°', desc: '随时跟踪您的装扮' },
-    { label: '专业补光', value: '2700-6500K', desc: '还原真实肤色' },
+    { label: '双目追踪', value: '48MP', desc: '比闺蜜更懂你的脸' },
+    { label: '3D深感', value: '双目+ToF', desc: '连毛孔都看得清' },
+    { label: '面部特征', value: '468点', desc: '比你更了解自己' },
+    { label: 'AI 大脑', value: '6 TOPS', desc: '秒懂你要的美' },
+    { label: '智能云台', value: '<1°', desc: '怎么动都跟着你' },
+    { label: '女神光', value: '2700-6500K', desc: '自带美颜补光' },
 ];
 
 const testimonials = [
     {
         name: '糖糖',
-        role: '化妆小白 → 现在被夸',
+        role: '从路人甲到被搭讪',
         avatar: '🙋‍♀️',
-        content: '之前画眼线像毛毛虫，用了AI指导一周后，闺蜜问我是不是报班学化妆了哈哈哈！',
+        content: '用了一个月，前男友发来消息说我变漂亮了，我直接拉黑。现在追我的人排队，爽！',
         rating: 5,
-        tag: '新手逆袭',
+        tag: '逆袭女主',
     },
     {
         name: 'Coco',
-        role: '敏感肌 · 终于找到适合的',
+        role: '敏感肌终于不烂脸了',
         avatar: '👩',
-        content: '以前买护肤品全靠博主推荐，踩了无数坑。现在AI根据我的肤质推荐，皮肤真的稳定多了！',
+        content: '之前换季就烂脸，现在AI帮我选的护肤品，皮肤稳定得不像话。同事以为我打了水光针！',
         rating: 5,
-        tag: '敏感肌友好',
+        tag: '烂脸救星',
     },
     {
         name: '奶茶',
-        role: '省钱达人',
+        role: '每月多出500喝奶茶',
         avatar: '💁‍♀️',
-        content: '它会帮我比价！同款口红便宜了60块！每个月能省下好几百，够我喝奶茶了~',
+        content: '以前看啥买啥，现在AI帮我比价+试色，上个月省了800！够我天天喝一点点了哈哈',
         rating: 5,
-        tag: '省钱秘籍',
+        tag: '省钱鬼才',
     },
 ];
 
@@ -532,9 +532,9 @@ export default function LandingPage() {
                         className="mt-12 flex flex-wrap justify-center gap-4"
                     >
                         {[
-                            { text: '"用了一周，同事问我是不是偷偷做医美了"', author: '@小甜甜' },
-                            { text: '"手残党终于画出了完整的眼妆！"', author: '@化妆小白' },
-                            { text: '"省下的钱够买两支口红了"', author: '@精打细算的Lisa' },
+                            { text: '"老公说我越来越好看了，嘿嘿"', author: '@已婚少女' },
+                            { text: '"相亲成功率从0变成100%"', author: '@脱单小达人' },
+                            { text: '"省下的钱买了个包，真香"', author: '@精致省钱女孩' },
                         ].map((quote, i) => (
                             <motion.div
                                 key={i}
@@ -793,13 +793,13 @@ export default function LandingPage() {
                             ✨
                         </motion.div>
                         <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                            今天开始，做更美的自己
+                            再不变美，前任都结婚了
                         </h2>
                         <p className="text-xl text-white/90 mb-4">
-                            别再羡慕别人了，你也可以！
+                            50000+ 姐妹已经偷偷变美了，你还在等什么？
                         </p>
                         <p className="text-lg text-white/70 mb-10">
-                            立即体验，3分钟获取你的专属变美方案 💖
+                            现在体验，让下一个被夸的人是你 💖
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
                             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
