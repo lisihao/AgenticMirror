@@ -1,314 +1,351 @@
 'use client';
 
-import { useRef, useState, useMemo } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Float, MeshDistortMaterial, Sphere, Environment } from '@react-three/drei';
-import * as THREE from 'three';
+import { useRef, useState, useMemo, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
-// 高斯泼溅粒子组件
-function GaussianParticles({
-  count = 500,
-  layer = 0,
-  color = '#ffccaa'
-}: {
-  count?: number;
-  layer?: number;
-  color?: string;
-}) {
-  const mesh = useRef<THREE.Points>(null);
-  const light = useRef<THREE.PointLight>(null);
-
-  // 生成面部形状的粒子位置
-  const [positions, sizes, colors] = useMemo(() => {
-    const pos = new Float32Array(count * 3);
-    const size = new Float32Array(count);
-    const col = new Float32Array(count * 3);
-
-    for (let i = 0; i < count; i++) {
-      // 创建面部椭球形状的分布
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(2 * Math.random() - 1);
-
-      // 面部椭球参数 - 稍扁的椭球
-      const rx = 1.0 + Math.random() * 0.1;
-      const ry = 1.3 + Math.random() * 0.1;
-      const rz = 0.8 + Math.random() * 0.1;
-
-      const r = 0.8 + Math.random() * 0.2;
-
-      pos[i * 3] = r * rx * Math.sin(phi) * Math.cos(theta);
-      pos[i * 3 + 1] = r * ry * Math.sin(phi) * Math.sin(theta) - 0.2;
-      pos[i * 3 + 2] = r * rz * Math.cos(phi);
-
-      // 粒子大小
-      size[i] = 0.02 + Math.random() * 0.04;
-
-      // 颜色 - 基于层级
-      const baseColor = new THREE.Color(color);
-      col[i * 3] = baseColor.r + (Math.random() - 0.5) * 0.1;
-      col[i * 3 + 1] = baseColor.g + (Math.random() - 0.5) * 0.1;
-      col[i * 3 + 2] = baseColor.b + (Math.random() - 0.5) * 0.1;
-    }
-
-    return [pos, size, col];
-  }, [count, color]);
-
-  useFrame((state) => {
-    if (mesh.current) {
-      mesh.current.rotation.y = state.clock.elapsedTime * 0.1;
-    }
-  });
-
-  return (
-    <points ref={mesh}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          count={count}
-          array={positions}
-          itemSize={3}
-        />
-        <bufferAttribute
-          attach="attributes-color"
-          count={count}
-          array={colors}
-          itemSize={3}
-        />
-      </bufferGeometry>
-      <pointsMaterial
-        size={0.05}
-        vertexColors
-        transparent
-        opacity={0.8}
-        sizeAttenuation
-        blending={THREE.AdditiveBlending}
-      />
-    </points>
-  );
-}
-
-// 3D 面部网格
-function FaceMesh({ makeupLayer = 0 }: { makeupLayer?: number }) {
-  const meshRef = useRef<THREE.Mesh>(null);
-
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.3) * 0.3;
-      meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.2) * 0.1;
-    }
-  });
-
-  // 根据化妆层级调整颜色
-  const skinColor = useMemo(() => {
-    const colors = [
-      '#ffccaa', // 素颜
-      '#ffe0cc', // 底妆 - 更均匀的肤色
-      '#ffd4cc', // 眼妆
-      '#ffcccc', // 唇妆
-      '#ffd0c8', // 完整
-    ];
-    return colors[makeupLayer] || colors[0];
-  }, [makeupLayer]);
-
-  return (
-    <group>
-      {/* 主面部 - 使用扭曲材质模拟柔和的高斯效果 */}
-      <mesh ref={meshRef} scale={[1, 1.3, 0.9]}>
-        <sphereGeometry args={[1, 64, 64]} />
-        <MeshDistortMaterial
-          color={skinColor}
-          speed={2}
-          distort={0.1}
-          radius={1}
-          transparent
-          opacity={0.9}
-        />
-      </mesh>
-
-      {/* 眼妆层 */}
-      {makeupLayer >= 2 && (
-        <>
-          {/* 左眼影 */}
-          <mesh position={[-0.35, 0.2, 0.75]} scale={[0.25, 0.12, 0.1]}>
-            <sphereGeometry args={[1, 32, 32]} />
-            <meshStandardMaterial
-              color="#c084fc"
-              transparent
-              opacity={0.6}
-              roughness={0.8}
-            />
-          </mesh>
-          {/* 右眼影 */}
-          <mesh position={[0.35, 0.2, 0.75]} scale={[0.25, 0.12, 0.1]}>
-            <sphereGeometry args={[1, 32, 32]} />
-            <meshStandardMaterial
-              color="#c084fc"
-              transparent
-              opacity={0.6}
-              roughness={0.8}
-            />
-          </mesh>
-          {/* 左腮红 */}
-          <mesh position={[-0.55, -0.15, 0.6]} scale={[0.3, 0.2, 0.1]}>
-            <sphereGeometry args={[1, 32, 32]} />
-            <meshStandardMaterial
-              color="#f472b6"
-              transparent
-              opacity={0.4}
-              roughness={0.9}
-            />
-          </mesh>
-          {/* 右腮红 */}
-          <mesh position={[0.55, -0.15, 0.6]} scale={[0.3, 0.2, 0.1]}>
-            <sphereGeometry args={[1, 32, 32]} />
-            <meshStandardMaterial
-              color="#f472b6"
-              transparent
-              opacity={0.4}
-              roughness={0.9}
-            />
-          </mesh>
-        </>
-      )}
-
-      {/* 唇妆层 */}
-      {makeupLayer >= 3 && (
-        <mesh position={[0, -0.45, 0.8]} scale={[0.25, 0.1, 0.1]}>
-          <sphereGeometry args={[1, 32, 32]} />
-          <meshStandardMaterial
-            color="#e11d48"
-            transparent
-            opacity={0.8}
-            roughness={0.5}
-            metalness={0.2}
-          />
-        </mesh>
-      )}
-
-      {/* 眉毛 */}
-      <mesh position={[-0.35, 0.45, 0.7]} rotation={[0, 0, 0.2]} scale={[0.2, 0.03, 0.05]}>
-        <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial color="#5c4033" />
-      </mesh>
-      <mesh position={[0.35, 0.45, 0.7]} rotation={[0, 0, -0.2]} scale={[0.2, 0.03, 0.05]}>
-        <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial color="#5c4033" />
-      </mesh>
-
-      {/* 眼睛 */}
-      <mesh position={[-0.35, 0.2, 0.85]} scale={[0.12, 0.08, 0.05]}>
-        <sphereGeometry args={[1, 32, 32]} />
-        <meshStandardMaterial color="#ffffff" />
-      </mesh>
-      <mesh position={[-0.35, 0.2, 0.92]} scale={[0.06, 0.06, 0.02]}>
-        <sphereGeometry args={[1, 32, 32]} />
-        <meshStandardMaterial color="#3b2f2f" />
-      </mesh>
-      <mesh position={[0.35, 0.2, 0.85]} scale={[0.12, 0.08, 0.05]}>
-        <sphereGeometry args={[1, 32, 32]} />
-        <meshStandardMaterial color="#ffffff" />
-      </mesh>
-      <mesh position={[0.35, 0.2, 0.92]} scale={[0.06, 0.06, 0.02]}>
-        <sphereGeometry args={[1, 32, 32]} />
-        <meshStandardMaterial color="#3b2f2f" />
-      </mesh>
-
-      {/* 鼻子 */}
-      <mesh position={[0, 0, 0.95]} scale={[0.08, 0.15, 0.1]}>
-        <sphereGeometry args={[1, 32, 32]} />
-        <meshStandardMaterial color={skinColor} />
-      </mesh>
-
-      {/* 嘴唇基础 */}
-      <mesh position={[0, -0.45, 0.78]} scale={[0.2, 0.08, 0.08]}>
-        <sphereGeometry args={[1, 32, 32]} />
-        <meshStandardMaterial color={makeupLayer >= 3 ? '#e11d48' : '#cc8888'} />
-      </mesh>
-    </group>
-  );
-}
-
-// 环绕的高斯粒子效果
-function SurroundingParticles({ layer = 0 }: { layer?: number }) {
-  const groupRef = useRef<THREE.Group>(null);
-
-  useFrame((state) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y = state.clock.elapsedTime * 0.2;
-    }
-  });
-
-  const particleColors = ['#ec4899', '#a855f7', '#6366f1', '#f472b6', '#fbbf24'];
-
-  return (
-    <group ref={groupRef}>
-      {Array.from({ length: 50 }).map((_, i) => {
-        const angle = (i / 50) * Math.PI * 2;
-        const radius = 2 + Math.sin(i * 0.5) * 0.3;
-        const y = (Math.random() - 0.5) * 2;
-        return (
-          <Float key={i} speed={2} rotationIntensity={0} floatIntensity={1}>
-            <mesh
-              position={[
-                Math.cos(angle) * radius,
-                y,
-                Math.sin(angle) * radius,
-              ]}
-            >
-              <sphereGeometry args={[0.03 + Math.random() * 0.02, 16, 16]} />
-              <meshStandardMaterial
-                color={particleColors[i % particleColors.length]}
-                emissive={particleColors[i % particleColors.length]}
-                emissiveIntensity={0.5}
-                transparent
-                opacity={0.7}
-              />
-            </mesh>
-          </Float>
-        );
-      })}
-    </group>
-  );
-}
-
-// 主组件
+// 简化版 3D 面部渲染 - 使用 CSS 3D 变换
 interface Face3DProps {
   makeupLayer?: number;
   className?: string;
 }
 
 export default function Face3D({ makeupLayer = 0, className = '' }: Face3DProps) {
-  return (
-    <div className={`w-full h-full ${className}`}>
-      <Canvas
-        camera={{ position: [0, 0, 4], fov: 45 }}
-        gl={{ antialias: true, alpha: true }}
-      >
-        {/* 环境光 */}
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[5, 5, 5]} intensity={1} />
-        <pointLight position={[-5, -5, -5]} intensity={0.5} color="#ec4899" />
-        <pointLight position={[5, -5, 5]} intensity={0.3} color="#a855f7" />
+  const [rotation, setRotation] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const lastPos = useRef({ x: 0, y: 0 });
 
-        {/* 3D 面部 */}
-        <FaceMesh makeupLayer={makeupLayer} />
+  // 自动旋转
+  useEffect(() => {
+    if (isDragging) return;
+    const interval = setInterval(() => {
+      setRotation((prev) => ({
+        x: prev.x,
+        y: prev.y + 0.5,
+      }));
+    }, 50);
+    return () => clearInterval(interval);
+  }, [isDragging]);
+
+  // 拖动处理
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    lastPos.current = { x: e.clientX, y: e.clientY };
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    const deltaX = e.clientX - lastPos.current.x;
+    const deltaY = e.clientY - lastPos.current.y;
+    setRotation((prev) => ({
+      x: Math.max(-30, Math.min(30, prev.x - deltaY * 0.5)),
+      y: prev.y + deltaX * 0.5,
+    }));
+    lastPos.current = { x: e.clientX, y: e.clientY };
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  // 颜色配置
+  const skinColors = ['#ffd5c8', '#ffe0d0', '#ffd8cc', '#ffd0c0', '#ffd4c8'];
+  const skinColor = skinColors[makeupLayer] || skinColors[0];
+
+  return (
+    <div
+      ref={containerRef}
+      className={`w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing ${className}`}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
+      style={{ perspective: '800px' }}
+    >
+      {/* 3D 场景容器 */}
+      <div
+        className="relative"
+        style={{
+          width: '200px',
+          height: '260px',
+          transformStyle: 'preserve-3d',
+          transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
+          transition: isDragging ? 'none' : 'transform 0.1s ease-out',
+        }}
+      >
+        {/* 主面部 */}
+        <div
+          className="absolute inset-0 rounded-[50%] shadow-2xl"
+          style={{
+            background: `radial-gradient(ellipse at 40% 30%, ${skinColor}, #e8b8a8)`,
+            transform: 'translateZ(20px)',
+            boxShadow: `
+              inset -20px -20px 40px rgba(0,0,0,0.1),
+              inset 20px 20px 40px rgba(255,255,255,0.3),
+              0 20px 60px rgba(0,0,0,0.3)
+            `,
+          }}
+        />
+
+        {/* 底妆效果 - 光泽层 */}
+        {makeupLayer >= 1 && (
+          <motion.div
+            className="absolute inset-0 rounded-[50%]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.4 }}
+            style={{
+              background: 'radial-gradient(ellipse at 35% 25%, rgba(255,255,255,0.6), transparent 50%)',
+              transform: 'translateZ(22px)',
+            }}
+          />
+        )}
+
+        {/* 眉毛 */}
+        <div
+          className="absolute"
+          style={{
+            top: '28%',
+            left: '20%',
+            width: '22%',
+            height: '4%',
+            background: 'linear-gradient(90deg, transparent, #5c4033 20%, #5c4033 80%, transparent)',
+            borderRadius: '50%',
+            transform: 'translateZ(25px) rotate(-5deg)',
+          }}
+        />
+        <div
+          className="absolute"
+          style={{
+            top: '28%',
+            right: '20%',
+            width: '22%',
+            height: '4%',
+            background: 'linear-gradient(90deg, transparent, #5c4033 20%, #5c4033 80%, transparent)',
+            borderRadius: '50%',
+            transform: 'translateZ(25px) rotate(5deg)',
+          }}
+        />
+
+        {/* 眼睛 */}
+        <div
+          className="absolute bg-white rounded-[50%] shadow-inner"
+          style={{
+            top: '36%',
+            left: '22%',
+            width: '18%',
+            height: '10%',
+            transform: 'translateZ(28px)',
+          }}
+        >
+          {/* 眼珠 */}
+          <div
+            className="absolute bg-gradient-to-br from-gray-800 to-gray-900 rounded-full"
+            style={{
+              top: '20%',
+              left: '35%',
+              width: '35%',
+              height: '60%',
+            }}
+          >
+            {/* 高光 */}
+            <div className="absolute top-1 left-1 w-2 h-2 bg-white rounded-full opacity-80" />
+          </div>
+        </div>
+        <div
+          className="absolute bg-white rounded-[50%] shadow-inner"
+          style={{
+            top: '36%',
+            right: '22%',
+            width: '18%',
+            height: '10%',
+            transform: 'translateZ(28px)',
+          }}
+        >
+          <div
+            className="absolute bg-gradient-to-br from-gray-800 to-gray-900 rounded-full"
+            style={{
+              top: '20%',
+              left: '35%',
+              width: '35%',
+              height: '60%',
+            }}
+          >
+            <div className="absolute top-1 left-1 w-2 h-2 bg-white rounded-full opacity-80" />
+          </div>
+        </div>
+
+        {/* 眼影 */}
+        {makeupLayer >= 2 && (
+          <>
+            <motion.div
+              className="absolute rounded-[50%]"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 0.6, scale: 1 }}
+              style={{
+                top: '32%',
+                left: '18%',
+                width: '24%',
+                height: '12%',
+                background: 'radial-gradient(ellipse, rgba(168, 85, 247, 0.7), transparent 70%)',
+                transform: 'translateZ(26px)',
+                filter: 'blur(3px)',
+              }}
+            />
+            <motion.div
+              className="absolute rounded-[50%]"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 0.6, scale: 1 }}
+              style={{
+                top: '32%',
+                right: '18%',
+                width: '24%',
+                height: '12%',
+                background: 'radial-gradient(ellipse, rgba(168, 85, 247, 0.7), transparent 70%)',
+                transform: 'translateZ(26px)',
+                filter: 'blur(3px)',
+              }}
+            />
+            {/* 腮红 */}
+            <motion.div
+              className="absolute rounded-full"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 0.5, scale: 1 }}
+              style={{
+                top: '50%',
+                left: '8%',
+                width: '25%',
+                height: '18%',
+                background: 'radial-gradient(ellipse, rgba(244, 114, 182, 0.6), transparent 70%)',
+                transform: 'translateZ(24px)',
+                filter: 'blur(8px)',
+              }}
+            />
+            <motion.div
+              className="absolute rounded-full"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 0.5, scale: 1 }}
+              style={{
+                top: '50%',
+                right: '8%',
+                width: '25%',
+                height: '18%',
+                background: 'radial-gradient(ellipse, rgba(244, 114, 182, 0.6), transparent 70%)',
+                transform: 'translateZ(24px)',
+                filter: 'blur(8px)',
+              }}
+            />
+          </>
+        )}
+
+        {/* 鼻子 */}
+        <div
+          className="absolute"
+          style={{
+            top: '42%',
+            left: '50%',
+            width: '12%',
+            height: '22%',
+            transform: 'translateX(-50%) translateZ(35px)',
+            background: `linear-gradient(180deg, transparent, ${skinColor} 30%, ${skinColor})`,
+            borderRadius: '0 0 50% 50%',
+            boxShadow: '-5px 0 10px rgba(0,0,0,0.05), 5px 0 10px rgba(0,0,0,0.05)',
+          }}
+        />
+
+        {/* 嘴唇 */}
+        <div
+          className="absolute"
+          style={{
+            top: '72%',
+            left: '50%',
+            width: '28%',
+            height: '10%',
+            transform: 'translateX(-50%) translateZ(28px)',
+          }}
+        >
+          {/* 上唇 */}
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: '10%',
+              width: '80%',
+              height: '45%',
+              background: makeupLayer >= 3
+                ? 'linear-gradient(180deg, #dc2626, #ef4444)'
+                : 'linear-gradient(180deg, #d4a5a5, #c99090)',
+              borderRadius: '50% 50% 0 0',
+              clipPath: 'polygon(0 100%, 50% 0, 100% 100%)',
+            }}
+          />
+          {/* 下唇 */}
+          <motion.div
+            initial={makeupLayer >= 3 ? { background: '#d4a5a5' } : {}}
+            animate={makeupLayer >= 3 ? { background: '#e11d48' } : {}}
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              left: '5%',
+              width: '90%',
+              height: '60%',
+              background: makeupLayer >= 3
+                ? 'linear-gradient(180deg, #ef4444, #dc2626)'
+                : 'linear-gradient(180deg, #c99090, #b88080)',
+              borderRadius: '0 0 50% 50%',
+              boxShadow: makeupLayer >= 3 ? '0 2px 10px rgba(220, 38, 38, 0.5)' : 'none',
+            }}
+          />
+          {/* 唇部高光 */}
+          {makeupLayer >= 3 && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.6 }}
+              className="absolute"
+              style={{
+                bottom: '20%',
+                left: '30%',
+                width: '40%',
+                height: '30%',
+                background: 'linear-gradient(180deg, rgba(255,255,255,0.4), transparent)',
+                borderRadius: '50%',
+              }}
+            />
+          )}
+        </div>
 
         {/* 高斯粒子效果 */}
-        <GaussianParticles count={300} layer={makeupLayer} />
-
-        {/* 环绕粒子 */}
-        <SurroundingParticles layer={makeupLayer} />
-
-        {/* 轨道控制 */}
-        <OrbitControls
-          enableZoom={false}
-          enablePan={false}
-          minPolarAngle={Math.PI / 3}
-          maxPolarAngle={Math.PI / 1.5}
-          autoRotate
-          autoRotateSpeed={1}
-        />
-      </Canvas>
+        {Array.from({ length: 20 }).map((_, i) => {
+          const angle = (i / 20) * Math.PI * 2;
+          const radius = 130 + Math.sin(i * 2) * 20;
+          const x = Math.cos(angle) * radius;
+          const y = Math.sin(angle) * radius;
+          const colors = ['#ec4899', '#a855f7', '#6366f1', '#f472b6'];
+          return (
+            <motion.div
+              key={i}
+              className="absolute rounded-full"
+              style={{
+                width: 6 + Math.random() * 6,
+                height: 6 + Math.random() * 6,
+                left: `calc(50% + ${x}px)`,
+                top: `calc(50% + ${y}px)`,
+                background: colors[i % colors.length],
+                filter: 'blur(2px)',
+                transform: `translateZ(${-20 + Math.random() * 40}px)`,
+              }}
+              animate={{
+                opacity: [0.3, 0.7, 0.3],
+                scale: [1, 1.2, 1],
+              }}
+              transition={{
+                duration: 2 + Math.random(),
+                repeat: Infinity,
+                delay: i * 0.1,
+              }}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }
