@@ -53,13 +53,13 @@ const differentiationFeatures = [
     id: 'microface',
     icon: Box,
     title: 'MicroFace 3D',
-    subtitle: '微米级 3D 建模',
+    subtitle: '亚毫米级 3D 建模',
     tagline: '50,000点精准捕捉每个细节',
-    description: '结构光 + 双目立体视觉，0.05mm 精度重建面部三维结构，精确到毛孔级别的皱纹深度测量。',
+    description: '结构光 + 双目立体视觉，亚毫米级精度重建面部三维结构，毛孔级可视化与高相关性美容指标评估。',
     barrierLevel: 5,
     features: [
       { label: '投射点数', value: '50,000+', desc: 'DOE 衍射光学' },
-      { label: '深度精度', value: '0.05mm', desc: '近距离测量' },
+      { label: '深度精度', value: '0.2-0.5mm', desc: '亚毫米级' },
       { label: '帧率', value: '30fps', desc: '实时追踪' },
       { label: '应用', value: '皱纹/轮廓/AR', desc: '多场景适配' },
     ],
@@ -450,7 +450,7 @@ function MicroFace3DDemo() {
       {/* 参数信息 */}
       <div className="absolute top-4 right-4 bg-black/50 px-2 py-1 rounded text-xs">
         <div className="text-cyan-400">50,000+ 点</div>
-        <div className="text-gray-500">0.05mm 精度</div>
+        <div className="text-gray-500">亚毫米级精度</div>
       </div>
     </div>
   );
@@ -1086,7 +1086,7 @@ export default function DifferentiationPage() {
                         <Box className="w-4 h-4 text-pink-400" />
                         <div>
                           <div className="text-white font-medium">MicroFace 3D</div>
-                          <div className="text-gray-500 text-xs">微米级3D建模</div>
+                          <div className="text-gray-500 text-xs">亚毫米级3D建模</div>
                         </div>
                       </div>
                     </td>
