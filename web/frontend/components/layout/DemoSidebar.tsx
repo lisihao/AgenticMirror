@@ -24,6 +24,8 @@ import {
     ShoppingCart,
     ClipboardList,
     Brain,
+    Target,
+    Cpu,
 } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 import { useCart } from '@/contexts/CartContext';
@@ -42,6 +44,20 @@ const menuItems = [
         labelEn: 'Companion',
         href: '/demo/companion',
         icon: Heart,
+        highlight: true,
+    },
+    {
+        label: '核心技术',
+        labelEn: 'Technology',
+        href: '/demo/technology',
+        icon: Cpu,
+        highlight: true,
+    },
+    {
+        label: '差异化竞争力',
+        labelEn: 'Differentiation',
+        href: '/demo/differentiation',
+        icon: Target,
         highlight: true,
     },
     {
