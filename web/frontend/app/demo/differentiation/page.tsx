@@ -113,20 +113,20 @@ const differentiationFeatures = [
     id: 'beautygenome',
     icon: Dna,
     title: 'Beauty Genome',
-    subtitle: '个性化美妆基因',
-    tagline: '128 维向量定义你的美',
-    description: '构建 128 维面部特征向量空间，结合偏好学习，生成独一无二的"美妆基因"，实现真正的千人千面。',
+    subtitle: '美妆偏好表征系统',
+    tagline: '用户×脸×场景 → 妆容偏好向量',
+    description: '基于认知科学的偏好学习框架：美感存在个体差异与文化差异，我们学习的是"你喜欢什么"，而非"什么是客观美"。',
     barrierLevel: 5,
     features: [
-      { label: '特征维度', value: '128D', desc: '形态+皮肤+色彩+偏好' },
-      { label: '形态特征', value: '32D', desc: '脸型/五官/轮廓' },
-      { label: '皮肤特征', value: '32D', desc: '肤质/肤色/问题' },
-      { label: '偏好特征', value: '32D', desc: '风格/品牌/价格' },
+      { label: 'Face Rep', value: '48D', desc: '面部结构/肤色/关键区域' },
+      { label: 'Style Rep', value: '48D', desc: '妆容参数/色相/风格' },
+      { label: 'Preference', value: '32D', desc: 'Pairwise偏好学习' },
+      { label: '训练方式', value: 'A/B对比', desc: '比打分更稳定' },
     ],
     competitors: [
-      { name: '问卷推荐', support: 'partial', note: '主观输入' },
-      { name: 'AI 滤镜', support: 'no', note: '无个性化' },
-      { name: '柜姐推荐', support: 'partial', note: '经验驱动' },
+      { name: '问卷推荐', support: 'partial', note: '静态规则' },
+      { name: 'AI 滤镜', support: 'no', note: '无偏好学习' },
+      { name: '柜姐推荐', support: 'partial', note: '无法量化' },
     ],
   },
   {
@@ -456,103 +456,173 @@ function MicroFace3DDemo() {
   );
 }
 
-// Beauty Genome 演示
+// Beauty Genome 演示 - 三部分偏好学习架构
 function BeautyGenomeDemo() {
-  const [hoveredDim, setHoveredDim] = useState<number | null>(null);
+  const [activePhase, setActivePhase] = useState<'face' | 'style' | 'preference'>('face');
+  const [pairSelection, setPairSelection] = useState<'A' | 'B' | null>(null);
 
-  const dimensions = [
-    { name: '脸型', value: 0.75, color: '#ec4899' },
-    { name: '眼型', value: 0.6, color: '#f472b6' },
-    { name: '肤质', value: 0.85, color: '#a78bfa' },
-    { name: '肤色', value: 0.7, color: '#818cf8' },
-    { name: '偏好', value: 0.9, color: '#22d3ee' },
-    { name: '风格', value: 0.55, color: '#34d399' },
+  const phases = [
+    { id: 'face', label: 'Face Rep', dim: '48D', color: '#ec4899' },
+    { id: 'style', label: 'Style Rep', dim: '48D', color: '#8b5cf6' },
+    { id: 'preference', label: 'Preference', dim: '32D', color: '#22d3ee' },
   ];
 
+  const faceFeatures = ['脸型轮廓', '眼部结构', '唇部特征', '眉形', '肤色', '肤质'];
+  const styleFeatures = ['底妆质感', '遮瑕强度', '色相风格', '眼影系', '唇色域', '眉形'];
+
   return (
-    <div className="relative h-80">
-      {/* 雷达图 */}
-      <svg viewBox="0 0 200 200" className="w-full h-full">
-        {/* 背景网格 */}
-        {[0.2, 0.4, 0.6, 0.8, 1].map((r, i) => (
-          <polygon
-            key={i}
-            points={dimensions.map((_, j) => {
-              const angle = (j / dimensions.length) * Math.PI * 2 - Math.PI / 2;
-              return `${100 + Math.cos(angle) * 70 * r},${100 + Math.sin(angle) * 70 * r}`;
-            }).join(' ')}
-            fill="none"
-            stroke="rgba(255,255,255,0.1)"
-            strokeWidth="0.5"
-          />
+    <div className="relative h-80 flex flex-col">
+      {/* 三部分架构图 */}
+      <div className="flex items-center justify-center gap-2 mb-4">
+        {phases.map((phase, i) => (
+          <React.Fragment key={phase.id}>
+            <motion.button
+              onClick={() => setActivePhase(phase.id as typeof activePhase)}
+              className={`px-3 py-2 rounded-lg text-xs font-medium transition-all ${
+                activePhase === phase.id
+                  ? 'bg-gradient-to-r from-pink-500/20 to-purple-500/20 border border-pink-500/50'
+                  : 'bg-gray-800/50 border border-gray-700 hover:border-gray-600'
+              }`}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <div className="text-white">{phase.label}</div>
+              <div className="text-gray-400 text-[10px]">{phase.dim}</div>
+            </motion.button>
+            {i < phases.length - 1 && (
+              <div className="text-gray-600">→</div>
+            )}
+          </React.Fragment>
         ))}
+      </div>
 
-        {/* 数据多边形 */}
-        <motion.polygon
-          points={dimensions.map((d, j) => {
-            const angle = (j / dimensions.length) * Math.PI * 2 - Math.PI / 2;
-            return `${100 + Math.cos(angle) * 70 * d.value},${100 + Math.sin(angle) * 70 * d.value}`;
-          }).join(' ')}
-          fill="url(#genomeGradient)"
-          stroke="#ec4899"
-          strokeWidth="1"
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 0.6, scale: 1 }}
-          transition={{ duration: 0.5 }}
-        />
+      {/* 动态内容区 */}
+      <div className="flex-1 relative">
+        <AnimatePresence mode="wait">
+          {activePhase === 'face' && (
+            <motion.div
+              key="face"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              className="absolute inset-0"
+            >
+              <div className="text-center mb-3">
+                <div className="text-pink-400 text-xs font-medium">Face Representation</div>
+                <div className="text-gray-500 text-[10px]">面部结构 + 肤色质感 + 关键区域</div>
+              </div>
+              <div className="grid grid-cols-3 gap-2">
+                {faceFeatures.map((f, i) => (
+                  <motion.div
+                    key={f}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.05 }}
+                    className="bg-pink-500/10 border border-pink-500/30 rounded-lg p-2 text-center"
+                  >
+                    <div className="text-white text-xs">{f}</div>
+                    <div className="text-pink-400 text-[10px]">8D</div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          )}
 
-        {/* 渐变 */}
-        <defs>
-          <radialGradient id="genomeGradient">
-            <stop offset="0%" stopColor="#ec4899" stopOpacity="0.4" />
-            <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.1" />
-          </radialGradient>
-        </defs>
+          {activePhase === 'style' && (
+            <motion.div
+              key="style"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              className="absolute inset-0"
+            >
+              <div className="text-center mb-3">
+                <div className="text-purple-400 text-xs font-medium">Style/Makeup Representation</div>
+                <div className="text-gray-500 text-[10px]">妆容参数向量 · 行业标准表征</div>
+              </div>
+              <div className="grid grid-cols-3 gap-2">
+                {styleFeatures.map((f, i) => (
+                  <motion.div
+                    key={f}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.05 }}
+                    className="bg-purple-500/10 border border-purple-500/30 rounded-lg p-2 text-center"
+                  >
+                    <div className="text-white text-xs">{f}</div>
+                    <div className="text-purple-400 text-[10px]">8D</div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          )}
 
-        {/* 数据点 */}
-        {dimensions.map((d, j) => {
-          const angle = (j / dimensions.length) * Math.PI * 2 - Math.PI / 2;
-          const x = 100 + Math.cos(angle) * 70 * d.value;
-          const y = 100 + Math.sin(angle) * 70 * d.value;
-          const labelX = 100 + Math.cos(angle) * 90;
-          const labelY = 100 + Math.sin(angle) * 90;
+          {activePhase === 'preference' && (
+            <motion.div
+              key="preference"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              className="absolute inset-0"
+            >
+              <div className="text-center mb-3">
+                <div className="text-cyan-400 text-xs font-medium">Preference Learning</div>
+                <div className="text-gray-500 text-[10px]">Pairwise A/B 对比 · 比打分更稳定</div>
+              </div>
+              {/* A/B 选择演示 */}
+              <div className="flex items-center justify-center gap-4">
+                <motion.button
+                  onClick={() => setPairSelection('A')}
+                  className={`w-24 h-28 rounded-xl border-2 flex flex-col items-center justify-center transition-all ${
+                    pairSelection === 'A'
+                      ? 'border-cyan-400 bg-cyan-500/20'
+                      : 'border-gray-600 bg-gray-800/50 hover:border-gray-500'
+                  }`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <div className="text-2xl mb-1">💄</div>
+                  <div className="text-white text-xs">妆容 A</div>
+                  <div className="text-gray-400 text-[10px]">自然裸妆</div>
+                </motion.button>
+                <div className="text-gray-500 text-xs">vs</div>
+                <motion.button
+                  onClick={() => setPairSelection('B')}
+                  className={`w-24 h-28 rounded-xl border-2 flex flex-col items-center justify-center transition-all ${
+                    pairSelection === 'B'
+                      ? 'border-cyan-400 bg-cyan-500/20'
+                      : 'border-gray-600 bg-gray-800/50 hover:border-gray-500'
+                  }`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <div className="text-2xl mb-1">💋</div>
+                  <div className="text-white text-xs">妆容 B</div>
+                  <div className="text-gray-400 text-[10px]">精致浓妆</div>
+                </motion.button>
+              </div>
+              {pairSelection && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-center mt-3"
+                >
+                  <div className="text-cyan-400 text-xs">✓ 偏好记录: {pairSelection === 'A' ? '自然风格' : '精致风格'}</div>
+                  <div className="text-gray-500 text-[10px]">持续学习优化偏好向量</div>
+                </motion.div>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
 
-          return (
-            <g key={j} onMouseEnter={() => setHoveredDim(j)} onMouseLeave={() => setHoveredDim(null)}>
-              <motion.circle
-                cx={x}
-                cy={y}
-                r={hoveredDim === j ? 6 : 4}
-                fill={d.color}
-                animate={{ scale: hoveredDim === j ? 1.2 : 1 }}
-              />
-              <text x={labelX} y={labelY} textAnchor="middle" fill="#9ca3af" fontSize="8" dominantBaseline="middle">
-                {d.name}
-              </text>
-            </g>
-          );
-        })}
-
-        {/* 中心文字 */}
-        <text x="100" y="95" textAnchor="middle" fill="white" fontSize="10" fontWeight="bold">Beauty</text>
-        <text x="100" y="108" textAnchor="middle" fill="white" fontSize="10" fontWeight="bold">Genome</text>
-        <text x="100" y="120" textAnchor="middle" fill="#9ca3af" fontSize="7">128D 向量</text>
-      </svg>
-
-      {/* 悬停详情 */}
-      <AnimatePresence>
-        {hoveredDim !== null && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
-            className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 px-4 py-2 rounded-lg"
-          >
-            <div className="text-white text-sm font-medium">{dimensions[hoveredDim].name}</div>
-            <div className="text-gray-400 text-xs">匹配度: {Math.round(dimensions[hoveredDim].value * 100)}%</div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* 底部公式 */}
+      <div className="text-center pt-2 border-t border-gray-800">
+        <div className="text-gray-400 text-[10px]">
+          <span className="text-pink-400">Face(48D)</span> × <span className="text-purple-400">Style(48D)</span> → <span className="text-cyan-400">Preference(32D)</span>
+        </div>
+        <div className="text-gray-500 text-[10px]">学习的是"你喜欢什么"，而非"什么是客观美"</div>
+      </div>
     </div>
   );
 }
@@ -1168,7 +1238,7 @@ export default function DifferentiationPage() {
                         <Dna className="w-4 h-4 text-pink-400" />
                         <div>
                           <div className="text-white font-medium">Beauty Genome</div>
-                          <div className="text-gray-500 text-xs">个性化美妆基因</div>
+                          <div className="text-gray-500 text-xs">美妆偏好表征</div>
                         </div>
                       </div>
                     </td>
@@ -1195,7 +1265,7 @@ export default function DifferentiationPage() {
                     <td className="py-3 px-4 text-center bg-pink-500/5">
                       <div className="flex flex-col items-center">
                         <CheckCircle2 className="w-5 h-5 text-pink-500" />
-                        <span className="text-xs text-pink-400 mt-1 font-medium">128维</span>
+                        <span className="text-xs text-pink-400 mt-1 font-medium">偏好学习</span>
                       </div>
                     </td>
                   </tr>
