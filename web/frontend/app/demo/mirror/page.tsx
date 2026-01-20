@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import {
@@ -14,11 +14,146 @@ import {
     Droplets,
     Shield,
     Zap,
+    Box,
 } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 import { mockAnalysis } from '@/lib/constants/mockData';
-import SketchFace from '@/components/workflow/SketchFace';
 import { HyperSkinDemo, MicroFace3DDemo } from '@/components/demos/SkinDemos';
+
+// 智能镜3D人脸组件 - 与核心技术页面一致
+function MirrorFace3D({ isScanning, showMetrics }: { isScanning: boolean; showMetrics: boolean }) {
+    return (
+        <div className="relative w-full aspect-[3/4] bg-gradient-to-b from-slate-900 to-slate-950 rounded-2xl overflow-hidden border border-rose-500/20">
+            {/* 3D点阵人脸 */}
+            <svg viewBox="0 0 200 250" className="w-full h-full">
+                {/* 面部轮廓 */}
+                <ellipse cx="100" cy="120" rx="55" ry="70" fill="none" stroke="#fb7185" strokeWidth="0.5" opacity="0.5" />
+
+                {/* 结构光点阵 */}
+                {Array.from({ length: 35 }).map((_, row) =>
+                    Array.from({ length: 25 }).map((_, col) => {
+                        const x = 45 + col * 4.5;
+                        const y = 50 + row * 5;
+                        const dx = x - 100;
+                        const dy = y - 120;
+                        const dist = Math.sqrt(dx * dx + (dy * 0.8) ** 2);
+                        const isInFace = dist < 55;
+                        if (!isInFace) return null;
+
+                        return (
+                            <motion.circle
+                                key={`${row}-${col}`}
+                                cx={x}
+                                cy={y}
+                                r={showMetrics ? 1.2 : 0.8}
+                                fill="#38bdf8"
+                                initial={{ opacity: 0 }}
+                                animate={{
+                                    opacity: isScanning
+                                        ? [0.2, 0.9, 0.2]
+                                        : showMetrics ? 0.7 : 0.4
+                                }}
+                                transition={{
+                                    duration: isScanning ? 0.8 : 1.5,
+                                    delay: (row + col) * 0.01,
+                                    repeat: isScanning ? Infinity : 0
+                                }}
+                            />
+                        );
+                    })
+                )}
+
+                {/* 五官轮廓 */}
+                <g opacity={showMetrics ? 0.8 : 0.4}>
+                    {/* 眼睛 */}
+                    <ellipse cx="75" cy="105" rx="12" ry="6" fill="none" stroke="#a78bfa" strokeWidth="1" />
+                    <ellipse cx="125" cy="105" rx="12" ry="6" fill="none" stroke="#a78bfa" strokeWidth="1" />
+                    <circle cx="75" cy="105" r="3" fill="#a78bfa" opacity="0.5" />
+                    <circle cx="125" cy="105" r="3" fill="#a78bfa" opacity="0.5" />
+                    {/* 眉毛 */}
+                    <path d="M60 92 Q75 88 90 92" fill="none" stroke="#a78bfa" strokeWidth="0.8" />
+                    <path d="M110 92 Q125 88 140 92" fill="none" stroke="#a78bfa" strokeWidth="0.8" />
+                    {/* 鼻子 */}
+                    <path d="M100 100 L100 130 M92 133 Q100 140 108 133" fill="none" stroke="#a78bfa" strokeWidth="0.8" />
+                    {/* 嘴巴 */}
+                    <path d="M82 155 Q100 165 118 155" fill="none" stroke="#fb7185" strokeWidth="1" />
+                    <path d="M85 155 Q100 160 115 155" fill="none" stroke="#fb7185" strokeWidth="0.5" opacity="0.5" />
+                </g>
+
+                {/* 区域标注 */}
+                {showMetrics && (
+                    <g>
+                        {/* T区 */}
+                        <rect x="85" y="95" width="30" height="40" fill="none" stroke="#22d3ee" strokeWidth="0.5" strokeDasharray="3,2" rx="2" />
+                        <text x="100" y="90" textAnchor="middle" fill="#22d3ee" fontSize="6">T区</text>
+
+                        {/* 脸颊 */}
+                        <circle cx="55" cy="130" r="15" fill="none" stroke="#f472b6" strokeWidth="0.5" strokeDasharray="3,2" />
+                        <circle cx="145" cy="130" r="15" fill="none" stroke="#f472b6" strokeWidth="0.5" strokeDasharray="3,2" />
+                    </g>
+                )}
+            </svg>
+
+            {/* 扫描线 */}
+            {isScanning && (
+                <motion.div
+                    className="absolute inset-x-0 h-0.5 bg-gradient-to-r from-transparent via-sky-400 to-transparent"
+                    animate={{ top: ['10%', '90%', '10%'] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+                />
+            )}
+
+            {/* 顶部状态 */}
+            <div className="absolute top-3 left-3 right-3 flex justify-between">
+                <div className="bg-black/60 backdrop-blur-sm rounded-lg px-2 py-1">
+                    <div className="text-rose-400 text-[10px] font-medium">AgenticMirror</div>
+                </div>
+                <div className="bg-black/60 backdrop-blur-sm rounded-lg px-2 py-1">
+                    <div className={cn(
+                        "text-[10px] font-medium",
+                        isScanning ? "text-sky-400" : showMetrics ? "text-green-400" : "text-gray-400"
+                    )}>
+                        {isScanning ? '扫描中...' : showMetrics ? '分析完成' : '待扫描'}
+                    </div>
+                </div>
+            </div>
+
+            {/* 底部数据 */}
+            {showMetrics && (
+                <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="absolute bottom-3 left-3 right-3 bg-black/60 backdrop-blur-sm rounded-lg p-2"
+                >
+                    <div className="grid grid-cols-4 gap-1 text-center">
+                        <div>
+                            <div className="text-sky-400 text-xs font-bold">72%</div>
+                            <div className="text-gray-500 text-[8px]">水分</div>
+                        </div>
+                        <div>
+                            <div className="text-amber-400 text-xs font-bold">35%</div>
+                            <div className="text-gray-500 text-[8px]">油脂</div>
+                        </div>
+                        <div>
+                            <div className="text-green-400 text-xs font-bold">68</div>
+                            <div className="text-gray-500 text-[8px]">弹性</div>
+                        </div>
+                        <div>
+                            <div className="text-rose-400 text-xs font-bold">85</div>
+                            <div className="text-gray-500 text-[8px]">综合</div>
+                        </div>
+                    </div>
+                </motion.div>
+            )}
+
+            {/* 参数信息 */}
+            <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-sm px-2 py-1 rounded text-[10px]">
+                <div className="text-sky-400">50,000+ 点</div>
+                <div className="text-gray-500">亚毫米级精度</div>
+            </div>
+        </div>
+    );
+}
 
 const lightingPresets = [
     { id: 'warm', label: '暖光', temp: '2700K', color: 'from-amber-50 to-orange-50' },
@@ -107,96 +242,27 @@ export default function MirrorPage() {
                 </button>
             </div>
 
-            {/* 产品渲染图展示 */}
-            <div className="mb-6 bg-gradient-to-r from-slate-900 via-purple-900/30 to-slate-900 rounded-2xl overflow-hidden">
-                <div className="grid lg:grid-cols-2 gap-0">
-                    <div className="p-8 flex flex-col justify-center">
-                        <div className="text-rose-400 text-sm font-medium mb-2">AgenticMirror Pro</div>
-                        <h2 className="text-3xl font-bold text-white mb-4">
-                            全栈美妆智能镜
-                        </h2>
-                        <p className="text-gray-400 mb-6">
-                            8通道光谱传感 · 50,000点3D建模 · 60fps实时渲染 · AI偏好学习
-                        </p>
-                        <div className="flex gap-3">
-                            <span className="px-3 py-1 bg-rose-500/20 text-rose-400 rounded-full text-xs">玫瑰金边框</span>
-                            <span className="px-3 py-1 bg-sky-500/20 text-sky-400 rounded-full text-xs">27寸4K屏</span>
-                            <span className="px-3 py-1 bg-fuchsia-500/20 text-fuchsia-400 rounded-full text-xs">环形补光</span>
-                        </div>
-                    </div>
-                    <div className="relative h-64 lg:h-auto">
-                        <img
-                            src="/images/agenticmirror-product.png"
-                            alt="AgenticMirror 产品渲染图"
-                            className="absolute inset-0 w-full h-full object-cover"
-                        />
-                    </div>
-                </div>
-            </div>
-
             <div className="grid lg:grid-cols-4 gap-6">
                 {/* Main Mirror View - Full Width */}
                 <div className="lg:col-span-3">
-                    <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-                        {/* Mirror Surface with Lighting Effect */}
-                        <div className={cn(
-                            "relative bg-gradient-to-b p-8",
-                            currentLighting?.color || "from-slate-100 to-gray-200"
-                        )}>
-                            {/* Smart Mirror */}
-                            <div className="max-w-xl mx-auto">
-                                <SketchFace
-                                    showScanLine={isScanning}
+                    <div className="bg-gradient-to-b from-slate-900 to-slate-950 rounded-2xl shadow-lg overflow-hidden border border-rose-500/20">
+                        {/* Mirror Surface */}
+                        <div className="relative p-6">
+                            {/* Smart Mirror - 3D点阵风格 */}
+                            <div className="max-w-md mx-auto">
+                                <MirrorFace3D
+                                    isScanning={isScanning}
                                     showMetrics={scanComplete}
-                                    showZoneGuides={showZoneGuides}
-                                    activeZone={activeZone as any}
-                                    showEarringRecommend={scanComplete}
-                                    beautyScore={mockAnalysis.overallScore}
                                 />
                             </div>
 
-                            {/* Status Badge */}
-                            <div className="absolute top-4 left-4">
-                                <div className={cn(
-                                    "flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium",
-                                    isScanning
-                                        ? "bg-blue-100 text-blue-700"
-                                        : scanComplete
-                                        ? "bg-green-100 text-green-700"
-                                        : "bg-gray-100 text-gray-600"
-                                )}>
-                                    <span className={cn(
-                                        "w-2 h-2 rounded-full",
-                                        isScanning
-                                            ? "bg-blue-500 animate-pulse"
-                                            : scanComplete
-                                            ? "bg-green-500"
-                                            : "bg-gray-400"
-                                    )} />
-                                    {isScanning ? '扫描中...' : scanComplete ? '分析完成' : '待扫描'}
-                                </div>
-                            </div>
-
-                            {/* Score Badge */}
-                            {scanComplete && (
-                                <motion.div
-                                    initial={{ opacity: 0, scale: 0.8 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    className="absolute top-4 right-4 bg-white/90 backdrop-blur rounded-2xl px-4 py-3 shadow-lg"
-                                >
-                                    <div className="text-xs text-gray-500 mb-1">综合评分</div>
-                                    <div className="text-3xl font-bold bg-gradient-to-r from-mirror-500 to-accent-500 bg-clip-text text-transparent">
-                                        {mockAnalysis.overallScore}
-                                    </div>
-                                </motion.div>
-                            )}
                         </div>
 
                         {/* Control Bar */}
-                        <div className="p-4 border-t border-gray-100 flex items-center justify-between bg-white">
+                        <div className="p-4 border-t border-slate-800 flex items-center justify-between bg-slate-900/80">
                             {/* Zone Selection */}
                             <div className="flex items-center gap-2">
-                                <span className="text-sm text-gray-500 mr-2">区域查看:</span>
+                                <span className="text-sm text-gray-400 mr-2">区域:</span>
                                 {zoneOptions.map((zone) => (
                                     <button
                                         key={zone.id}
@@ -207,8 +273,8 @@ export default function MirrorPage() {
                                         className={cn(
                                             "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm transition-all",
                                             activeZone === zone.id
-                                                ? "bg-mirror-100 text-mirror-700 ring-2 ring-mirror-300"
-                                                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                                                ? "bg-rose-500/20 text-rose-400 ring-1 ring-rose-500/50"
+                                                : "bg-slate-800 text-gray-400 hover:bg-slate-700 hover:text-gray-300"
                                         )}
                                     >
                                         <span>{zone.icon}</span>
@@ -224,8 +290,8 @@ export default function MirrorPage() {
                                 className={cn(
                                     "flex items-center gap-2 px-6 py-2.5 rounded-full font-medium transition-all",
                                     isScanning
-                                        ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                                        : "bg-gradient-to-r from-mirror-500 to-accent-500 text-white shadow-lg hover:shadow-xl hover:scale-105"
+                                        ? "bg-slate-700 text-gray-500 cursor-not-allowed"
+                                        : "bg-gradient-to-r from-rose-500 to-fuchsia-500 text-white shadow-lg shadow-rose-500/30 hover:shadow-xl hover:scale-105"
                                 )}
                             >
                                 <Camera className="w-5 h-5" />
