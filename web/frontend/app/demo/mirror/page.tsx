@@ -107,6 +107,33 @@ export default function MirrorPage() {
                 </button>
             </div>
 
+            {/* 产品渲染图展示 */}
+            <div className="mb-6 bg-gradient-to-r from-slate-900 via-purple-900/30 to-slate-900 rounded-2xl overflow-hidden">
+                <div className="grid lg:grid-cols-2 gap-0">
+                    <div className="p-8 flex flex-col justify-center">
+                        <div className="text-rose-400 text-sm font-medium mb-2">AgenticMirror Pro</div>
+                        <h2 className="text-3xl font-bold text-white mb-4">
+                            全栈美妆智能镜
+                        </h2>
+                        <p className="text-gray-400 mb-6">
+                            8通道光谱传感 · 50,000点3D建模 · 60fps实时渲染 · AI偏好学习
+                        </p>
+                        <div className="flex gap-3">
+                            <span className="px-3 py-1 bg-rose-500/20 text-rose-400 rounded-full text-xs">玫瑰金边框</span>
+                            <span className="px-3 py-1 bg-sky-500/20 text-sky-400 rounded-full text-xs">27寸4K屏</span>
+                            <span className="px-3 py-1 bg-fuchsia-500/20 text-fuchsia-400 rounded-full text-xs">环形补光</span>
+                        </div>
+                    </div>
+                    <div className="relative h-64 lg:h-auto">
+                        <img
+                            src="/images/agenticmirror-product.png"
+                            alt="AgenticMirror 产品渲染图"
+                            className="absolute inset-0 w-full h-full object-cover"
+                        />
+                    </div>
+                </div>
+            </div>
+
             <div className="grid lg:grid-cols-4 gap-6">
                 {/* Main Mirror View - Full Width */}
                 <div className="lg:col-span-3">
