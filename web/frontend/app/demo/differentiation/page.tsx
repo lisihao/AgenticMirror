@@ -21,6 +21,10 @@ import {
   Shield,
   Target,
   TrendingUp,
+  CheckCircle2,
+  XCircle,
+  AlertCircle,
+  Crown,
 } from 'lucide-react';
 
 // 十大差异化特性定义
@@ -968,6 +972,525 @@ export default function DifferentiationPage() {
               </tbody>
             </table>
           </div>
+        </div>
+      </section>
+
+      {/* 竞品技术对比 */}
+      <section className="px-4 pb-16">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-8"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 rounded-full text-amber-300 text-sm font-bold mb-4">
+              <Crown className="w-4 h-4" />
+              CES 2026 竞品技术对标
+            </div>
+            <h2 className="text-2xl font-bold text-white mb-2">十大技术壁垒 vs 行业巨头</h2>
+            <p className="text-gray-400">全面领先三星、欧莱雅、NuraLogix 等国际大厂</p>
+          </motion.div>
+
+          {/* 竞品对比表格 */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-2xl border border-white/10 overflow-hidden"
+          >
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="text-left py-4 px-4 text-gray-300 font-semibold sticky left-0 bg-gray-800/90 backdrop-blur z-10 min-w-[180px]">
+                      技术能力
+                    </th>
+                    <th className="text-center py-4 px-3 text-gray-300 font-semibold min-w-[100px]">
+                      <div className="flex flex-col items-center">
+                        <span className="text-blue-400">Samsung</span>
+                        <span className="text-xs text-gray-500">Bespoke AI</span>
+                      </div>
+                    </th>
+                    <th className="text-center py-4 px-3 text-gray-300 font-semibold min-w-[100px]">
+                      <div className="flex flex-col items-center">
+                        <span className="text-purple-400">L'Oréal</span>
+                        <span className="text-xs text-gray-500">Cell BioPrint</span>
+                      </div>
+                    </th>
+                    <th className="text-center py-4 px-3 text-gray-300 font-semibold min-w-[100px]">
+                      <div className="flex flex-col items-center">
+                        <span className="text-emerald-400">NuraLogix</span>
+                        <span className="text-xs text-gray-500">Magic Mirror</span>
+                      </div>
+                    </th>
+                    <th className="text-center py-4 px-3 text-gray-300 font-semibold min-w-[100px]">
+                      <div className="flex flex-col items-center">
+                        <span className="text-cyan-400">CareOS</span>
+                        <span className="text-xs text-gray-500">Themis 2.0</span>
+                      </div>
+                    </th>
+                    <th className="text-center py-4 px-3 text-gray-300 font-semibold min-w-[100px]">
+                      <div className="flex flex-col items-center">
+                        <span className="text-orange-400">HiMirror</span>
+                        <span className="text-xs text-gray-500">Plus+</span>
+                      </div>
+                    </th>
+                    <th className="text-center py-4 px-4 font-semibold min-w-[120px] bg-gradient-to-r from-pink-500/20 to-purple-500/20">
+                      <div className="flex flex-col items-center">
+                        <span className="text-pink-400 font-bold">AgenticMirror</span>
+                        <span className="text-xs text-pink-300">我们</span>
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5">
+                  {/* HyperSkin 多光谱皮肤传感 */}
+                  <tr className="hover:bg-white/5 transition-colors">
+                    <td className="py-3 px-4 sticky left-0 bg-gray-800/90 backdrop-blur">
+                      <div className="flex items-center gap-2">
+                        <Scan className="w-4 h-4 text-pink-400" />
+                        <div>
+                          <div className="text-white font-medium">HyperSkin Sensor</div>
+                          <div className="text-gray-500 text-xs">多光谱皮肤传感</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-3 text-center">
+                      <div className="flex flex-col items-center">
+                        <AlertCircle className="w-5 h-5 text-amber-500" />
+                        <span className="text-xs text-gray-500 mt-1">单通道</span>
+                      </div>
+                    </td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-3 text-center">
+                      <div className="flex flex-col items-center">
+                        <AlertCircle className="w-5 h-5 text-amber-500" />
+                        <span className="text-xs text-gray-500 mt-1">仅RGB</span>
+                      </div>
+                    </td>
+                    <td className="py-3 px-4 text-center bg-pink-500/5">
+                      <div className="flex flex-col items-center">
+                        <CheckCircle2 className="w-5 h-5 text-pink-500" />
+                        <span className="text-xs text-pink-400 mt-1 font-medium">三通道</span>
+                      </div>
+                    </td>
+                  </tr>
+
+                  {/* MicroFace 3D */}
+                  <tr className="hover:bg-white/5 transition-colors">
+                    <td className="py-3 px-4 sticky left-0 bg-gray-800/90 backdrop-blur">
+                      <div className="flex items-center gap-2">
+                        <Box className="w-4 h-4 text-pink-400" />
+                        <div>
+                          <div className="text-white font-medium">MicroFace 3D</div>
+                          <div className="text-gray-500 text-xs">微米级3D建模</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-4 text-center bg-pink-500/5">
+                      <div className="flex flex-col items-center">
+                        <CheckCircle2 className="w-5 h-5 text-pink-500" />
+                        <span className="text-xs text-pink-400 mt-1 font-medium">50K点阵</span>
+                      </div>
+                    </td>
+                  </tr>
+
+                  {/* TrueColor Adapt */}
+                  <tr className="hover:bg-white/5 transition-colors">
+                    <td className="py-3 px-4 sticky left-0 bg-gray-800/90 backdrop-blur">
+                      <div className="flex items-center gap-2">
+                        <Palette className="w-4 h-4 text-pink-400" />
+                        <div>
+                          <div className="text-white font-medium">TrueColor Adapt</div>
+                          <div className="text-gray-500 text-xs">环境自适应色彩</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="py-3 px-3 text-center">
+                      <div className="flex flex-col items-center">
+                        <AlertCircle className="w-5 h-5 text-amber-500" />
+                        <span className="text-xs text-gray-500 mt-1">基础</span>
+                      </div>
+                    </td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-3 text-center">
+                      <div className="flex flex-col items-center">
+                        <AlertCircle className="w-5 h-5 text-amber-500" />
+                        <span className="text-xs text-gray-500 mt-1">LED补光</span>
+                      </div>
+                    </td>
+                    <td className="py-3 px-4 text-center bg-pink-500/5">
+                      <div className="flex flex-col items-center">
+                        <CheckCircle2 className="w-5 h-5 text-pink-500" />
+                        <span className="text-xs text-pink-400 mt-1 font-medium">16通道</span>
+                      </div>
+                    </td>
+                  </tr>
+
+                  {/* MotionBreak AI */}
+                  <tr className="hover:bg-white/5 transition-colors">
+                    <td className="py-3 px-4 sticky left-0 bg-gray-800/90 backdrop-blur">
+                      <div className="flex items-center gap-2">
+                        <Move3D className="w-4 h-4 text-pink-400" />
+                        <div>
+                          <div className="text-white font-medium">MotionBreak AI</div>
+                          <div className="text-gray-500 text-xs">动作分解教学</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-4 text-center bg-pink-500/5">
+                      <div className="flex flex-col items-center">
+                        <CheckCircle2 className="w-5 h-5 text-pink-500" />
+                        <span className="text-xs text-pink-400 mt-1 font-medium">mmWave</span>
+                      </div>
+                    </td>
+                  </tr>
+
+                  {/* Beauty Genome */}
+                  <tr className="hover:bg-white/5 transition-colors">
+                    <td className="py-3 px-4 sticky left-0 bg-gray-800/90 backdrop-blur">
+                      <div className="flex items-center gap-2">
+                        <Dna className="w-4 h-4 text-pink-400" />
+                        <div>
+                          <div className="text-white font-medium">Beauty Genome</div>
+                          <div className="text-gray-500 text-xs">个性化美妆基因</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="py-3 px-3 text-center">
+                      <div className="flex flex-col items-center">
+                        <AlertCircle className="w-5 h-5 text-amber-500" />
+                        <span className="text-xs text-gray-500 mt-1">简单</span>
+                      </div>
+                    </td>
+                    <td className="py-3 px-3 text-center">
+                      <div className="flex flex-col items-center">
+                        <AlertCircle className="w-5 h-5 text-amber-500" />
+                        <span className="text-xs text-gray-500 mt-1">肤质</span>
+                      </div>
+                    </td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-3 text-center">
+                      <div className="flex flex-col items-center">
+                        <AlertCircle className="w-5 h-5 text-amber-500" />
+                        <span className="text-xs text-gray-500 mt-1">问卷</span>
+                      </div>
+                    </td>
+                    <td className="py-3 px-4 text-center bg-pink-500/5">
+                      <div className="flex flex-col items-center">
+                        <CheckCircle2 className="w-5 h-5 text-pink-500" />
+                        <span className="text-xs text-pink-400 mt-1 font-medium">128维</span>
+                      </div>
+                    </td>
+                  </tr>
+
+                  {/* SkinTimeline */}
+                  <tr className="hover:bg-white/5 transition-colors">
+                    <td className="py-3 px-4 sticky left-0 bg-gray-800/90 backdrop-blur">
+                      <div className="flex items-center gap-2">
+                        <Clock className="w-4 h-4 text-pink-400" />
+                        <div>
+                          <div className="text-white font-medium">SkinTimeline</div>
+                          <div className="text-gray-500 text-xs">时序皮肤追踪</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-3 text-center">
+                      <div className="flex flex-col items-center">
+                        <AlertCircle className="w-5 h-5 text-amber-500" />
+                        <span className="text-xs text-gray-500 mt-1">短期</span>
+                      </div>
+                    </td>
+                    <td className="py-3 px-3 text-center">
+                      <div className="flex flex-col items-center">
+                        <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+                        <span className="text-xs text-gray-500 mt-1">健康</span>
+                      </div>
+                    </td>
+                    <td className="py-3 px-3 text-center">
+                      <div className="flex flex-col items-center">
+                        <AlertCircle className="w-5 h-5 text-amber-500" />
+                        <span className="text-xs text-gray-500 mt-1">基础</span>
+                      </div>
+                    </td>
+                    <td className="py-3 px-3 text-center">
+                      <div className="flex flex-col items-center">
+                        <AlertCircle className="w-5 h-5 text-amber-500" />
+                        <span className="text-xs text-gray-500 mt-1">手动</span>
+                      </div>
+                    </td>
+                    <td className="py-3 px-4 text-center bg-pink-500/5">
+                      <div className="flex flex-col items-center">
+                        <CheckCircle2 className="w-5 h-5 text-pink-500" />
+                        <span className="text-xs text-pink-400 mt-1 font-medium">LSTM预测</span>
+                      </div>
+                    </td>
+                  </tr>
+
+                  {/* PhotoReal AR */}
+                  <tr className="hover:bg-white/5 transition-colors">
+                    <td className="py-3 px-4 sticky left-0 bg-gray-800/90 backdrop-blur">
+                      <div className="flex items-center gap-2">
+                        <Sparkles className="w-4 h-4 text-pink-400" />
+                        <div>
+                          <div className="text-white font-medium">PhotoReal AR</div>
+                          <div className="text-gray-500 text-xs">物理级真实感渲染</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-3 text-center">
+                      <div className="flex flex-col items-center">
+                        <AlertCircle className="w-5 h-5 text-amber-500" />
+                        <span className="text-xs text-gray-500 mt-1">ModiFace</span>
+                      </div>
+                    </td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-3 text-center">
+                      <div className="flex flex-col items-center">
+                        <AlertCircle className="w-5 h-5 text-amber-500" />
+                        <span className="text-xs text-gray-500 mt-1">2D贴图</span>
+                      </div>
+                    </td>
+                    <td className="py-3 px-4 text-center bg-pink-500/5">
+                      <div className="flex flex-col items-center">
+                        <CheckCircle2 className="w-5 h-5 text-pink-500" />
+                        <span className="text-xs text-pink-400 mt-1 font-medium">PBR+SSS</span>
+                      </div>
+                    </td>
+                  </tr>
+
+                  {/* ContextBeauty */}
+                  <tr className="hover:bg-white/5 transition-colors">
+                    <td className="py-3 px-4 sticky left-0 bg-gray-800/90 backdrop-blur">
+                      <div className="flex items-center gap-2">
+                        <MapPin className="w-4 h-4 text-pink-400" />
+                        <div>
+                          <div className="text-white font-medium">ContextBeauty</div>
+                          <div className="text-gray-500 text-xs">场景感知推荐</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="py-3 px-3 text-center">
+                      <div className="flex flex-col items-center">
+                        <AlertCircle className="w-5 h-5 text-amber-500" />
+                        <span className="text-xs text-gray-500 mt-1">智能家居</span>
+                      </div>
+                    </td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-3 text-center">
+                      <div className="flex flex-col items-center">
+                        <AlertCircle className="w-5 h-5 text-amber-500" />
+                        <span className="text-xs text-gray-500 mt-1">天气</span>
+                      </div>
+                    </td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-4 text-center bg-pink-500/5">
+                      <div className="flex flex-col items-center">
+                        <CheckCircle2 className="w-5 h-5 text-pink-500" />
+                        <span className="text-xs text-pink-400 mt-1 font-medium">8维上下文</span>
+                      </div>
+                    </td>
+                  </tr>
+
+                  {/* IngrediMatch */}
+                  <tr className="hover:bg-white/5 transition-colors">
+                    <td className="py-3 px-4 sticky left-0 bg-gray-800/90 backdrop-blur">
+                      <div className="flex items-center gap-2">
+                        <FlaskConical className="w-4 h-4 text-pink-400" />
+                        <div>
+                          <div className="text-white font-medium">IngrediMatch</div>
+                          <div className="text-gray-500 text-xs">成分匹配安全</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-3 text-center">
+                      <div className="flex flex-col items-center">
+                        <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+                        <span className="text-xs text-gray-500 mt-1">自有品牌</span>
+                      </div>
+                    </td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-3 text-center">
+                      <div className="flex flex-col items-center">
+                        <AlertCircle className="w-5 h-5 text-amber-500" />
+                        <span className="text-xs text-gray-500 mt-1">查询</span>
+                      </div>
+                    </td>
+                    <td className="py-3 px-4 text-center bg-pink-500/5">
+                      <div className="flex flex-col items-center">
+                        <CheckCircle2 className="w-5 h-5 text-pink-500" />
+                        <span className="text-xs text-pink-400 mt-1 font-medium">15K+成分</span>
+                      </div>
+                    </td>
+                  </tr>
+
+                  {/* MasterMind KG */}
+                  <tr className="hover:bg-white/5 transition-colors">
+                    <td className="py-3 px-4 sticky left-0 bg-gray-800/90 backdrop-blur">
+                      <div className="flex items-center gap-2">
+                        <Brain className="w-4 h-4 text-pink-400" />
+                        <div>
+                          <div className="text-white font-medium">MasterMind KG</div>
+                          <div className="text-gray-500 text-xs">化妆大师知识图谱</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-3 text-center">
+                      <div className="flex flex-col items-center">
+                        <AlertCircle className="w-5 h-5 text-amber-500" />
+                        <span className="text-xs text-gray-500 mt-1">品牌知识</span>
+                      </div>
+                    </td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
+                    <td className="py-3 px-4 text-center bg-pink-500/5">
+                      <div className="flex flex-col items-center">
+                        <CheckCircle2 className="w-5 h-5 text-pink-500" />
+                        <span className="text-xs text-pink-400 mt-1 font-medium">100K实体</span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+
+                {/* 统计行 */}
+                <tfoot>
+                  <tr className="bg-white/5 border-t border-white/10">
+                    <td className="py-4 px-4 sticky left-0 bg-gray-800/90 backdrop-blur">
+                      <div className="text-white font-bold">技术领先项</div>
+                    </td>
+                    <td className="py-4 px-3 text-center">
+                      <span className="text-2xl font-bold text-gray-500">0</span>
+                    </td>
+                    <td className="py-4 px-3 text-center">
+                      <span className="text-2xl font-bold text-gray-500">1</span>
+                    </td>
+                    <td className="py-4 px-3 text-center">
+                      <span className="text-2xl font-bold text-gray-500">1</span>
+                    </td>
+                    <td className="py-4 px-3 text-center">
+                      <span className="text-2xl font-bold text-gray-500">0</span>
+                    </td>
+                    <td className="py-4 px-3 text-center">
+                      <span className="text-2xl font-bold text-gray-500">0</span>
+                    </td>
+                    <td className="py-4 px-4 text-center bg-pink-500/10">
+                      <span className="text-2xl font-bold text-pink-400">10</span>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+
+            {/* 图例 */}
+            <div className="flex flex-wrap items-center justify-center gap-6 p-4 border-t border-white/10">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-pink-500" />
+                <span className="text-xs text-gray-400">完整支持</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                <span className="text-xs text-gray-400">竞品领先</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 text-amber-500" />
+                <span className="text-xs text-gray-400">部分支持</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <XCircle className="w-4 h-4 text-gray-600" />
+                <span className="text-xs text-gray-400">不支持</span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* 竞争优势总结 */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="grid md:grid-cols-3 gap-4 mt-8"
+          >
+            <div className="bg-gradient-to-br from-blue-500/10 to-indigo-500/10 rounded-xl p-5 border border-blue-500/20">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                  <span className="text-blue-400 font-bold">vs</span>
+                </div>
+                <span className="text-blue-400 font-bold">Samsung</span>
+              </div>
+              <p className="text-gray-400 text-sm">
+                三星强在智能家居生态，但<span className="text-white">缺乏美妆垂直深度</span>。
+                无专业皮肤分析、无3D建模、无动作教学，"美妆"只是附属功能。
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-xl p-5 border border-purple-500/20">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center">
+                  <span className="text-purple-400 font-bold">vs</span>
+                </div>
+                <span className="text-purple-400 font-bold">L'Oréal</span>
+              </div>
+              <p className="text-gray-400 text-sm">
+                欧莱雅有品牌和AR技术，但<span className="text-white">局限于自有品牌推广</span>。
+                非中立平台、无硬件优势、无持续陪伴，本质是"数字柜姐"。
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-br from-emerald-500/10 to-teal-500/10 rounded-xl p-5 border border-emerald-500/20">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+                  <span className="text-emerald-400 font-bold">vs</span>
+                </div>
+                <span className="text-emerald-400 font-bold">NuraLogix</span>
+              </div>
+              <p className="text-gray-400 text-sm">
+                NuraLogix 专注健康监测，但<span className="text-white">完全不涉及美妆场景</span>。
+                纯健康工具定位、无情感交互、无个性化推荐，用户粘性不足。
+              </p>
+            </div>
+          </motion.div>
+
+          {/* 结论 */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mt-8 bg-gradient-to-r from-pink-500/10 to-purple-500/10 rounded-2xl p-6 border border-pink-500/20 text-center"
+          >
+            <Crown className="w-10 h-10 text-pink-400 mx-auto mb-3" />
+            <h3 className="text-xl font-bold text-white mb-2">
+              唯一的全栈美妆智能镜
+            </h3>
+            <p className="text-gray-400 max-w-2xl mx-auto">
+              AgenticMirror 是市场上<span className="text-pink-400 font-medium">唯一同时具备</span>专业传感硬件（多光谱+3D）、
+              垂直AI能力（知识图谱+动作分解）、情感陪伴交互的智能镜产品。
+              <br />
+              <span className="text-white font-medium">10项技术全部领先，这不是单点突破，而是系统性碾压。</span>
+            </p>
+          </motion.div>
         </div>
       </section>
 
