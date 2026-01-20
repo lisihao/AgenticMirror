@@ -241,7 +241,7 @@ function BarrierLevel({ level }: { level: number }) {
           key={i}
           className={`w-2 h-2 rounded-full ${
             i <= level
-              ? 'bg-gradient-to-r from-pink-500 to-purple-500'
+              ? 'bg-gradient-to-r from-rose-500 to-fuchsia-500'
               : 'bg-gray-600'
           }`}
         />
@@ -270,8 +270,8 @@ function HyperSkinDemo() {
   const [activeChannel, setActiveChannel] = useState<'vis' | 'nir' | 'uvf'>('vis');
 
   const channels = {
-    vis: { name: '可见光', color: '#22d3ee', range: '400-700nm', depth: '表皮 0.1mm' },
-    nir: { name: '近红外', color: '#f472b6', range: '800-1000nm', depth: '真皮 1-2mm' },
+    vis: { name: '可见光', color: '#38bdf8', range: '400-700nm', depth: '表皮 0.1mm' },
+    nir: { name: '近红外', color: '#fda4af', range: '800-1000nm', depth: '真皮 1-2mm' },
     uvf: { name: '紫外荧光', color: '#a78bfa', range: '320-400nm', depth: '皮脂层' },
   };
 
@@ -326,16 +326,16 @@ function HyperSkinDemo() {
         <g transform="translate(20, 130)">
           {activeChannel === 'vis' && (
             <>
-              <text fill="#22d3ee" fontSize="7">肤色 L*58.2</text>
-              <text x="50" fill="#22d3ee" fontSize="7">毛孔 23个/cm²</text>
-              <text x="110" fill="#22d3ee" fontSize="7">纹理 细腻</text>
+              <text fill="#38bdf8" fontSize="7">肤色 L*58.2</text>
+              <text x="50" fill="#38bdf8" fontSize="7">毛孔 23个/cm²</text>
+              <text x="110" fill="#38bdf8" fontSize="7">纹理 细腻</text>
             </>
           )}
           {activeChannel === 'nir' && (
             <>
-              <text fill="#f472b6" fontSize="7">水分 42%</text>
-              <text x="45" fill="#f472b6" fontSize="7">血红蛋白 正常</text>
-              <text x="110" fill="#f472b6" fontSize="7">黑色素 中等</text>
+              <text fill="#fda4af" fontSize="7">水分 42%</text>
+              <text x="45" fill="#fda4af" fontSize="7">血红蛋白 正常</text>
+              <text x="110" fill="#fda4af" fontSize="7">黑色素 中等</text>
             </>
           )}
           {activeChannel === 'uvf' && (
@@ -356,7 +356,7 @@ function HyperSkinDemo() {
             onClick={() => setActiveChannel(ch)}
             className={`px-3 py-1.5 rounded-full text-xs transition-all ${
               activeChannel === ch
-                ? 'bg-gradient-to-r from-pink-500 to-purple-500 text-white'
+                ? 'bg-gradient-to-r from-rose-500 to-fuchsia-500 text-white'
                 : 'bg-white/10 text-gray-400 hover:bg-white/20'
             }`}
             whileHover={{ scale: 1.05 }}
@@ -378,7 +378,7 @@ function MicroFace3DDemo() {
     <div className="relative h-80 flex items-center justify-center">
       <svg viewBox="0 0 200 200" className="w-full h-full max-w-xs">
         {/* 面部轮廓 */}
-        <ellipse cx="100" cy="100" rx="55" ry="70" fill="none" stroke="#ec4899" strokeWidth="0.5" opacity="0.5" />
+        <ellipse cx="100" cy="100" rx="55" ry="70" fill="none" stroke="#fb7185" strokeWidth="0.5" opacity="0.5" />
 
         {/* 结构光点阵 */}
         {Array.from({ length: 30 }).map((_, row) =>
@@ -397,7 +397,7 @@ function MicroFace3DDemo() {
                 cx={x}
                 cy={y}
                 r={showDetail ? 1.2 : 0.8}
-                fill="#22d3ee"
+                fill="#38bdf8"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: [0.3, 0.8, 0.3] }}
                 transition={{ duration: 1.5, delay: (row + col) * 0.02, repeat: Infinity }}
@@ -420,7 +420,7 @@ function MicroFace3DDemo() {
         {/* 深度信息 */}
         {showDetail && (
           <g>
-            <text x="100" y="20" textAnchor="middle" fill="#22d3ee" fontSize="8">深度图</text>
+            <text x="100" y="20" textAnchor="middle" fill="#38bdf8" fontSize="8">深度图</text>
             <motion.rect
               x="30" y="170" width="140" height="8" rx="2" fill="url(#depthGradient)"
               initial={{ opacity: 0 }}
@@ -429,8 +429,8 @@ function MicroFace3DDemo() {
             <defs>
               <linearGradient id="depthGradient">
                 <stop offset="0%" stopColor="#3b82f6" />
-                <stop offset="50%" stopColor="#22d3ee" />
-                <stop offset="100%" stopColor="#f472b6" />
+                <stop offset="50%" stopColor="#38bdf8" />
+                <stop offset="100%" stopColor="#fda4af" />
               </linearGradient>
             </defs>
             <text x="30" y="185" fill="#9ca3af" fontSize="6">近</text>
@@ -442,14 +442,14 @@ function MicroFace3DDemo() {
       {/* 切换按钮 */}
       <button
         onClick={() => setShowDetail(!showDetail)}
-        className="absolute bottom-4 px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white text-xs rounded-full"
+        className="absolute bottom-4 px-4 py-2 bg-gradient-to-r from-rose-500 to-fuchsia-500 text-white text-xs rounded-full"
       >
         {showDetail ? '简化视图' : '查看深度图'}
       </button>
 
       {/* 参数信息 */}
       <div className="absolute top-4 right-4 bg-black/50 px-2 py-1 rounded text-xs">
-        <div className="text-cyan-400">50,000+ 点</div>
+        <div className="text-sky-400">50,000+ 点</div>
         <div className="text-gray-500">亚毫米级精度</div>
       </div>
     </div>
@@ -462,9 +462,9 @@ function BeautyGenomeDemo() {
   const [pairSelection, setPairSelection] = useState<'A' | 'B' | null>(null);
 
   const phases = [
-    { id: 'face', label: 'Face Rep', dim: '48D', color: '#ec4899' },
-    { id: 'style', label: 'Style Rep', dim: '48D', color: '#8b5cf6' },
-    { id: 'preference', label: 'Preference', dim: '32D', color: '#22d3ee' },
+    { id: 'face', label: 'Face Rep', dim: '48D', color: '#fb7185' },
+    { id: 'style', label: 'Style Rep', dim: '48D', color: '#e879f9' },
+    { id: 'preference', label: 'Preference', dim: '32D', color: '#38bdf8' },
   ];
 
   const faceFeatures = ['脸型轮廓', '眼部结构', '唇部特征', '眉形', '肤色', '肤质'];
@@ -480,8 +480,8 @@ function BeautyGenomeDemo() {
               onClick={() => setActivePhase(phase.id as typeof activePhase)}
               className={`px-3 py-2 rounded-lg text-xs font-medium transition-all ${
                 activePhase === phase.id
-                  ? 'bg-gradient-to-r from-pink-500/20 to-purple-500/20 border border-pink-500/50'
-                  : 'bg-gray-800/50 border border-gray-700 hover:border-gray-600'
+                  ? 'bg-gradient-to-r from-rose-500/20 to-fuchsia-500/20 border border-rose-500/50'
+                  : 'bg-slate-800/50 border border-slate-600 hover:border-slate-500'
               }`}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -508,7 +508,7 @@ function BeautyGenomeDemo() {
               className="absolute inset-0"
             >
               <div className="text-center mb-3">
-                <div className="text-pink-400 text-xs font-medium">Face Representation</div>
+                <div className="text-rose-400 text-xs font-medium">Face Representation</div>
                 <div className="text-gray-500 text-[10px]">面部结构 + 肤色质感 + 关键区域</div>
               </div>
               <div className="grid grid-cols-3 gap-2">
@@ -518,10 +518,10 @@ function BeautyGenomeDemo() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.05 }}
-                    className="bg-pink-500/10 border border-pink-500/30 rounded-lg p-2 text-center"
+                    className="bg-rose-500/10 border border-rose-500/30 rounded-lg p-2 text-center"
                   >
                     <div className="text-white text-xs">{f}</div>
-                    <div className="text-pink-400 text-[10px]">8D</div>
+                    <div className="text-rose-400 text-[10px]">8D</div>
                   </motion.div>
                 ))}
               </div>
@@ -537,7 +537,7 @@ function BeautyGenomeDemo() {
               className="absolute inset-0"
             >
               <div className="text-center mb-3">
-                <div className="text-purple-400 text-xs font-medium">Style/Makeup Representation</div>
+                <div className="text-fuchsia-400 text-xs font-medium">Style/Makeup Representation</div>
                 <div className="text-gray-500 text-[10px]">妆容参数向量 · 行业标准表征</div>
               </div>
               <div className="grid grid-cols-3 gap-2">
@@ -547,10 +547,10 @@ function BeautyGenomeDemo() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.05 }}
-                    className="bg-purple-500/10 border border-purple-500/30 rounded-lg p-2 text-center"
+                    className="bg-fuchsia-500/10 border border-fuchsia-500/30 rounded-lg p-2 text-center"
                   >
                     <div className="text-white text-xs">{f}</div>
-                    <div className="text-purple-400 text-[10px]">8D</div>
+                    <div className="text-fuchsia-400 text-[10px]">8D</div>
                   </motion.div>
                 ))}
               </div>
@@ -566,7 +566,7 @@ function BeautyGenomeDemo() {
               className="absolute inset-0"
             >
               <div className="text-center mb-3">
-                <div className="text-cyan-400 text-xs font-medium">Preference Learning</div>
+                <div className="text-sky-400 text-xs font-medium">Preference Learning</div>
                 <div className="text-gray-500 text-[10px]">Pairwise A/B 对比 · 比打分更稳定</div>
               </div>
               {/* A/B 选择演示 */}
@@ -575,8 +575,8 @@ function BeautyGenomeDemo() {
                   onClick={() => setPairSelection('A')}
                   className={`w-24 h-28 rounded-xl border-2 flex flex-col items-center justify-center transition-all ${
                     pairSelection === 'A'
-                      ? 'border-cyan-400 bg-cyan-500/20'
-                      : 'border-gray-600 bg-gray-800/50 hover:border-gray-500'
+                      ? 'border-sky-400 bg-sky-500/20'
+                      : 'border-slate-600 bg-slate-800/50 hover:border-slate-400'
                   }`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -590,8 +590,8 @@ function BeautyGenomeDemo() {
                   onClick={() => setPairSelection('B')}
                   className={`w-24 h-28 rounded-xl border-2 flex flex-col items-center justify-center transition-all ${
                     pairSelection === 'B'
-                      ? 'border-cyan-400 bg-cyan-500/20'
-                      : 'border-gray-600 bg-gray-800/50 hover:border-gray-500'
+                      ? 'border-sky-400 bg-sky-500/20'
+                      : 'border-slate-600 bg-slate-800/50 hover:border-slate-400'
                   }`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -607,7 +607,7 @@ function BeautyGenomeDemo() {
                   animate={{ opacity: 1, y: 0 }}
                   className="text-center mt-3"
                 >
-                  <div className="text-cyan-400 text-xs">✓ 偏好记录: {pairSelection === 'A' ? '自然风格' : '精致风格'}</div>
+                  <div className="text-sky-400 text-xs">✓ 偏好记录: {pairSelection === 'A' ? '自然风格' : '精致风格'}</div>
                   <div className="text-gray-500 text-[10px]">持续学习优化偏好向量</div>
                 </motion.div>
               )}
@@ -617,9 +617,9 @@ function BeautyGenomeDemo() {
       </div>
 
       {/* 底部公式 */}
-      <div className="text-center pt-2 border-t border-gray-800">
+      <div className="text-center pt-2 border-t border-slate-700">
         <div className="text-gray-400 text-[10px]">
-          <span className="text-pink-400">Face(48D)</span> × <span className="text-purple-400">Style(48D)</span> → <span className="text-cyan-400">Preference(32D)</span>
+          <span className="text-rose-400">Face(48D)</span> × <span className="text-fuchsia-400">Style(48D)</span> → <span className="text-sky-400">Preference(32D)</span>
         </div>
         <div className="text-gray-500 text-[10px]">学习的是"你喜欢什么"，而非"什么是客观美"</div>
       </div>
@@ -632,11 +632,11 @@ function MasterMindDemo() {
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
 
   const nodes = [
-    { id: 'center', x: 100, y: 100, r: 20, label: '妆容推荐', color: '#ec4899' },
-    { id: 'face', x: 45, y: 60, r: 12, label: '脸型', color: '#f472b6' },
+    { id: 'center', x: 100, y: 100, r: 20, label: '妆容推荐', color: '#fb7185' },
+    { id: 'face', x: 45, y: 60, r: 12, label: '脸型', color: '#fda4af' },
     { id: 'skin', x: 155, y: 60, r: 12, label: '肤质', color: '#a78bfa' },
     { id: 'color', x: 45, y: 140, r: 12, label: '色彩', color: '#818cf8' },
-    { id: 'tech', x: 155, y: 140, r: 12, label: '技法', color: '#22d3ee' },
+    { id: 'tech', x: 155, y: 140, r: 12, label: '技法', color: '#38bdf8' },
     { id: 'product', x: 100, y: 170, r: 12, label: '产品', color: '#34d399' },
     { id: 'style', x: 100, y: 30, r: 12, label: '风格', color: '#fbbf24' },
   ];
@@ -709,7 +709,7 @@ function MasterMindDemo() {
             cx={0}
             cy={0}
             r={3}
-            fill="#22d3ee"
+            fill="#38bdf8"
             initial={{ opacity: 0 }}
             animate={{
               opacity: [0, 1, 0],
@@ -745,7 +745,7 @@ function SimpleDemo({ feature }: { feature: typeof differentiationFeatures[0] })
   return (
     <div className="h-80 flex flex-col items-center justify-center">
       <motion.div
-        className="w-24 h-24 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-500 flex items-center justify-center mb-4"
+        className="w-24 h-24 rounded-2xl bg-gradient-to-br from-rose-500 to-fuchsia-500 flex items-center justify-center mb-4"
         animate={{ rotate: [0, 5, -5, 0] }}
         transition={{ duration: 4, repeat: Infinity }}
       >
@@ -764,7 +764,7 @@ function SimpleDemo({ feature }: { feature: typeof differentiationFeatures[0] })
             transition={{ delay: i * 0.1 }}
             className="bg-white/5 rounded-lg p-2 text-center"
           >
-            <div className="text-pink-400 text-xs font-bold">{f.value}</div>
+            <div className="text-rose-400 text-xs font-bold">{f.value}</div>
             <div className="text-gray-500 text-xs">{f.label}</div>
           </motion.div>
         ))}
@@ -788,7 +788,7 @@ export default function DifferentiationPage() {
   const DemoComponent = demoComponents[currentFeature.id];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black text-white">
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-purple-950/30 to-slate-950 text-white">
       {/* 顶部导航 */}
       <div className="fixed top-0 left-0 right-0 z-50 bg-black/50 backdrop-blur-lg border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -801,7 +801,7 @@ export default function DifferentiationPage() {
           </Link>
 
           <div className="flex items-center gap-2">
-            <Target className="w-5 h-5 text-pink-400" />
+            <Target className="w-5 h-5 text-rose-400" />
             <h1 className="text-white font-bold">差异化竞争力</h1>
           </div>
 
@@ -816,12 +816,12 @@ export default function DifferentiationPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-pink-500/20 to-purple-500/20 border border-pink-500/30 rounded-full text-pink-300 text-sm font-bold mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-rose-500/20 to-fuchsia-500/20 border border-rose-500/30 rounded-full text-rose-300 text-sm font-bold mb-6">
               <Shield className="w-4 h-4" />
               人无我有 · 人有我优
             </div>
             <h1 className="text-4xl md:text-5xl font-black mb-4">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-fuchsia-400 to-sky-400">
                 十大技术壁垒
               </span>
             </h1>
@@ -842,7 +842,7 @@ export default function DifferentiationPage() {
                 onClick={() => setActiveFeature(feature.id)}
                 className={`flex-shrink-0 flex items-center gap-2 px-4 py-2 rounded-full transition-all ${
                   activeFeature === feature.id
-                    ? 'bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-lg shadow-pink-500/30'
+                    ? 'bg-gradient-to-r from-rose-500 to-fuchsia-500 text-white shadow-lg shadow-rose-500/30'
                     : 'bg-white/5 text-gray-400 hover:bg-white/10 border border-white/10'
                 }`}
                 whileHover={{ scale: 1.05 }}
@@ -887,7 +887,7 @@ export default function DifferentiationPage() {
                 {/* 标题 */}
                 <div>
                   <div className="flex items-center gap-3 mb-2">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-pink-500 to-purple-500 flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-rose-500 to-fuchsia-500 flex items-center justify-center">
                       <currentFeature.icon className="w-6 h-6 text-white" />
                     </div>
                     <div>
@@ -895,7 +895,7 @@ export default function DifferentiationPage() {
                       <p className="text-sm text-gray-500">{currentFeature.subtitle}</p>
                     </div>
                   </div>
-                  <p className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400 mt-4">
+                  <p className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-fuchsia-400 mt-4">
                     "{currentFeature.tagline}"
                   </p>
                   <p className="text-gray-400 mt-3">{currentFeature.description}</p>
@@ -916,7 +916,7 @@ export default function DifferentiationPage() {
                         transition={{ delay: i * 0.1 }}
                         className="bg-white/5 rounded-xl p-3 border border-white/10"
                       >
-                        <div className="text-pink-400 font-bold text-sm">{f.value}</div>
+                        <div className="text-rose-400 font-bold text-sm">{f.value}</div>
                         <div className="text-white text-xs font-medium">{f.label}</div>
                         <div className="text-gray-500 text-xs mt-1">{f.desc}</div>
                       </motion.div>
@@ -951,12 +951,12 @@ export default function DifferentiationPage() {
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.7 }}
-                      className="flex items-center justify-between bg-gradient-to-r from-pink-500/10 to-purple-500/10 rounded-lg p-3 border border-pink-500/30"
+                      className="flex items-center justify-between bg-gradient-to-r from-rose-500/10 to-fuchsia-500/10 rounded-lg p-3 border border-rose-500/30"
                     >
-                      <span className="text-pink-400 text-sm font-bold">AgenticMirror</span>
+                      <span className="text-rose-400 text-sm font-bold">AgenticMirror</span>
                       <div className="flex items-center gap-2">
-                        <span className="text-pink-300 text-xs">完整实现</span>
-                        <span className="px-2 py-0.5 rounded bg-gradient-to-r from-pink-500 to-purple-500 text-white text-xs">
+                        <span className="text-rose-300 text-xs">完整实现</span>
+                        <span className="px-2 py-0.5 rounded bg-gradient-to-r from-rose-500 to-fuchsia-500 text-white text-xs">
                           领先
                         </span>
                       </div>
@@ -992,7 +992,7 @@ export default function DifferentiationPage() {
                   <motion.tr
                     key={f.id}
                     className={`border-b border-white/5 cursor-pointer ${
-                      activeFeature === f.id ? 'bg-pink-500/10' : 'hover:bg-white/5'
+                      activeFeature === f.id ? 'bg-rose-500/10' : 'hover:bg-white/5'
                     }`}
                     onClick={() => setActiveFeature(f.id)}
                     initial={{ opacity: 0, x: -20 }}
@@ -1002,7 +1002,7 @@ export default function DifferentiationPage() {
                   >
                     <td className="py-3 px-4">
                       <div className="flex items-center gap-3">
-                        <f.icon className="w-5 h-5 text-pink-400" />
+                        <f.icon className="w-5 h-5 text-rose-400" />
                         <div>
                           <div className="text-white font-medium text-sm">{f.title}</div>
                           <div className="text-gray-500 text-xs">{f.subtitle}</div>
@@ -1015,7 +1015,7 @@ export default function DifferentiationPage() {
                           <div
                             key={l}
                             className={`w-2 h-2 rounded-full mx-0.5 ${
-                              l <= f.barrierLevel ? 'bg-pink-500' : 'bg-gray-700'
+                              l <= f.barrierLevel ? 'bg-rose-500' : 'bg-gray-700'
                             }`}
                           />
                         ))}
@@ -1073,7 +1073,7 @@ export default function DifferentiationPage() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="bg-white/5">
-                    <th className="text-left py-4 px-4 text-gray-300 font-semibold sticky left-0 bg-gray-800/90 backdrop-blur z-10 min-w-[180px]">
+                    <th className="text-left py-4 px-4 text-gray-300 font-semibold sticky left-0 bg-slate-800/90 backdrop-blur z-10 min-w-[180px]">
                       技术能力
                     </th>
                     <th className="text-center py-4 px-3 text-gray-300 font-semibold min-w-[100px]">
@@ -1084,7 +1084,7 @@ export default function DifferentiationPage() {
                     </th>
                     <th className="text-center py-4 px-3 text-gray-300 font-semibold min-w-[100px]">
                       <div className="flex flex-col items-center">
-                        <span className="text-purple-400">L'Oréal</span>
+                        <span className="text-fuchsia-400">L'Oréal</span>
                         <span className="text-xs text-gray-500">Cell BioPrint</span>
                       </div>
                     </th>
@@ -1096,7 +1096,7 @@ export default function DifferentiationPage() {
                     </th>
                     <th className="text-center py-4 px-3 text-gray-300 font-semibold min-w-[100px]">
                       <div className="flex flex-col items-center">
-                        <span className="text-cyan-400">CareOS</span>
+                        <span className="text-sky-400">CareOS</span>
                         <span className="text-xs text-gray-500">Themis 2.0</span>
                       </div>
                     </th>
@@ -1106,10 +1106,10 @@ export default function DifferentiationPage() {
                         <span className="text-xs text-gray-500">Plus+</span>
                       </div>
                     </th>
-                    <th className="text-center py-4 px-4 font-semibold min-w-[120px] bg-gradient-to-r from-pink-500/20 to-purple-500/20">
+                    <th className="text-center py-4 px-4 font-semibold min-w-[120px] bg-gradient-to-r from-rose-500/20 to-fuchsia-500/20">
                       <div className="flex flex-col items-center">
-                        <span className="text-pink-400 font-bold">AgenticMirror</span>
-                        <span className="text-xs text-pink-300">我们</span>
+                        <span className="text-rose-400 font-bold">AgenticMirror</span>
+                        <span className="text-xs text-rose-300">我们</span>
                       </div>
                     </th>
                   </tr>
@@ -1117,9 +1117,9 @@ export default function DifferentiationPage() {
                 <tbody className="divide-y divide-white/5">
                   {/* HyperSkin 多光谱皮肤传感 */}
                   <tr className="hover:bg-white/5 transition-colors">
-                    <td className="py-3 px-4 sticky left-0 bg-gray-800/90 backdrop-blur">
+                    <td className="py-3 px-4 sticky left-0 bg-slate-800/90 backdrop-blur">
                       <div className="flex items-center gap-2">
-                        <Scan className="w-4 h-4 text-pink-400" />
+                        <Scan className="w-4 h-4 text-rose-400" />
                         <div>
                           <div className="text-white font-medium">HyperSkin Sensor</div>
                           <div className="text-gray-500 text-xs">多光谱皮肤传感</div>
@@ -1141,19 +1141,19 @@ export default function DifferentiationPage() {
                         <span className="text-xs text-gray-500 mt-1">仅RGB</span>
                       </div>
                     </td>
-                    <td className="py-3 px-4 text-center bg-pink-500/5">
+                    <td className="py-3 px-4 text-center bg-rose-500/5">
                       <div className="flex flex-col items-center">
-                        <CheckCircle2 className="w-5 h-5 text-pink-500" />
-                        <span className="text-xs text-pink-400 mt-1 font-medium">三通道</span>
+                        <CheckCircle2 className="w-5 h-5 text-rose-500" />
+                        <span className="text-xs text-rose-400 mt-1 font-medium">三通道</span>
                       </div>
                     </td>
                   </tr>
 
                   {/* MicroFace 3D */}
                   <tr className="hover:bg-white/5 transition-colors">
-                    <td className="py-3 px-4 sticky left-0 bg-gray-800/90 backdrop-blur">
+                    <td className="py-3 px-4 sticky left-0 bg-slate-800/90 backdrop-blur">
                       <div className="flex items-center gap-2">
-                        <Box className="w-4 h-4 text-pink-400" />
+                        <Box className="w-4 h-4 text-rose-400" />
                         <div>
                           <div className="text-white font-medium">MicroFace 3D</div>
                           <div className="text-gray-500 text-xs">亚毫米级3D建模</div>
@@ -1165,19 +1165,19 @@ export default function DifferentiationPage() {
                     <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
                     <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
                     <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
-                    <td className="py-3 px-4 text-center bg-pink-500/5">
+                    <td className="py-3 px-4 text-center bg-rose-500/5">
                       <div className="flex flex-col items-center">
-                        <CheckCircle2 className="w-5 h-5 text-pink-500" />
-                        <span className="text-xs text-pink-400 mt-1 font-medium">50K点阵</span>
+                        <CheckCircle2 className="w-5 h-5 text-rose-500" />
+                        <span className="text-xs text-rose-400 mt-1 font-medium">50K点阵</span>
                       </div>
                     </td>
                   </tr>
 
                   {/* TrueColor Adapt */}
                   <tr className="hover:bg-white/5 transition-colors">
-                    <td className="py-3 px-4 sticky left-0 bg-gray-800/90 backdrop-blur">
+                    <td className="py-3 px-4 sticky left-0 bg-slate-800/90 backdrop-blur">
                       <div className="flex items-center gap-2">
-                        <Palette className="w-4 h-4 text-pink-400" />
+                        <Palette className="w-4 h-4 text-rose-400" />
                         <div>
                           <div className="text-white font-medium">TrueColor Adapt</div>
                           <div className="text-gray-500 text-xs">环境自适应色彩</div>
@@ -1199,19 +1199,19 @@ export default function DifferentiationPage() {
                         <span className="text-xs text-gray-500 mt-1">LED补光</span>
                       </div>
                     </td>
-                    <td className="py-3 px-4 text-center bg-pink-500/5">
+                    <td className="py-3 px-4 text-center bg-rose-500/5">
                       <div className="flex flex-col items-center">
-                        <CheckCircle2 className="w-5 h-5 text-pink-500" />
-                        <span className="text-xs text-pink-400 mt-1 font-medium">16通道</span>
+                        <CheckCircle2 className="w-5 h-5 text-rose-500" />
+                        <span className="text-xs text-rose-400 mt-1 font-medium">16通道</span>
                       </div>
                     </td>
                   </tr>
 
                   {/* MotionBreak AI */}
                   <tr className="hover:bg-white/5 transition-colors">
-                    <td className="py-3 px-4 sticky left-0 bg-gray-800/90 backdrop-blur">
+                    <td className="py-3 px-4 sticky left-0 bg-slate-800/90 backdrop-blur">
                       <div className="flex items-center gap-2">
-                        <Move3D className="w-4 h-4 text-pink-400" />
+                        <Move3D className="w-4 h-4 text-rose-400" />
                         <div>
                           <div className="text-white font-medium">MotionBreak AI</div>
                           <div className="text-gray-500 text-xs">动作分解教学</div>
@@ -1223,19 +1223,19 @@ export default function DifferentiationPage() {
                     <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
                     <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
                     <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
-                    <td className="py-3 px-4 text-center bg-pink-500/5">
+                    <td className="py-3 px-4 text-center bg-rose-500/5">
                       <div className="flex flex-col items-center">
-                        <CheckCircle2 className="w-5 h-5 text-pink-500" />
-                        <span className="text-xs text-pink-400 mt-1 font-medium">mmWave</span>
+                        <CheckCircle2 className="w-5 h-5 text-rose-500" />
+                        <span className="text-xs text-rose-400 mt-1 font-medium">mmWave</span>
                       </div>
                     </td>
                   </tr>
 
                   {/* Beauty Genome */}
                   <tr className="hover:bg-white/5 transition-colors">
-                    <td className="py-3 px-4 sticky left-0 bg-gray-800/90 backdrop-blur">
+                    <td className="py-3 px-4 sticky left-0 bg-slate-800/90 backdrop-blur">
                       <div className="flex items-center gap-2">
-                        <Dna className="w-4 h-4 text-pink-400" />
+                        <Dna className="w-4 h-4 text-rose-400" />
                         <div>
                           <div className="text-white font-medium">Beauty Genome</div>
                           <div className="text-gray-500 text-xs">美妆偏好表征</div>
@@ -1262,19 +1262,19 @@ export default function DifferentiationPage() {
                         <span className="text-xs text-gray-500 mt-1">问卷</span>
                       </div>
                     </td>
-                    <td className="py-3 px-4 text-center bg-pink-500/5">
+                    <td className="py-3 px-4 text-center bg-rose-500/5">
                       <div className="flex flex-col items-center">
-                        <CheckCircle2 className="w-5 h-5 text-pink-500" />
-                        <span className="text-xs text-pink-400 mt-1 font-medium">偏好学习</span>
+                        <CheckCircle2 className="w-5 h-5 text-rose-500" />
+                        <span className="text-xs text-rose-400 mt-1 font-medium">偏好学习</span>
                       </div>
                     </td>
                   </tr>
 
                   {/* SkinTimeline */}
                   <tr className="hover:bg-white/5 transition-colors">
-                    <td className="py-3 px-4 sticky left-0 bg-gray-800/90 backdrop-blur">
+                    <td className="py-3 px-4 sticky left-0 bg-slate-800/90 backdrop-blur">
                       <div className="flex items-center gap-2">
-                        <Clock className="w-4 h-4 text-pink-400" />
+                        <Clock className="w-4 h-4 text-rose-400" />
                         <div>
                           <div className="text-white font-medium">SkinTimeline</div>
                           <div className="text-gray-500 text-xs">时序皮肤追踪</div>
@@ -1306,19 +1306,19 @@ export default function DifferentiationPage() {
                         <span className="text-xs text-gray-500 mt-1">手动</span>
                       </div>
                     </td>
-                    <td className="py-3 px-4 text-center bg-pink-500/5">
+                    <td className="py-3 px-4 text-center bg-rose-500/5">
                       <div className="flex flex-col items-center">
-                        <CheckCircle2 className="w-5 h-5 text-pink-500" />
-                        <span className="text-xs text-pink-400 mt-1 font-medium">LSTM预测</span>
+                        <CheckCircle2 className="w-5 h-5 text-rose-500" />
+                        <span className="text-xs text-rose-400 mt-1 font-medium">LSTM预测</span>
                       </div>
                     </td>
                   </tr>
 
                   {/* LiveRender Pro */}
                   <tr className="hover:bg-white/5 transition-colors">
-                    <td className="py-3 px-4 sticky left-0 bg-gray-800/90 backdrop-blur">
+                    <td className="py-3 px-4 sticky left-0 bg-slate-800/90 backdrop-blur">
                       <div className="flex items-center gap-2">
-                        <Sparkles className="w-4 h-4 text-pink-400" />
+                        <Sparkles className="w-4 h-4 text-rose-400" />
                         <div>
                           <div className="text-white font-medium">LiveRender Pro</div>
                           <div className="text-gray-500 text-xs">60fps实时渲染</div>
@@ -1340,19 +1340,19 @@ export default function DifferentiationPage() {
                         <span className="text-xs text-gray-500 mt-1">15fps</span>
                       </div>
                     </td>
-                    <td className="py-3 px-4 text-center bg-pink-500/5">
+                    <td className="py-3 px-4 text-center bg-rose-500/5">
                       <div className="flex flex-col items-center">
-                        <CheckCircle2 className="w-5 h-5 text-pink-500" />
-                        <span className="text-xs text-pink-400 mt-1 font-medium">60fps</span>
+                        <CheckCircle2 className="w-5 h-5 text-rose-500" />
+                        <span className="text-xs text-rose-400 mt-1 font-medium">60fps</span>
                       </div>
                     </td>
                   </tr>
 
                   {/* ContextBeauty */}
                   <tr className="hover:bg-white/5 transition-colors">
-                    <td className="py-3 px-4 sticky left-0 bg-gray-800/90 backdrop-blur">
+                    <td className="py-3 px-4 sticky left-0 bg-slate-800/90 backdrop-blur">
                       <div className="flex items-center gap-2">
-                        <MapPin className="w-4 h-4 text-pink-400" />
+                        <MapPin className="w-4 h-4 text-rose-400" />
                         <div>
                           <div className="text-white font-medium">ContextBeauty</div>
                           <div className="text-gray-500 text-xs">场景感知推荐</div>
@@ -1374,19 +1374,19 @@ export default function DifferentiationPage() {
                       </div>
                     </td>
                     <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
-                    <td className="py-3 px-4 text-center bg-pink-500/5">
+                    <td className="py-3 px-4 text-center bg-rose-500/5">
                       <div className="flex flex-col items-center">
-                        <CheckCircle2 className="w-5 h-5 text-pink-500" />
-                        <span className="text-xs text-pink-400 mt-1 font-medium">8维上下文</span>
+                        <CheckCircle2 className="w-5 h-5 text-rose-500" />
+                        <span className="text-xs text-rose-400 mt-1 font-medium">8维上下文</span>
                       </div>
                     </td>
                   </tr>
 
                   {/* IngrediMatch */}
                   <tr className="hover:bg-white/5 transition-colors">
-                    <td className="py-3 px-4 sticky left-0 bg-gray-800/90 backdrop-blur">
+                    <td className="py-3 px-4 sticky left-0 bg-slate-800/90 backdrop-blur">
                       <div className="flex items-center gap-2">
-                        <FlaskConical className="w-4 h-4 text-pink-400" />
+                        <FlaskConical className="w-4 h-4 text-rose-400" />
                         <div>
                           <div className="text-white font-medium">IngrediMatch</div>
                           <div className="text-gray-500 text-xs">成分匹配安全</div>
@@ -1408,19 +1408,19 @@ export default function DifferentiationPage() {
                         <span className="text-xs text-gray-500 mt-1">查询</span>
                       </div>
                     </td>
-                    <td className="py-3 px-4 text-center bg-pink-500/5">
+                    <td className="py-3 px-4 text-center bg-rose-500/5">
                       <div className="flex flex-col items-center">
-                        <CheckCircle2 className="w-5 h-5 text-pink-500" />
-                        <span className="text-xs text-pink-400 mt-1 font-medium">15K+成分</span>
+                        <CheckCircle2 className="w-5 h-5 text-rose-500" />
+                        <span className="text-xs text-rose-400 mt-1 font-medium">15K+成分</span>
                       </div>
                     </td>
                   </tr>
 
                   {/* MasterMind KG */}
                   <tr className="hover:bg-white/5 transition-colors">
-                    <td className="py-3 px-4 sticky left-0 bg-gray-800/90 backdrop-blur">
+                    <td className="py-3 px-4 sticky left-0 bg-slate-800/90 backdrop-blur">
                       <div className="flex items-center gap-2">
-                        <Brain className="w-4 h-4 text-pink-400" />
+                        <Brain className="w-4 h-4 text-rose-400" />
                         <div>
                           <div className="text-white font-medium">MasterMind KG</div>
                           <div className="text-gray-500 text-xs">化妆大师知识图谱</div>
@@ -1437,10 +1437,10 @@ export default function DifferentiationPage() {
                     <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
                     <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
                     <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
-                    <td className="py-3 px-4 text-center bg-pink-500/5">
+                    <td className="py-3 px-4 text-center bg-rose-500/5">
                       <div className="flex flex-col items-center">
-                        <CheckCircle2 className="w-5 h-5 text-pink-500" />
-                        <span className="text-xs text-pink-400 mt-1 font-medium">100K实体</span>
+                        <CheckCircle2 className="w-5 h-5 text-rose-500" />
+                        <span className="text-xs text-rose-400 mt-1 font-medium">100K实体</span>
                       </div>
                     </td>
                   </tr>
@@ -1449,7 +1449,7 @@ export default function DifferentiationPage() {
                 {/* 统计行 */}
                 <tfoot>
                   <tr className="bg-white/5 border-t border-white/10">
-                    <td className="py-4 px-4 sticky left-0 bg-gray-800/90 backdrop-blur">
+                    <td className="py-4 px-4 sticky left-0 bg-slate-800/90 backdrop-blur">
                       <div className="text-white font-bold">技术领先项</div>
                     </td>
                     <td className="py-4 px-3 text-center">
@@ -1467,8 +1467,8 @@ export default function DifferentiationPage() {
                     <td className="py-4 px-3 text-center">
                       <span className="text-2xl font-bold text-gray-500">0</span>
                     </td>
-                    <td className="py-4 px-4 text-center bg-pink-500/10">
-                      <span className="text-2xl font-bold text-pink-400">10</span>
+                    <td className="py-4 px-4 text-center bg-rose-500/10">
+                      <span className="text-2xl font-bold text-rose-400">10</span>
                     </td>
                   </tr>
                 </tfoot>
@@ -1478,7 +1478,7 @@ export default function DifferentiationPage() {
             {/* 图例 */}
             <div className="flex flex-wrap items-center justify-center gap-6 p-4 border-t border-white/10">
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-pink-500" />
+                <CheckCircle2 className="w-4 h-4 text-rose-500" />
                 <span className="text-xs text-gray-400">完整支持</span>
               </div>
               <div className="flex items-center gap-2">
@@ -1516,12 +1516,12 @@ export default function DifferentiationPage() {
               </p>
             </div>
 
-            <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-xl p-5 border border-purple-500/20">
+            <div className="bg-gradient-to-br from-fuchsia-500/10 to-rose-500/10 rounded-xl p-5 border border-fuchsia-500/20">
               <div className="flex items-center gap-2 mb-3">
-                <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center">
-                  <span className="text-purple-400 font-bold">vs</span>
+                <div className="w-8 h-8 rounded-lg bg-fuchsia-500/20 flex items-center justify-center">
+                  <span className="text-fuchsia-400 font-bold">vs</span>
                 </div>
-                <span className="text-purple-400 font-bold">L'Oréal</span>
+                <span className="text-fuchsia-400 font-bold">L'Oréal</span>
               </div>
               <p className="text-gray-400 text-sm">
                 欧莱雅有品牌和AR技术，但<span className="text-white">局限于自有品牌推广</span>。
@@ -1548,14 +1548,14 @@ export default function DifferentiationPage() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mt-8 bg-gradient-to-r from-pink-500/10 to-purple-500/10 rounded-2xl p-6 border border-pink-500/20 text-center"
+            className="mt-8 bg-gradient-to-r from-rose-500/10 to-fuchsia-500/10 rounded-2xl p-6 border border-rose-500/20 text-center"
           >
-            <Crown className="w-10 h-10 text-pink-400 mx-auto mb-3" />
+            <Crown className="w-10 h-10 text-rose-400 mx-auto mb-3" />
             <h3 className="text-xl font-bold text-white mb-2">
               唯一的全栈美妆智能镜
             </h3>
             <p className="text-gray-400 max-w-2xl mx-auto">
-              AgenticMirror 是市场上<span className="text-pink-400 font-medium">唯一同时具备</span>专业传感硬件（多光谱+3D）、
+              AgenticMirror 是市场上<span className="text-rose-400 font-medium">唯一同时具备</span>专业传感硬件（多光谱+3D）、
               垂直AI能力（知识图谱+动作分解）、情感陪伴交互的智能镜产品。
               <br />
               <span className="text-white font-medium">10项技术全部领先，这不是单点突破，而是系统性碾压。</span>
@@ -1568,7 +1568,7 @@ export default function DifferentiationPage() {
       <section className="px-4 pb-20">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
-            className="bg-gradient-to-r from-pink-500/10 to-purple-500/10 border border-pink-500/20 rounded-3xl p-8"
+            className="bg-gradient-to-r from-rose-500/10 to-fuchsia-500/10 border border-rose-500/20 rounded-3xl p-8"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -1582,7 +1582,7 @@ export default function DifferentiationPage() {
             <div className="flex flex-wrap justify-center gap-4">
               <Link
                 href="/demo/workflow"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold rounded-full hover:shadow-lg hover:shadow-pink-500/30 transition-all"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-rose-500 to-fuchsia-500 text-white font-bold rounded-full hover:shadow-lg hover:shadow-rose-500/30 transition-all"
               >
                 <Play className="w-5 h-5" />
                 体验完整流程
