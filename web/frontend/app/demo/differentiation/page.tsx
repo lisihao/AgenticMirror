@@ -152,21 +152,21 @@ const differentiationFeatures = [
   {
     id: 'photoreal',
     icon: Sparkles,
-    title: 'PhotoReal AR',
-    subtitle: '物理级真实感渲染',
-    tagline: '虚拟试妆比真的还真',
-    description: '基于物理的渲染 (PBR) + 次表面散射 (SSS)，实时环境光适应，AR 试妆效果与真实皮肤无缝融合。',
-    barrierLevel: 4,
+    title: 'LiveRender Pro',
+    subtitle: '实时高帧率渲染引擎',
+    tagline: '60fps 捕捉 · 实时渲染 · 所见即所得',
+    description: '60fps 高帧率实时捕捉化妆动作，毫秒级渲染上妆效果，PBR + SSS 物理级光照，让智能镜成为真正的"化妆实时预览器"。',
+    barrierLevel: 5,
     features: [
-      { label: '渲染技术', value: 'PBR + SSS', desc: '物理级光照' },
-      { label: '材质类型', value: '7 种', desc: '哑光到闪片' },
-      { label: '帧率', value: '60fps', desc: '1080p 实时' },
-      { label: '延迟', value: '< 16ms', desc: 'GPU 加速' },
+      { label: '捕捉帧率', value: '60fps', desc: '动作无卡顿' },
+      { label: '渲染延迟', value: '< 16ms', desc: '实时响应' },
+      { label: '渲染技术', value: 'PBR + SSS', desc: '皮肤次表面散射' },
+      { label: '输出分辨率', value: '1080p', desc: 'GPU 实时渲染' },
     ],
     competitors: [
-      { name: '传统 AR', support: 'partial', note: 'Lambert 漫反射' },
-      { name: '滤镜', support: 'no', note: '2D 叠加' },
-      { name: '完美日记', support: 'partial', note: '简单贴图' },
+      { name: '传统镜子', support: 'no', note: '无 AR 叠加' },
+      { name: 'AR 试妆 App', support: 'partial', note: '15-30fps 卡顿' },
+      { name: '美图滤镜', support: 'no', note: '静态照片' },
     ],
   },
   {
@@ -1314,14 +1314,14 @@ export default function DifferentiationPage() {
                     </td>
                   </tr>
 
-                  {/* PhotoReal AR */}
+                  {/* LiveRender Pro */}
                   <tr className="hover:bg-white/5 transition-colors">
                     <td className="py-3 px-4 sticky left-0 bg-gray-800/90 backdrop-blur">
                       <div className="flex items-center gap-2">
                         <Sparkles className="w-4 h-4 text-pink-400" />
                         <div>
-                          <div className="text-white font-medium">PhotoReal AR</div>
-                          <div className="text-gray-500 text-xs">物理级真实感渲染</div>
+                          <div className="text-white font-medium">LiveRender Pro</div>
+                          <div className="text-gray-500 text-xs">60fps实时渲染</div>
                         </div>
                       </div>
                     </td>
@@ -1329,7 +1329,7 @@ export default function DifferentiationPage() {
                     <td className="py-3 px-3 text-center">
                       <div className="flex flex-col items-center">
                         <AlertCircle className="w-5 h-5 text-amber-500" />
-                        <span className="text-xs text-gray-500 mt-1">ModiFace</span>
+                        <span className="text-xs text-gray-500 mt-1">30fps</span>
                       </div>
                     </td>
                     <td className="py-3 px-3 text-center"><XCircle className="w-5 h-5 text-gray-600 mx-auto" /></td>
@@ -1337,13 +1337,13 @@ export default function DifferentiationPage() {
                     <td className="py-3 px-3 text-center">
                       <div className="flex flex-col items-center">
                         <AlertCircle className="w-5 h-5 text-amber-500" />
-                        <span className="text-xs text-gray-500 mt-1">2D贴图</span>
+                        <span className="text-xs text-gray-500 mt-1">15fps</span>
                       </div>
                     </td>
                     <td className="py-3 px-4 text-center bg-pink-500/5">
                       <div className="flex flex-col items-center">
                         <CheckCircle2 className="w-5 h-5 text-pink-500" />
-                        <span className="text-xs text-pink-400 mt-1 font-medium">PBR+SSS</span>
+                        <span className="text-xs text-pink-400 mt-1 font-medium">60fps</span>
                       </div>
                     </td>
                   </tr>
