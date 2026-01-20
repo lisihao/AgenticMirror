@@ -21,6 +21,11 @@ import {
   Shield,
   Target,
   TrendingUp,
+  Bot,
+  Glasses,
+  HeartPulse,
+  Rocket,
+  CircleDot,
 } from 'lucide-react';
 
 // 十大差异化特性定义
@@ -968,6 +973,315 @@ export default function DifferentiationPage() {
               </tbody>
             </table>
           </div>
+        </div>
+      </section>
+
+      {/* CES 2026 趋势分析 */}
+      <section className="px-4 pb-16">
+        <div className="max-w-7xl mx-auto">
+          {/* 板块标题 */}
+          <div className="text-center mb-12">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 rounded-full text-cyan-300 text-sm font-bold mb-4"
+            >
+              <Rocket className="w-4 h-4" />
+              CES 2026 趋势对标
+            </motion.div>
+            <h2 className="text-3xl font-bold text-white mb-3">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400">
+                三大趋势交汇点
+              </span>
+            </h2>
+            <p className="text-gray-400 max-w-2xl mx-auto">
+              AgenticMirror 是陪伴机器人、端侧 AI、健康科技三大 CES 2026 核心趋势的完美融合
+            </p>
+          </div>
+
+          {/* 三大趋势卡片 */}
+          <div className="grid md:grid-cols-3 gap-6 mb-12">
+            {/* 趋势一：陪伴机器人 */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="bg-gradient-to-br from-blue-900/30 to-indigo-900/30 rounded-2xl p-6 border border-blue-500/20 hover:border-blue-500/40 transition-all group"
+            >
+              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <Bot className="w-7 h-7 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">陪伴机器人 & 桌面机器人</h3>
+              <p className="text-gray-400 text-sm mb-4">
+                CES 2026 最热门赛道，从工业走向家庭与个人陪伴
+              </p>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-sm">
+                  <CircleDot className="w-3 h-3 text-blue-400" />
+                  <span className="text-gray-300">情感交互能力</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <CircleDot className="w-3 h-3 text-blue-400" />
+                  <span className="text-gray-300">场景化理解</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <CircleDot className="w-3 h-3 text-blue-400" />
+                  <span className="text-gray-300">持续陪伴关系</span>
+                </div>
+              </div>
+              <div className="mt-4 pt-4 border-t border-white/10">
+                <div className="text-xs text-gray-500 mb-1">AgenticMirror 对标</div>
+                <div className="text-sm text-blue-400 font-medium">
+                  垂直领域的情感陪伴机器人
+                </div>
+              </div>
+            </motion.div>
+
+            {/* 趋势二：端侧 AI */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="bg-gradient-to-br from-purple-900/30 to-pink-900/30 rounded-2xl p-6 border border-purple-500/20 hover:border-purple-500/40 transition-all group"
+            >
+              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <Glasses className="w-7 h-7 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">端侧 AI / AI on Edge</h3>
+              <p className="text-gray-400 text-sm mb-4">
+                AI 眼镜、AI Pin、边缘计算，从云端走向设备端
+              </p>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-sm">
+                  <CircleDot className="w-3 h-3 text-purple-400" />
+                  <span className="text-gray-300">本地隐私保护</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <CircleDot className="w-3 h-3 text-purple-400" />
+                  <span className="text-gray-300">低延迟实时响应</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <CircleDot className="w-3 h-3 text-purple-400" />
+                  <span className="text-gray-300">离线可用能力</span>
+                </div>
+              </div>
+              <div className="mt-4 pt-4 border-t border-white/10">
+                <div className="text-xs text-gray-500 mb-1">AgenticMirror 对标</div>
+                <div className="text-sm text-purple-400 font-medium">
+                  端侧 NPU + 云端协同架构
+                </div>
+              </div>
+            </motion.div>
+
+            {/* 趋势三：AI + 健康 */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="bg-gradient-to-br from-emerald-900/30 to-teal-900/30 rounded-2xl p-6 border border-emerald-500/20 hover:border-emerald-500/40 transition-all group"
+            >
+              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <HeartPulse className="w-7 h-7 text-white" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">AI + 健康</h3>
+              <p className="text-gray-400 text-sm mb-4">
+                健康监测、预防医学、个性化健康管理的智能化
+              </p>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-sm">
+                  <CircleDot className="w-3 h-3 text-emerald-400" />
+                  <span className="text-gray-300">非接触式健康监测</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <CircleDot className="w-3 h-3 text-emerald-400" />
+                  <span className="text-gray-300">长期趋势追踪</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <CircleDot className="w-3 h-3 text-emerald-400" />
+                  <span className="text-gray-300">早期预警能力</span>
+                </div>
+              </div>
+              <div className="mt-4 pt-4 border-t border-white/10">
+                <div className="text-xs text-gray-500 mb-1">AgenticMirror 对标</div>
+                <div className="text-sm text-emerald-400 font-medium">
+                  皮肤健康 → 整体健康入口
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* 趋势融合图 */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-3xl p-8 border border-white/10"
+          >
+            <h3 className="text-xl font-bold text-white text-center mb-8">
+              三大趋势融合：AgenticMirror 的独特定位
+            </h3>
+
+            {/* 维恩图可视化 */}
+            <div className="relative h-80 max-w-lg mx-auto">
+              <svg viewBox="0 0 400 320" className="w-full h-full">
+                {/* 三个圆圈 */}
+                <motion.circle
+                  cx="200" cy="120" r="90"
+                  fill="url(#blueGradient)" fillOpacity="0.3"
+                  stroke="#3b82f6" strokeWidth="2" strokeOpacity="0.5"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                />
+                <motion.circle
+                  cx="130" cy="220" r="90"
+                  fill="url(#purpleGradient)" fillOpacity="0.3"
+                  stroke="#a855f7" strokeWidth="2" strokeOpacity="0.5"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                />
+                <motion.circle
+                  cx="270" cy="220" r="90"
+                  fill="url(#greenGradient)" fillOpacity="0.3"
+                  stroke="#10b981" strokeWidth="2" strokeOpacity="0.5"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                />
+
+                {/* 渐变定义 */}
+                <defs>
+                  <radialGradient id="blueGradient">
+                    <stop offset="0%" stopColor="#3b82f6" />
+                    <stop offset="100%" stopColor="#1e40af" />
+                  </radialGradient>
+                  <radialGradient id="purpleGradient">
+                    <stop offset="0%" stopColor="#a855f7" />
+                    <stop offset="100%" stopColor="#7c3aed" />
+                  </radialGradient>
+                  <radialGradient id="greenGradient">
+                    <stop offset="0%" stopColor="#10b981" />
+                    <stop offset="100%" stopColor="#059669" />
+                  </radialGradient>
+                  <radialGradient id="centerGradient">
+                    <stop offset="0%" stopColor="#ec4899" />
+                    <stop offset="100%" stopColor="#8b5cf6" />
+                  </radialGradient>
+                </defs>
+
+                {/* 圈内标签 */}
+                <text x="200" y="70" textAnchor="middle" fill="#60a5fa" fontSize="12" fontWeight="bold">陪伴机器人</text>
+                <text x="80" y="240" textAnchor="middle" fill="#c084fc" fontSize="12" fontWeight="bold">端侧 AI</text>
+                <text x="320" y="240" textAnchor="middle" fill="#34d399" fontSize="12" fontWeight="bold">AI+健康</text>
+
+                {/* 中心交汇区域 */}
+                <motion.circle
+                  cx="200" cy="180" r="35"
+                  fill="url(#centerGradient)"
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 0.5 }}
+                />
+                <motion.text
+                  x="200" y="175" textAnchor="middle" fill="white" fontSize="10" fontWeight="bold"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.8 }}
+                >
+                  Agentic
+                </motion.text>
+                <motion.text
+                  x="200" y="190" textAnchor="middle" fill="white" fontSize="10" fontWeight="bold"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.8 }}
+                >
+                  Mirror
+                </motion.text>
+
+                {/* 两两交集标签 */}
+                <text x="155" y="145" textAnchor="middle" fill="#9ca3af" fontSize="8">情感AI助手</text>
+                <text x="245" y="145" textAnchor="middle" fill="#9ca3af" fontSize="8">健康陪伴</text>
+                <text x="200" y="265" textAnchor="middle" fill="#9ca3af" fontSize="8">边缘健康监测</text>
+              </svg>
+            </div>
+
+            {/* 底部总结 */}
+            <div className="grid md:grid-cols-3 gap-4 mt-8">
+              <div className="bg-blue-500/10 rounded-xl p-4 border border-blue-500/20">
+                <div className="text-blue-400 font-bold text-sm mb-1">陪伴 × 端侧</div>
+                <div className="text-gray-400 text-xs">情感化 AI 助手，本地化隐私保护，持续在线陪伴</div>
+              </div>
+              <div className="bg-purple-500/10 rounded-xl p-4 border border-purple-500/20">
+                <div className="text-purple-400 font-bold text-sm mb-1">陪伴 × 健康</div>
+                <div className="text-gray-400 text-xs">日常关怀与健康监测结合，建立长期信任关系</div>
+              </div>
+              <div className="bg-emerald-500/10 rounded-xl p-4 border border-emerald-500/20">
+                <div className="text-emerald-400 font-bold text-sm mb-1">端侧 × 健康</div>
+                <div className="text-gray-400 text-xs">敏感数据本地处理，实时健康反馈，无需网络依赖</div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* 投资叙事框架 */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mt-8 bg-gradient-to-r from-pink-500/5 to-purple-500/5 rounded-2xl p-6 border border-pink-500/10"
+          >
+            <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+              <TrendingUp className="w-5 h-5 text-pink-400" />
+              投资叙事框架
+            </h3>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <div className="text-gray-400 text-sm mb-3">
+                  <span className="text-pink-400 font-bold">短期价值：</span>
+                  CES 热门赛道的垂直玩家
+                </div>
+                <ul className="space-y-2 text-sm text-gray-500">
+                  <li className="flex items-start gap-2">
+                    <span className="text-pink-400 mt-1">•</span>
+                    <span>美妆赛道的"桌面陪伴机器人"</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-pink-400 mt-1">•</span>
+                    <span>端侧 AI 在消费电子的应用典范</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-pink-400 mt-1">•</span>
+                    <span>皮肤健康的非接触式监测入口</span>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <div className="text-gray-400 text-sm mb-3">
+                  <span className="text-purple-400 font-bold">长期愿景：</span>
+                  个人健康管理入口级产品
+                </div>
+                <ul className="space-y-2 text-sm text-gray-500">
+                  <li className="flex items-start gap-2">
+                    <span className="text-purple-400 mt-1">•</span>
+                    <span>每日必用触点 → 数据积累 → 健康预警</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-purple-400 mt-1">•</span>
+                    <span>从"美"到"健康"的自然延伸</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-purple-400 mt-1">•</span>
+                    <span>家庭健康管理中心的原型</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
