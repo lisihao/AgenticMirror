@@ -21,6 +21,7 @@ import {
 import { cn } from '@/lib/utils/cn';
 import SketchFace from '@/components/workflow/SketchFace';
 import SketchAIBrain from '@/components/workflow/SketchAIBrain';
+import { HyperSkinDemo, MicroFace3DDemo } from '@/components/demos/SkinDemos';
 import {
     workflowPhases,
     mockAnalysis,
@@ -248,11 +249,40 @@ export default function WorkflowPage() {
                                     </div>
                                 </div>
 
+                                {/* 核心技术展示 - 扫描完成后显示 */}
+                                {scanProgress >= 100 && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        className="mt-6 grid grid-cols-2 gap-4"
+                                    >
+                                        <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl p-4">
+                                            <div className="text-rose-400 text-sm font-medium mb-2 flex items-center gap-2">
+                                                <Eye className="w-4 h-4" />
+                                                HyperSkin 光谱传感
+                                            </div>
+                                            <div className="h-56">
+                                                <HyperSkinDemo />
+                                            </div>
+                                        </div>
+                                        <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl p-4">
+                                            <div className="text-sky-400 text-sm font-medium mb-2 flex items-center gap-2">
+                                                <Camera className="w-4 h-4" />
+                                                MicroFace 3D 建模
+                                            </div>
+                                            <div className="h-56">
+                                                <MicroFace3DDemo />
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                )}
+
                                 {/* Detailed Skin Analysis Section - Below Mirror */}
                                 {scanProgress >= 100 && (
                                     <motion.div
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: 0.2 }}
                                         className="mt-6 space-y-4"
                                     >
                                         {/* Overall Score Card */}

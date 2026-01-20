@@ -18,6 +18,7 @@ import {
 import { cn } from '@/lib/utils/cn';
 import { mockAnalysis } from '@/lib/constants/mockData';
 import SketchFace from '@/components/workflow/SketchFace';
+import { HyperSkinDemo, MicroFace3DDemo } from '@/components/demos/SkinDemos';
 
 const lightingPresets = [
     { id: 'warm', label: '暖光', temp: '2700K', color: 'from-amber-50 to-orange-50' },
@@ -287,15 +288,39 @@ export default function MirrorPage() {
                         </div>
                     </div>
 
+                    {/* 核心技术展示 */}
+                    <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl p-5 shadow-sm">
+                        <h2 className="font-semibold text-white mb-4 flex items-center gap-2">
+                            <Zap className="w-5 h-5 text-rose-400" />
+                            核心技术
+                        </h2>
+                        <div className="space-y-4">
+                            {/* HyperSkin 光谱传感 */}
+                            <div className="bg-black/30 rounded-lg p-3">
+                                <div className="text-rose-400 text-xs font-medium mb-2">HyperSkin 光谱传感</div>
+                                <div className="h-48">
+                                    <HyperSkinDemo />
+                                </div>
+                            </div>
+                            {/* MicroFace 3D */}
+                            <div className="bg-black/30 rounded-lg p-3">
+                                <div className="text-sky-400 text-xs font-medium mb-2">MicroFace 3D 建模</div>
+                                <div className="h-48">
+                                    <MicroFace3DDemo />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     {/* Feature Highlights */}
                     <div className="bg-white rounded-xl p-5 shadow-sm">
                         <h2 className="font-semibold text-gray-900 mb-4">智能镜功能</h2>
                         <div className="space-y-3">
                             {[
-                                { icon: '🔍', title: '皮肤扫描', desc: '8项专业指标分析' },
-                                { icon: '🎯', title: '区域引导', desc: '精准定位问题区域' },
+                                { icon: '🔍', title: '皮肤扫描', desc: '8通道光谱分析' },
+                                { icon: '🎯', title: '3D建模', desc: '50,000点结构光' },
                                 { icon: '💎', title: '耳饰推荐', desc: 'AI 配饰搭配建议' },
-                                { icon: '✨', title: '妆容变换', desc: '实时妆效预览' },
+                                { icon: '✨', title: '实时渲染', desc: '60fps AR试妆' },
                             ].map((feature) => (
                                 <div key={feature.title} className="flex items-start gap-3 p-3 rounded-lg bg-gray-50">
                                     <span className="text-xl">{feature.icon}</span>
